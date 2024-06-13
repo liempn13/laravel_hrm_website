@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +7,19 @@
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
     <title>NLOffice</title>
 </head>
-
 <body>
     <div class="login-card">
-        <h2>Login</h2>
-        <h3>Enter your credentials</h3>
+        <h2>Sign Up</h2>
+        {{-- <h3>Enter your credentials</h3> --}}
         <form class="login-form">
             <input type="text" placeholder="Email or phone number">
             <input type="password" placeholder="Password">
-            <a href="/forgot_password">Forgot your password?</a>
-            <button type="submit">Login</button>
+            <p>
+                Signed up already?
+                <a href="/login">Login here</a>
+            </p>
+            <button type="submit">Sign Up</button>
         </form>
     </div>
 </body>
-
 </html>
