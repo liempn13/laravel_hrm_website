@@ -14,8 +14,15 @@
         <h2>Login</h2>
         <h3>Enter your credentials</h3>
         <form class="login-form">
+
+            {{-- @extends('partial.textfield')
+
+            @section('textfield')
+
+            @stop --}}
             <input type="text" placeholder="Email or phone number">
             <input type="password" placeholder="Password">
+            {{-- <button type="button" onclick="showPass(this)"></button> --}}
             <a href="/forgot_password">Forgot your password?</a>
             <button type="submit">Login</button>
         </form>
