@@ -1,15 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
 
-<style>
-    input {
-        color: rgb(255 255 255 / 96%);
-        background: rgb(255 255 255 / 8%);
-        font-family: inherit;
-        font-size: 16px;
-        padding: 0 16px;
-    }
-</style>
-<form>
-    <label for="">{{$placeholder}}</label>
-    <input type="{{$texttype}}" placeholder="{{$placeholder}}">
-</form>
+<body>
+    <div>
+        <input class="textfield" type="{{ $texttype }}" placeholder="{{ $placeholder }}">
+        <label for="textfield">{{ $placeholder }}</label>
+        <button onclick="togglePassword(this)"></button>
+    </div>
+    <script type="text/javascript" src="{{ assets('js/textfield.js') }}"></script>
+</body>
+
+</html>

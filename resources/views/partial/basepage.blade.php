@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sidebars</title>
+    <title>NLOffice</title>
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,6 +37,11 @@
                             <li>
                                 <button type="button"
                                     onclick="window.location='{{ url('/department') }}'">Department</button>
+                            </li>
+                            <li>
+                                <button type="button" onclick="window.location='{{ url('/position') }}'">
+                                    <p>Position</p>
+                                </button>
                             </li>
                             <li>
                                 <button type="button" onclick="window.location='{{ url('/staff') }}'">Staff</button>
@@ -88,18 +93,17 @@
             </ul>
         </nav>
     </aside>
-    <section class="headbar">
+    <section id="top-nav-bar">
         <nav>
             <button type="button" class="burger" onclick="toggleSidebar()"><i class="fa fa-bars"
                     aria-hidden="false"></i></button>
         </nav>
     </section>
-    <section id="main-body-web">
-        <div >
-
+    {{-- <section id="main-body-web">
+        <div>
             @yield('main-body-web')
         </div>
-    </section>
+    </section> --}}
     <script src="{{ asset('js/sidebar.js') }}"></script>
 </body>
 
