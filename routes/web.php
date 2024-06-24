@@ -25,14 +25,18 @@ Route::get('/forgot_password', function () {
     return view('forgot_password');
 });
 
-Route::get('/textfield',function(){
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+Route::get('/textfield', function () {
     return view('partial.textfield');
 });
 
-Route::get('/staff',function(){
+Route::get('/staff', function () {
     return view('staff');
 });
 
-Route::get('/department',function(){
+Route::get('/department', function () {
     return view('department');
 });

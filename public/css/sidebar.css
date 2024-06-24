@@ -23,7 +23,6 @@ button {
 }
 
 .sidebar {
-    /* position: fixed; */
     left: 0px;
     top: 0px;
     bottom: 0px;
@@ -43,10 +42,6 @@ button {
     height: 72px;
     padding: 0 1.25rem 0 0;
     border-bottom: 1px solid rgb(255 255 255 / 8%);
-}
-
-.sidebar header button {
-    /* width: 52px; */
 }
 
 .sidebar header img {
@@ -163,4 +158,13 @@ button {
     backdrop-filter: blur(20px);
     transition: width 0.4s;
     justify-items: stretch;
+}
+#top-nav-bar{
+    top: 0;
+    right: 0;
+    height: 100px;
+    width: 100%;
+    border: none;
+    /* justify-items: stretch; */
+    /* background: ; */
 }
