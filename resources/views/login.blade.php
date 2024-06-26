@@ -24,7 +24,7 @@
             <input type="password" placeholder="Password">
             {{-- <button type="button" onclick="showPass(this)"></button> --}}
             <a href="/forgot_password">Forgot your password?</a>
-            <button type="submit">Login</button>
+            <button type="submit" onclick="window.location ='{{ url('/dashboard') }}'">Login</button>
         </form>
     </div>
 </body>
