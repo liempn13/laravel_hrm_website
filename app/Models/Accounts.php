@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Accounts extends Model
 {
+    use HasFactory;
+
     protected $table = 'accounts';
 
     protected $primaryKey = 'account_id';
