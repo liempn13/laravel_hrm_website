@@ -93,17 +93,17 @@
             </ul>
         </nav>
     </aside>
-    <section id="top-nav-bar">
+    {{-- <section id="top-nav-bar">
         <nav>
             <button type="button" class="burger" onclick="toggleSidebar()"><i class="fa fa-bars"
                     aria-hidden="false"></i></button>
         </nav>
-    </section>
-    {{-- <section id="main-body-web">
+    </section> --}}
+    <section id="main-body-web">
         <div>
             @yield('main-body-web')
         </div>
-    </section> --}}
+    </section>
     <script src="{{ asset('js/sidebar.js') }}"></script>
 </body>
 

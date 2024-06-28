@@ -1,5 +1,8 @@
 @extends('partial.basepage')
 
 @section('main-body-web')
-
-@endsection
+    @foreach ($accounts as $account)
+        <li>{{ $account->username }}</li>
+        <li>{{ $account->password }}</li>
+    @endforeach
+@stop

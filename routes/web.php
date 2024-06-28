@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AccountsController;
+use App\Models\Accounts;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,3 +42,5 @@ Route::get('/staff', function () {
 Route::get('/department', function () {
     return view('department');
 });
+
+Route::get('/dashboard', [AccountsController::class,'index']);

@@ -7,13 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Relatives extends Model
 {
-    protected $table = 'relatives';
-
-    protected $primaryKey = 'account_id';
-
-    protected $fillable = ['relative_name',''];
-
-    protected $hidden = [''];
-
-    protected $casts = ['account_id'=>'string'];
+    use HasFactory;
 }

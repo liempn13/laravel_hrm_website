@@ -7,13 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Salaries extends Model
 {
-    protected $table = 'salaries';
-
-    protected $primaryKey = 'account_id';
-
-    protected $fillable = ['salary_name',''];
-
-    protected $hidden = [''];
-
-    protected $casts = ['account_id'=>'string'];
+    use HasFactory;
 }

@@ -8,15 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Accounts extends Model
 {
     use HasFactory;
-
-    protected $table = 'accounts';
-
-    protected $primaryKey = 'account_id';
-
-    protected $fillable = ['username','password'];
-
-    protected $hidden = ['password'];
-
-    protected $casts = ['account_id'=>'string','password'=>'string'];
-
+    protected $table = "accounts";
+    protected $primaryKey = "account_id";
+    protected $fillable = ["username","password"] ;
+    public $timestamps = false;
+    protected $casts = [""] ;
 }
