@@ -2,7 +2,9 @@
 
 @section('main-body-web')
     @foreach ($accounts as $account)
-        <li>{{ $account->username }}</li>
-        <li>{{ $account->password }}</li>
+    <tr>
+        <td> {{ $account->username }}</td>
+        <td> {{ $account->password }}</td>
+    </tr>
     @endforeach
 @stop

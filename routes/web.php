@@ -43,4 +43,4 @@ Route::get('/department', function () {
     return view('department');
 });
 
-Route::get('/dashboard', [AccountsController::class,'index']);
+Route::get('/dashboard', [AccountsController::class,'selectAll']);

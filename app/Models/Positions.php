@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Positions extends Model
 {
     use HasFactory;
+    protected $table = "positions";
+    protected $primaryKey = "position_id";
+    protected $fillable = ["",""] ;
+    public $timestamps = false;
+    protected $casts = [""] ;
 }

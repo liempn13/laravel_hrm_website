@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Profiles extends Model
 {
     use HasFactory;
+    protected $table = "profiles";
+    protected $primaryKey = "profile_id";
+    protected $fillable = ["",""] ;
+    public $timestamps = false;
+    protected $casts = [""] ;
 }
