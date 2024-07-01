@@ -10,7 +10,10 @@ class Projects extends Model
     use HasFactory;
     protected $table = "decisions";
     protected $primaryKey = "decision_id";
-    protected $fillable = ["",""] ;
+    protected $keyType = "string";
+    protected $fillable = [
+        "project_name",
+        "project_status",] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

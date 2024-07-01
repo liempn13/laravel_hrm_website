@@ -10,6 +10,7 @@ class Diplomas extends Model
     use HasFactory;
     protected $table = "diplomas";
     protected $primaryKey = "diploma_id";
+    protected $keyType = "string";
     protected $fillable = ["",""] ;
     public $timestamps = false;
     protected $casts = [""] ;
