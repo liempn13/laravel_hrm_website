@@ -10,6 +10,9 @@ class Positions extends Model
     use HasFactory;
     protected $table = "positions";
     protected $primaryKey = "position_id";
+
+    protected $keyType = "string";
+
     protected $fillable = ["",""] ;
     public $timestamps = false;
     protected $casts = [""] ;

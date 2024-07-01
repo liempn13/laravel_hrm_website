@@ -10,7 +10,9 @@ class Enterprises extends Model
     use HasFactory;
     protected $table = "enterprises";
     protected $primaryKey = "enterprise_id";
-    protected $fillable = ["",""] ;
+    protected $fillable = [
+        "enterprise_name",
+        ""] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

@@ -43,4 +43,17 @@ Route::get('/department', function () {
     return view('department');
 });
 
+//Select
 Route::get('/dashboard', [AccountsController::class,'selectAll']);
+
+//create
+Route::get('/', [AccountsController::class, 'create']);
+Route::post('/', [AccountsController::class, 'store']);
+
+// Update account
+Route::get('/{id}', [AccountsController::class, 'edit']);
+Route::post('/{id}', [AccountsController::class, 'update']);
+
+// Delete account
+// Vẫn nhớ phải truyền id vào nhá
+Route::get('/{id}', [AccountsController::class, 'delete']);
