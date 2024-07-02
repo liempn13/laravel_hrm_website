@@ -11,7 +11,10 @@ class Departments extends Model
     protected $table = "departments";
     protected $primaryKey = "department_id";
     protected $keyType = "string";
-    protected $fillable = ["",""] ;
+    protected $fillable = [
+        "department_name",
+    "department_status",
+    "enterprise_id"] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

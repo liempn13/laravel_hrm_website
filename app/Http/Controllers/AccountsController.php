@@ -18,7 +18,7 @@ class AccountsController extends Controller
     }
 
     public function create(){
-        return view('/');
+        return view('/create_user');
     }
 
     public function store(Request $request)
@@ -33,20 +33,20 @@ class AccountsController extends Controller
         $data['password'] = Hash::make($request->password);
         // Tạo mới accounts với các dữ liệu tương ứng với dữ liệu được gán trong $data
         Accounts::create($data);
-        echo'success create';
+        print'success create';
     }
 
-    public function edit($id){
+    public function edit($account_id){
         // Tìm đến đối tượng muốn update
-        $accounts = Accounts::findOrFail($id);
+        $accounts = Accounts::findOrFail($account_id);
 
         // điều hướng đến view edit accounts và truyền sang dữ liệu về accounts muốn sửa đổi
-        return view('/', compact('accounts'));
+        return view('/edit_user', compact('accounts'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $account_id){
         // Tìm đến đối tượng muốn update
-        $account = Accounts::findOrFail($id);
+        $accounts = Accounts::findOrFail($account_id);
 
         // gán dữ liệu gửi lên vào biến data
         $data = $request->all();
@@ -55,13 +55,13 @@ class AccountsController extends Controller
         $data['password'] = Hash::make($request->password);
 
         // Update Accounts
-        Accounts::update($data);
+        $accounts::update($data);
         echo"success update";
     }
 
-    public function delete($id){
+    public function delete($account_id){
         // Tìm đến đối tượng muốn xóa
-        $account = Accounts::findOrFail($id);
+        $account = Accounts::findOrFail($account_id);
 
         $account->delete();
         echo"success delete";
