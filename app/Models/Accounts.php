@@ -15,11 +15,11 @@ class Accounts extends Model
 
     protected $fillable = [
         "username",
-        // "passwword",
-        // "permission",
-        // "account_status"
+        "password",
+        "permission",
+        "account_status"
     ] ;
-    // public $hidden = ["password","remember_token"] ;
+    public $hidden = ["password","remember_token"] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

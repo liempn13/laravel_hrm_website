@@ -16,13 +16,17 @@
             Name:
             <input type="text" name="username">
         </label><br><br>
-        {{-- <label for="Email">
-            Email:
-            <input type="text" name="email">
-        </label><br><br> --}}
         <label for="Password">
             Password:
             <input type="text" name="password">
+        </label><br><br>
+        <label for="Password">
+            Permission:
+            <input type="text" name="permission">
+        </label><br><br>
+        <label for="Password">
+            Status:
+            <input type="text" name="account_status">
         </label><br><br>
         <button type="submit">Create user</button>
     </form>

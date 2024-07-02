@@ -16,10 +16,7 @@
             Name:
             <input type="text" name="username" value="{{ $account->username }}">
         </label><br><br>
-        {{-- <label for="Email">
-            Email:
-            <input type="text" name="email" value="{{ $user->email }}">
-        </label><br><br> --}}
+
         <label for="Password">
             Password:
             <input type="text" name="password">
