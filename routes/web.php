@@ -43,17 +43,25 @@ Route::get('/department', function () {
     return view('department');
 });
 
+Route::get('/create_user', function () {
+    return view('create_user');
+});
+
+Route::get('/edit_user', function () {
+    return view('edit_user');
+});
+
 //Select
 Route::get('/dashboard', [AccountsController::class,'selectAll']);
 
 //create
-Route::get('/', [AccountsController::class, 'create']);
-Route::post('/', [AccountsController::class, 'store']);
+Route::get('/create_user', [AccountsController::class, 'create']);
+Route::post('/create_user', [AccountsController::class, 'store']);
 
 // Update account
-Route::get('/{id}', [AccountsController::class, 'edit']);
-Route::post('/{id}', [AccountsController::class, 'update']);
+Route::get('/edit_user{account_id}', [AccountsController::class, 'edit']);
+Route::post('/edit_user{account_id}', [AccountsController::class, 'update']);
 
 // Delete account
 // Vẫn nhớ phải truyền id vào nhá
-Route::get('/{id}', [AccountsController::class, 'delete']);
+Route::get('/{account_id}', [AccountsController::class, 'delete']);
