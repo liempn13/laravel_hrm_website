@@ -12,7 +12,8 @@ class Enterprises extends Model
     protected $primaryKey = "enterprise_id";
     protected $fillable = [
         "enterprise_name",
-        ""] ;
+        ""
+        ] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

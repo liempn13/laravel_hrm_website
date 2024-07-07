@@ -8,10 +8,25 @@ use Illuminate\Routing\Controller;
 
 class DepartmentsController extends Controller
 {
-    public function selectAll()
-   {
-        $departments = Departments::all();
+    public function index(){
 
-        return view('/dashboard',['departments' => $departments]);
-   }
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update(Request $request, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }

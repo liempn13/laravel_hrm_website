@@ -8,10 +8,25 @@ use Illuminate\Routing\Controller;
 
 class SalariesController extends Controller
 {
-    public function selectAll()
-    {
-         $salaries = Salaries::all();
+    public function index(){
 
-         return view('/',['salaries' => $salaries]);
     }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update(Request $request, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }

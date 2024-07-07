@@ -8,10 +8,25 @@ use Illuminate\Routing\Controller;
 
 class EnterprisesController extends Controller
 {
-    public function selectAll()
-   {
-        $enterprises = Enterprises::all();
+    public function index(){
 
-        return view('/dashboard',['enterprises' => $enterprises]);
-   }
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update(Request $request, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }
