@@ -13,7 +13,7 @@ class Diplomas extends Model
     protected $keyType = "string";
     protected $fillable = [
         "diploma_name",
-        ""
+        "enterprise_id"
         ] ;
     public $timestamps = false;
     protected $casts = [""] ;
