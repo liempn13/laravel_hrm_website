@@ -11,7 +11,10 @@ class Diplomas extends Model
     protected $table = "diplomas";
     protected $primaryKey = "diploma_id";
     protected $keyType = "string";
-    protected $fillable = ["",""] ;
+    protected $fillable = [
+        "diploma_name",
+        ""
+        ] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

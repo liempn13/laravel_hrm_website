@@ -18,6 +18,7 @@ class WorkingProcessesController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
+            "enterprise_id"=> "required",
             ""=> "",
         ]);
         if ($validator->fails()) {

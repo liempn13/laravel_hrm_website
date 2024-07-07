@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Accounts;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\AccountsResource as AccountsResource;
 
 class AccountsController extends Controller
 {
@@ -16,19 +16,63 @@ class AccountsController extends Controller
 
     public function store(Request $request)
     {
-
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            "enterprise_id"=> "required",
+            ""=> "",
+        ]);
+        if ($validator->fails()) {
+            $arr = [
+                "success"=> false,
+                "message"=> "Data check error",
+                "data"=> $validator->errors(),
+            ];
+            return response()->json($arr,200);
+        }
+        $accounts = Accounts::create($input);
+        $arr = [
+            "status"=> true,
+            "message"=> "Save successful",
+            "data"=> new AccountsResource($accounts)
+        ];
+        return response()->json( $arr,201);
     }
 
     public function edit($id){
 
     }
 
-    public function update(Request $request, $id){
-
+    public function update(Request $request, Accounts $accounts){
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            ""=> "",
+        ]);
+        if ($validator->fails()) {
+            $arr = [
+                "success"=> false,
+                "message"=> "Data check error",
+                "data"=> $validator->errors(),
+            ];
+            return response()->json($arr,200);
+        }
+        $accounts->name = $input['name'];
+        $accounts->save();
+        $arr = [
+            "status"=> true,
+            "message"=> "Save successful",
+            "data"=> new AccountsResource($accounts)
+        ];
+        return response()->json( $arr,200);
     }
 
-    public function delete($id){
-
+    public function delete(Accounts $accounts){
+        $accounts -> delete();
+        $arr = [
+            "status"=> true,
+            "message"=> "Delete success",
+            "data"=> []
+        ];
+        return response()->json( $arr,200);
     }
 
 }
