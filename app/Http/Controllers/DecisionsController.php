@@ -8,10 +8,25 @@ use Illuminate\Routing\Controller;
 
 class DecisionsController extends Controller
 {
-    public function index()
-    {
-         $decisions = Decisions::all();
+    public function index(){
 
-         return view('/',['decisions' => $decisions]);
     }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update(Request $request, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }

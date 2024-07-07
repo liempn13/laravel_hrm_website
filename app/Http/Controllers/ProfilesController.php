@@ -8,10 +8,25 @@ use Illuminate\Routing\Controller;
 
 class ProfilesController extends Controller
 {
-    public function selectAll()
-   {
-        $profiles = Profiles::all();
+    public function index(){
 
-        return view('/',['profiles' => $profiles]);
-   }
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update(Request $request, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }

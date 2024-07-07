@@ -8,10 +8,25 @@ use App\Models\Relatives;
 
 class RelativesController extends Controller
 {
-    public function selectAll()
-   {
-        $relatives = Relatives::all();
+    public function index(){
 
-        return view('/',['relatives' => $relatives]);
-   }
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update(Request $request, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }

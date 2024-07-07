@@ -8,10 +8,25 @@ use Illuminate\Routing\Controller;
 
 class ProjectsController extends Controller
 {
-    public function selectAll()
-   {
-        $projects = Projects::all();
+    public function index(){
 
-        return view('/',['projects' => $projects]);
-   }
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update(Request $request, $id){
+
+    }
+
+    public function delete($id){
+
+    }
+
 }

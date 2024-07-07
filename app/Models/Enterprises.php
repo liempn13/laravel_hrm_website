@@ -15,7 +15,6 @@ class Enterprises extends Model
         "enterprise_name",
         "enterprise_status",
         "email",
-        "",
         ] ;
     public $timestamps = false;
     protected $casts = [""] ;
