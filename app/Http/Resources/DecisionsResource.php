@@ -10,11 +10,9 @@ class DecisionsResource extends JsonResource
     {
         return
         [
-            'account_id' => $this->account_id,
-            'username' => $this->username,
-            'passsword' => $this->password,
-            'account_status' => $this->account_status,
-            'enterprise_id' => $this->enterprise_id,
+            "decision_name",
+        "decision_content",
+        "decision_status",
         ];
     }
 }

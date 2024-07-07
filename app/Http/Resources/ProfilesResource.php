@@ -10,11 +10,18 @@ class ProfilesResource extends JsonResource
     {
         return
         [
-            'account_id' => $this->account_id,
-            'username' => $this->username,
-            'passsword' => $this->password,
-            'account_status' => $this->account_status,
-            'enterprise_id' => $this->enterprise_id,
+            "profile_name",
+        "gender",
+        "birthday",
+        "email",
+        "phone",
+        "identify_num",
+        "id_expire_day",
+        "position_id",
+        "department_id",
+        "enterprise_id",
+        "salary_id",
+        "profile_status"
         ];
     }
 }

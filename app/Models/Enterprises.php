@@ -12,10 +12,15 @@ class Enterprises extends Model
     protected $primaryKey = "enterprise_id";
     protected $fillable = [
         "enterprise_id",
-        "enterprise_name",
-        "enterprise_status",
+        "name",
         "email",
+        "phone",
+        "licensenum",
+        "assign_date",
+        "enterprise_status",
         ] ;
     public $timestamps = false;
-    protected $casts = [""] ;
+    protected $casts = [
+        ""
+        ] ;
 }
