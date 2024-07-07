@@ -36,3 +36,4 @@ Route::get('/', function () {
 // // Delete account
 // // Vẫn nhớ phải truyền id vào nhá
 // Route::get('/{id}', [AccountsController::class, 'delete']);
+

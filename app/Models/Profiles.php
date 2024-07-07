@@ -18,6 +18,10 @@ class Profiles extends Model
         "phone",
         "identify_num",
         "id_expire_day",
+        "position_id",
+        "department_id",
+        "enterprise_id",
+        "salary_id",
         "profile_status"
         ] ;
     public $timestamps = false;

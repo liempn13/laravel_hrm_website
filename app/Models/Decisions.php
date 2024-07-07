@@ -12,6 +12,7 @@ class Decisions extends Model
     protected $primaryKey = "decision_id";
     protected $fillable = [
         "decision_name",
+        "decision_content",
         "decision_status",
         ] ;
     public $timestamps = false;
