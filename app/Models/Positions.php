@@ -13,7 +13,10 @@ class Positions extends Model
 
     protected $keyType = "string";
 
-    protected $fillable = ["",""] ;
+    protected $fillable = [
+        "position_id",
+        "position_name"
+        ] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

@@ -10,19 +10,20 @@ class Profiles extends Model
     use HasFactory;
     protected $table = "profiles";
     protected $primaryKey = "profile_id";
+
     protected $fillable = [
         "profile_name",
-        "gender",
-        "birthday",
-        "email",
-        "phone",
+        "profile_status",
         "identify_num",
         "id_expire_day",
-        "position_id",
+        "gender",
+        "phone",
+        "email",
         "department_id",
+        "position_id",
+        "birthday",
         "enterprise_id",
         "salary_id",
-        "profile_status"
         ] ;
     public $timestamps = false;
     protected $casts = [""] ;

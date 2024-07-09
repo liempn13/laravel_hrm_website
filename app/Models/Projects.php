@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Projects extends Model
 {
     use HasFactory;
-    protected $table = "decisions";
-    protected $primaryKey = "decision_id";
+    protected $table = "projects";
+    protected $primaryKey = "project_id";
     protected $keyType = "string";
     protected $fillable = [
-        "project_id",
         "project_name",
+        "project_status",
         "department_id",
         "enterprise_id",
-        "",
-        "project_status",] ;
+        ] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }
