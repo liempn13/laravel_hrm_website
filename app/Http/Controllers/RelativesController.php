@@ -10,68 +10,72 @@ use App\Http\Resources\RelativesResource as RelativesResource;
 
 class RelativesController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
+        $relatives = Relatives::all();
+        // return response()->json($relatives);
+        return RelativesResource::collection($relatives);
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
-        $validator = Validator::make($input, [
-            "enterprise_id"=> "required",
-            ""=> "",
-        ]);
+        $validator = Validator::make($input, []);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $relatives = Relatives::create($input);
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new RelativesResource($relatives)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new RelativesResource($relatives)
         ];
-        return response()->json( $arr,201);
+        return response()->json($arr, 201);
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, Relatives $relatives){
+    public function update(Request $request, Relatives $relatives)
+    {
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            "relatives_birthday" => "",
+            "relatives_name" => "",
+            "relatives_phone" => ""
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
-        $relatives->name = $input['name'];
+        $relatives->relative_name = $input['relative_name'];
         $relatives->save();
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new RelativesResource($relatives)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new RelativesResource($relatives)
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 
-    public function delete(Relatives $relatives){
-        $relatives -> delete();
+    public function delete(Relatives $relatives)
+    {
+        $relatives->delete();
         $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 }

@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('decisions', function (Blueprint $table) {
             $table->id();
+            $table->date('assign_date');
+            $table->string('decision_name');
+            $table->string('salary_id');
+            $table->tinyInteger('decision_status');
+            $table->integer('enterprise_id');
             $table->timestamps();
         });
     }

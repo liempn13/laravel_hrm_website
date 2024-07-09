@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\DecisionsController;
 use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\DiplomasController;
 use App\Http\Controllers\EnterprisesController;
 use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\ProfilesController;
@@ -22,11 +23,13 @@ Route::resource('accounts', AccountsController::class);
 //
 Route::resource('profiles', ProfilesController::class);
 //
-Route::resource('projects', PositionsController::class);
+Route::resource('positions', PositionsController::class);
 //
 Route::resource('departments', DepartmentsController::class);
 //
 Route::resource('decisions', DecisionsController::class);
+//
+Route::resource('diplomas', DiplomasController::class);
 //
 Route::resource('enterprises', EnterprisesController::class);
 //
@@ -37,4 +40,3 @@ Route::resource('salaries', SalariesController::class);
 Route::resource('projects', ProjectsController::class);
 //
 Route::resource('workingprocesses', WorkingProcessesController::class);
-

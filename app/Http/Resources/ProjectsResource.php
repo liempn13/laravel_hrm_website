@@ -9,12 +9,12 @@ class ProjectsResource extends JsonResource
     public function toArray($request)
     {
         return
-        [
-            'account_id' => $this->account_id,
-            'username' => $this->username,
-            'passsword' => $this->password,
-            'account_status' => $this->account_status,
-            'enterprise_id' => $this->enterprise_id,
-        ];
+            [
+                'project_id' => $this->project_id,
+                'project_name' => $this->project_name,
+                'project_status' => $this->project_status,
+                'department_id' => $this->department_id,
+                'enterprise_id' => $this->enterprise_id,
+            ];
     }
 }

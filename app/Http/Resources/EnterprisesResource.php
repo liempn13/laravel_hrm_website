@@ -10,13 +10,13 @@ class EnterprisesResource extends JsonResource
     {
         return
         [
-            "enterprise_id",
-            "name",
-            "email",
-            "phone",
-            "licensenum",
-            "assign_date",
-            "enterprise_status",
+            "enterprise_id" => $this->enterprise_id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "phone" => $this->phone,
+            "license_num" => $this->license_num,
+            "assign_date" => $this->assign_date,
+            "enterprise_status" => $this->enterprise_status,
         ];
     }
 }

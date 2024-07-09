@@ -11,7 +11,9 @@ use App\Http\Resources\DepartmentsResource as DepartmentsResource;
 class DepartmentsController extends Controller
 {
     public function index(){
-
+        $department = Departments::all();
+        // return response()->json($department);
+        return DepartmentsResource::collection($department);
     }
 
     public function store(Request $request)
@@ -19,7 +21,8 @@ class DepartmentsController extends Controller
         $input = $request->all();
         $validator = Validator::make($input, [
             "enterprise_id"=> "required",
-            ""=> "",
+            "department_name"=> "required",
+            "department_status"=>"required"
         ]);
         if ($validator->fails()) {
             $arr = [
@@ -45,7 +48,9 @@ class DepartmentsController extends Controller
     public function update(Request $request, Departments $departments){
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            "enterprise_id" => "",
+            "department_name" => "",
+            "department_status" => ""
         ]);
         if ($validator->fails()) {
             $arr = [

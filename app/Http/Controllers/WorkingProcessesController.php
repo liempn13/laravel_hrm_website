@@ -10,69 +10,83 @@ use App\Http\Resources\WorkingProcessesResource as WorkingProcessesResource;
 
 class WorkingProcessesController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "enterprise_id"=> "required",
-            ""=> "",
+            'workingprocesses_id' => "",
+            'profile_id' => "",
+            'workingprocesses_content' => "",
+            'workingprocesses_starttime' => "",
+            'workingprocesses_endtime' => "",
+            'workingprocesses_status' => "",
+            'workingprocesses_workplace' => "",
+            'enterprise_id' => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $workingProcesses = WorkingProcesses::create($input);
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new WorkingProcessesResource($workingProcesses)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new WorkingProcessesResource($workingProcesses)
         ];
-        return response()->json( $arr,201);
+        return response()->json($arr, 201);
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, WorkingProcesses $workingProcesses){
+    public function update(Request $request, WorkingProcesses $workingProcesses)
+    {
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            'workingprocesses_id' => "",
+            'profile_id' => "",
+            'workingprocesses_content' => "",
+            'workingprocesses_starttime' => "",
+            'workingprocesses_endtime' => "",
+            'workingprocesses_status' => "",
+            'workingprocesses_workplace' => "",
+            'enterprise_id' => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $workingProcesses->name = $input['name'];
         $workingProcesses->save();
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new WorkingProcessesResource($workingProcesses)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new WorkingProcessesResource($workingProcesses)
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 
-    public function delete(WorkingProcesses $workingProcesses){
-        $workingProcesses -> delete();
+    public function delete(WorkingProcesses $workingProcesses)
+    {
+        $workingProcesses->delete();
         $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
-
 }

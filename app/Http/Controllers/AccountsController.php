@@ -10,69 +10,85 @@ use App\Http\Resources\AccountsResource as AccountsResource;
 
 class AccountsController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
+        $accounts = Accounts::all();
+        // return response()->json($accounts);
+        return AccountsResource::collection($accounts);
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "enterprise_id"=> "required",
-            ""=> "",
+            "account_id" => "",
+            "username" => "required",
+            "password" => "required",
+            "enterprise_id" => "",
+            "permission" => "required",
+            "account_status" => "required"
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $accounts = Accounts::create($input);
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new AccountsResource($accounts)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new AccountsResource($accounts)
         ];
-        return response()->json( $arr,201);
+        return response()->json($arr, 201);
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, Accounts $accounts){
+    public function update(Request $request, Accounts $accounts)
+    {
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            "username" => "",
+            "password" => "",
+            "enterprise_id" => "",
+            "permission" => "",
+            "account_status" => ""
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
-        $accounts->name = $input['name'];
+        $accounts->username = $input['username'];
+        $accounts->password = $input['password'];
+        $accounts->enterprise_id = $input['enterprise_id'];
+        $accounts->permission = $input['permission'];
+        $accounts->account_status = $input['account_status'];
         $accounts->save();
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new AccountsResource($accounts)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new AccountsResource($accounts)
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 
-    public function delete(Accounts $accounts){
-        $accounts -> delete();
+    public function delete(Accounts $accounts)
+    {
+        $accounts->delete();
         $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
-
 }

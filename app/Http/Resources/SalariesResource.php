@@ -9,12 +9,13 @@ class SalariesResource extends JsonResource
     public function toArray($request)
     {
         return
-        [
-            'account_id' => $this->account_id,
-            'username' => $this->username,
-            'passsword' => $this->password,
-            'account_status' => $this->account_status,
-            'enterprise_id' => $this->enterprise_id,
-        ];
+            [
+                'salary_id' => $this->salary_id,
+                'salary_name' => $this->salary_name,
+                'salary' => $this->salary,
+                'allowances' => $this->allowances,
+                'salary_status' => $this->salary_status,
+                'enterprise_id' => $this->enterprise_id,
+            ];
     }
 }
