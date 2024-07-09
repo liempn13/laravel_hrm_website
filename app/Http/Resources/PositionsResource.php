@@ -9,12 +9,10 @@ class PositionsResource extends JsonResource
     public function toArray($request)
     {
         return
-        [
-            'account_id' => $this->account_id,
-            'username' => $this->username,
-            'passsword' => $this->password,
-            'account_status' => $this->account_status,
-            'enterprise_id' => $this->enterprise_id,
-        ];
+            [
+                'position_id' => $this->position_id,
+                'position_name' => $this->position_name,
+                'enterprise_id' => $this->enterprise_id,
+            ];
     }
 }

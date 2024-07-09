@@ -10,68 +10,79 @@ use App\Http\Resources\SalariesResource as SalariesResource;
 
 class SalariesController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "enterprise_id"=> "required",
-            ""=> "",
+            'salary_id' => "",
+            'salary_name' => "",
+            'salary' => "",
+            'allowances' => "",
+            'salary_status' => "",
+            'enterprise_id' => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $salaries = Salaries::create($input);
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new SalariesResource($salaries)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new SalariesResource($salaries)
         ];
-        return response()->json( $arr,201);
+        return response()->json($arr, 201);
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, Salaries $salaries){
+    public function update(Request $request, Salaries $salaries)
+    {
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            'salary_id' => "",
+            'salary_name' => "",
+            'salary' => "",
+            'allowances' => "",
+            'salary_status' => "",
+            'enterprise_id' => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $salaries->name = $input['name'];
         $salaries->save();
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new SalariesResource($salaries)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new SalariesResource($salaries)
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 
-    public function delete(Salaries $salaries){
-        $salaries -> delete();
+    public function delete(Salaries $salaries)
+    {
+        $salaries->delete();
         $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 }

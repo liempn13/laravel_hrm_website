@@ -11,7 +11,9 @@ use App\Http\Resources\DecisionsResource as DecisionsResource;
 class DecisionsController extends Controller
 {
     public function index(){
-
+        $decisions = Decisions::all();
+        // return response()->json($Deicisions);
+        return DecisionsResource::collection($decisions);
     }
 
     public function store(Request $request)

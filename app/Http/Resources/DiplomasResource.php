@@ -9,9 +9,9 @@ class DiplomasResource extends JsonResource
     public function toArray($request)
     {
         return
-        [
-            "diploma_name",
-        "enterprise_id"
-        ];
+            [
+                "diploma_name" => $this->diploma_name,
+                "enterprise_id" => $this->enterprise_id
+            ];
     }
 }
