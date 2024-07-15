@@ -12,6 +12,9 @@ class WorkingProcessesController extends Controller
 {
     public function index()
     {
+        $workingprocess = WorkingProcesses::all();
+        return response()->json($workingprocess);
+        // return WorkingProcessesResource::collection($workingprocess);
     }
 
     public function store(Request $request)
@@ -19,7 +22,7 @@ class WorkingProcessesController extends Controller
         $input = $request->all();
         $validator = Validator::make($input, [
             'workingprocesses_id' => "",
-            'profile_id' => "",
+            'profile_id' => "required",
             'workingprocesses_content' => "",
             'workingprocesses_starttime' => "",
             'workingprocesses_endtime' => "",
@@ -69,7 +72,10 @@ class WorkingProcessesController extends Controller
             ];
             return response()->json($arr, 200);
         }
-        $workingProcesses->name = $input['name'];
+
+        $workingProcesses->workingprocesses_content = $input['workingprocesses_content'];
+        $workingProcesses->workingprocesses_workplace = $input['workingprocesses_content'];
+
         $workingProcesses->save();
         $arr = [
             "status" => true,

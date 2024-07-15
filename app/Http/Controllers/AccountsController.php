@@ -13,8 +13,8 @@ class AccountsController extends Controller
     public function index()
     {
         $accounts = Accounts::all();
-        // return response()->json($accounts);
-        return AccountsResource::collection($accounts);
+        return response()->json($accounts);
+        // return AccountsResource::collection($accounts);
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class AccountsController extends Controller
             $arr = [
                 "success" => false,
                 "message" => "Data check error",
-                "data" => $validator->errors(),
+                $validator->errors(),
             ];
             return response()->json($arr, 200);
         }
@@ -63,7 +63,7 @@ class AccountsController extends Controller
             $arr = [
                 "success" => false,
                 "message" => "Data check error",
-                "data" => $validator->errors(),
+                $validator->errors(),
             ];
             return response()->json($arr, 200);
         }
@@ -72,7 +72,7 @@ class AccountsController extends Controller
         $accounts->enterprise_id = $input['enterprise_id'];
         $accounts->permission = $input['permission'];
         $accounts->account_status = $input['account_status'];
-        $accounts->save();
+        $accounts->update();
         $arr = [
             "status" => true,
             "message" => "Save successful",

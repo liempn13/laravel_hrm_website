@@ -18,8 +18,8 @@ class Accounts extends Model
         "password",
         "permission",
         "account_status"
-    ] ;
-    public $hidden = ["password","remember_token"] ;
+    ];
+    public $hidden = [];
     public $timestamps = false;
-    protected $casts = [""] ;
+    protected $casts = [""];
 }

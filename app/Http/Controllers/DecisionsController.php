@@ -10,71 +10,73 @@ use App\Http\Resources\DecisionsResource as DecisionsResource;
 
 class DecisionsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $decisions = Decisions::all();
-        // return response()->json($Deicisions);
-        return DecisionsResource::collection($decisions);
+        return response()->json($decisions);
+        // return DecisionsResource::collection($decisions);
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "enterprise_id"=> "required",
-            ""=> "",
+            "enterprise_id" => "required",
+            "" => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $decisions = Decisions::create($input);
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new DecisionsResource($decisions)
+            "status" => true,
+            "message" => "Save successful",
+            new DecisionsResource($decisions)
         ];
-        return response()->json( $arr,201);
+        return response()->json($arr, 201);
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, Decisions $decisions){
+    public function update(Request $request, Decisions $decisions)
+    {
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            "" => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $decisions->name = $input['name'];
         $decisions->save();
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new DecisionsResource($decisions)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new DecisionsResource($decisions)
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 
-    public function delete(Decisions $decisions){
-        $decisions -> delete();
+    public function delete(Decisions $decisions)
+    {
+        $decisions->delete();
         $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
-
 }
