@@ -12,6 +12,9 @@ class SalariesController extends Controller
 {
     public function index()
     {
+        $salaries = Salaries::all();
+        return response()->json($salaries);
+        // return SalariesResource::collection($salaries);
     }
 
     public function store(Request $request)

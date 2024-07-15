@@ -10,68 +10,76 @@ use App\Http\Resources\DiplomasResource as DiplomasResource;
 
 class DiplomasController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
+        $diploma = Diplomas::all();
+        return response()->json($diploma);
+        // return DiplomasResource::collection($diploma);
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "enterprise_id"=> "required",
-            ""=> "",
+            "enterprise_id" => "required",
+            "diploma_name",
+            "enterprise_id"
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $diplomas = Diplomas::create($input);
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new DiplomasResource($diplomas)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new DiplomasResource($diplomas)
         ];
-        return response()->json( $arr,201);
+        return response()->json($arr, 201);
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, Diplomas $diplomas){
+    public function update(Request $request, Diplomas $diplomas)
+    {
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            "diploma_name" => "",
+            "diploma_id" => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
-        $diplomas->name = $input['name'];
+        $diplomas->name = $input['diploma_name'];
+        $diplomas->name = $input['diploma_id'];
         $diplomas->save();
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new DiplomasResource($diplomas)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new DiplomasResource($diplomas)
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 
-    public function delete(Diplomas $diplomas){
-        $diplomas -> delete();
+    public function delete(Diplomas $diplomas)
+    {
+        $diplomas->delete();
         $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 }

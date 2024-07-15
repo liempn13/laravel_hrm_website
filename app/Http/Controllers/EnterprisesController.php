@@ -10,69 +10,73 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class EnterprisesController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
+        $enterprise = Enterprises::all();
+        return response()->json($enterprise);
+        // return EnterprisesResource::collection($enterprise);
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "enterprise_id"=> "required",
-            ""=> "",
+            "enterprise_id" => "required",
+            "" => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $enterprises = Enterprises::create($input);
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new EnterprisesResource($enterprises)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new EnterprisesResource($enterprises)
         ];
-        return response()->json( $arr,201);
+        return response()->json($arr, 201);
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, Enterprises $enterprises){
+    public function update(Request $request, Enterprises $enterprises)
+    {
         $input = $request->all();
         $validator = Validator::make($input, [
-            ""=> "",
+            "" => "",
         ]);
         if ($validator->fails()) {
             $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
+                "success" => false,
+                "message" => "Data check error",
+                "data" => $validator->errors(),
             ];
-            return response()->json($arr,200);
+            return response()->json($arr, 200);
         }
         $enterprises->name = $input['name'];
         $enterprises->save();
         $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new EnterprisesResource($enterprises)
+            "status" => true,
+            "message" => "Save successful",
+            "data" => new EnterprisesResource($enterprises)
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
 
-    public function delete(Enterprises $enterprises){
-        $enterprises -> delete();
+    public function delete(Enterprises $enterprises)
+    {
+        $enterprises->delete();
         $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
         ];
-        return response()->json( $arr,200);
+        return response()->json($arr, 200);
     }
-
 }
