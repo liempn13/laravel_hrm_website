@@ -7,6 +7,8 @@ use App\Models\WorkingProcesses;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\WorkingProcessesResource as WorkingProcessesResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class WorkingProcessesController extends Controller
 {

@@ -7,6 +7,8 @@ use App\Models\Salaries;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\SalariesResource as SalariesResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class SalariesController extends Controller
 {

@@ -7,6 +7,9 @@ use App\Models\Profiles;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ProfilesResource as ProfilesResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfilesController extends Controller
 {
@@ -15,6 +18,13 @@ class ProfilesController extends Controller
         $profile = Profiles::all();
         return response()->json($profile);
         // return ProfilesResource::collection($profile);
+    }
+
+    public function showMyProfile(string $id)
+    {
+        return ([
+            'profiles' => Profiles::where([], [])->get()
+        ]);
     }
 
     public function store(Request $request)
@@ -51,9 +61,7 @@ class ProfilesController extends Controller
         return response()->json($arr, 201);
     }
 
-    public function edit($id)
-    {
-    }
+    public function edit($id) {}
 
     public function update(Request $request, Profiles $profiles)
     {
@@ -85,14 +93,10 @@ class ProfilesController extends Controller
         $profiles->email = $input['email'];
         $profiles->gender = $input['gender'];
         $profiles->birthday = $input['birthday'];
-        $profiles->profile_name = $input['profile_name'];
-        $profiles->profile_name = $input['profile_name'];
-        $profiles->profile_name = $input['profile_name'];
-        $profiles->profile_name = $input['profile_name'];
-        $profiles->profile_name = $input['profile_name'];
-        $profiles->profile_name = $input['profile_name'];
-        $profiles->profile_name = $input['profile_name'];
-        $profiles->profile_name = $input['profile_name'];
+        $profiles->salary_id = $input['salary_id'];
+        $profiles->enterprise_id = $input['enterprise_id'];
+        $profiles->department_id = $input['department_id'];
+        $profiles->position_id = $input['position_id'];
         $profiles->save();
         $arr = [
             "status" => true,
