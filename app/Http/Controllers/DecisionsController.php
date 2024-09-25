@@ -7,6 +7,8 @@ use App\Models\Decisions;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\DecisionsResource as DecisionsResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class DecisionsController extends Controller
 {
@@ -16,7 +18,12 @@ class DecisionsController extends Controller
         return response()->json($decisions);
         // return DecisionsResource::collection($decisions);
     }
-
+    public function showByEnterpriseID(string $id)
+    {
+        return ([
+            'decisions' => Decisions::where(['enterprise_id'],[])->get()
+        ]);
+    }
     public function store(Request $request)
     {
         $input = $request->all();

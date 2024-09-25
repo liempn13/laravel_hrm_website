@@ -10,9 +10,9 @@ class DepartmentsResource extends JsonResource
     {
         return
             [
-                "department_id" => $this->deccision_content,
-                "department_name" => $this->deparment_name,
-                "department_status" => $this->deccision_status,
+                "department_id" => $this->department_id,
+                "department_name" => $this->department_name,
+                "department_status" => $this->department_status,
                 "enterprise_id" => $this->enterprise_id
             ];
     }

@@ -6,20 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Accounts extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;
     protected $table = "accounts";
     protected $primaryKey = "account_id";
 
     protected $fillable = [
         "username",
-        "password",
         "permission",
+        'password',
         "account_status"
     ];
-    public $hidden = [];
+    public $hidden = ['password', 'remember_token'];
     public $timestamps = false;
     protected $casts = [""];
 }
