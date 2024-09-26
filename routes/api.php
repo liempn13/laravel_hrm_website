@@ -14,6 +14,7 @@ use App\Http\Controllers\WorkingProcessesController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 // use App\Http\Resources\AccountsResource;
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
