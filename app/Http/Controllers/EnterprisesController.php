@@ -14,7 +14,6 @@ class EnterprisesController extends Controller
     {
         $enterprise = Enterprises::all();
         return response()->json($enterprise);
-        // return EnterprisesResource::collection($enterprise);
     }
     public function show(string $id)
     {

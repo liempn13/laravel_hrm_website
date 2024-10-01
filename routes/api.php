@@ -15,18 +15,7 @@ use App\Http\Controllers\AuthController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Resources\AccountsResource;
-Route::post('/login_api', [AuthController::class, 'login']);
 
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//     Route::get('/profile', function (Request $request) {
-//         return auth()->user();
-//     });
-//     Route::post('/logout', [AuthController::class, 'logout']);
-// });
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 Route::apiResource('accounts', AccountsController::class);
 //
 Route::apiResource('profiles', ProfilesController::class);
@@ -50,10 +39,12 @@ Route::apiResource('projects', ProjectsController::class);
 Route::apiResource('workingprocesses', WorkingProcessesController::class);
 
 Route::controller(AccountsController::class)->group(function () {
-    Route::get('/adminaccounts/{id}', 'showAdminAccounts');
-    Route::get('/accounts/{id}', 'showAccountsByEnterpriseID');
+    Route::get('/superadmin/accounts', 'showAdminAccounts');
+    Route::get('/admin/accounts/{id}', 'showAccountsByEnterpriseID');
+    Route::get('/identity/v2/auth/login', 'login');
+    Route::get('/identity/v2/auth/account', 'getUserProfileData');
     Route::put('/accounts/{id}', 'update');
-    Route::post('', []);
+    Route::post('', );
 });
 //
 Route::controller(EnterprisesController::class)->group(function () {
@@ -71,7 +62,7 @@ Route::controller(DiplomasController::class)->group(function () {
 });
 //
 Route::controller(DepartmentsController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/v1/departments/{id}', 'showDepartmentsByEnterpriseID');
     Route::put('', '');
     Route::post('',);
     Route::delete('', '');
@@ -83,22 +74,17 @@ Route::controller(DecisionsController::class)->group(function () {
     Route::post('',);
     Route::delete('', '');
 });
-Route::controller(EnterprisesController::class)->group(function () {
-    Route::get('', '');
-    Route::put('', '');
-    Route::post('',);
-    Route::delete('', '');
-});
 //
 Route::controller(ProfilesController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/profile/{id}', 'showProfile');
+    Route::get('/v1/profiles/{id}', 'showProfilesByEnterpriseID');
     Route::put('', '');
     Route::post('',);
     Route::delete('', '');
 });
 //
 Route::controller(PositionsController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/v1/positions/{id}', 'showPositionsByEnterpriseID');
     Route::put('', '');
     Route::post('',);
     Route::delete('', '');
@@ -113,7 +99,7 @@ Route::controller(ProjectsController::class)->group(function () {
 //
 Route::controller(RelativesController::class)->group(
     function () {
-        Route::get('', '');
+        Route::get('/relatives/{id}', 'showRelativesOf');
         Route::put('', '');
         Route::post('',);
         Route::delete('', '');
@@ -128,7 +114,9 @@ Route::controller(WorkingProcessesController::class)->group(function () {
 });
 //
 Route::controller(SalariesController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/v1/salaries/{id}', 'getSalariesByEnterpriseID');
+    // Route::get('/salaries/{id}', 'getSalariesByDepartmentID');
+    // Route::get('/salary/{id}', 'getSalary');
     Route::put('', '');
     Route::post('','');
     Route::delete('', '');

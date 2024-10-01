@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('relatives', function (Blueprint $table) {
             $table->id();
+            $table->date('relatives_birthday');
+            $table->text('relatives_name');
+            $table->string('relatives_phone');
             $table->timestamps();
         });
     }

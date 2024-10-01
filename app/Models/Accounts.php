@@ -16,11 +16,11 @@ class Accounts extends Model
 
     protected $fillable = [
         "username",
-        "permission",
+        "permission",// mặc định 0 là superadmin, 1 là admin, 2 là nhân viên
         'password',
         "account_status"
     ];
     public $hidden = ['password', 'remember_token'];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = ["permission"=>'integer'];
 }

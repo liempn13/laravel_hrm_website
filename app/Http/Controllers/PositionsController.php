@@ -12,20 +12,24 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class PositionsController extends Controller
 {
-    public function index()
-    {
-        $position = Positions::all();
-        return response()->json($position);
-        // return PositionsResource::collection($position);
-    }
+    // public function index()
+    // {
+    //     $position = Positions::all();
+    //     return response()->json($position);
+    // }
 
+    public function showPositionsByEnterpriseID(string $enterprise_id)
+    {
+        return ([
+            'positions' => Positions::where('enterprise_id',$enterprise_id)->get()
+        ]);
+    }
     public function show(string $id)
     {
         return ([
             'positions' => Positions::findOrFail($id)
         ]);
     }
-
     public function store(Request $request)
     {
         $input = $request->all();

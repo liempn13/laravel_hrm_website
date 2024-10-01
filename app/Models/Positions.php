@@ -15,7 +15,8 @@ class Positions extends Model
 
     protected $fillable = [
         "position_id",
-        "position_name"
+        "position_name",
+        "enterprise_id"
         ] ;
     public $timestamps = false;
     protected $casts = [""] ;
