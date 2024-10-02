@@ -13,17 +13,23 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfilesController extends Controller
 {
-    public function index()
-    {
-        $profile = Profiles::all();
-        return response()->json($profile);
-        // return ProfilesResource::collection($profile);
-    }
+    // public function index()
+    // {
+    //     $profile = Profiles::all();
+    //     return response()->json($profile);
+    // }
 
-    public function showMyProfile(string $id)
+    public function showProfile(string $id)
     {
         return ([
-            'profiles' => Profiles::where([], [])->get()
+            'profiles' => Profiles::findOrFail($id)
+        ]);
+    }
+
+    public function showProfilesByEnterpriseID(string $enterprise_id)
+    {
+        return ([
+            'profiles' => Profiles::where('enterprise_id', $enterprise_id)->get()
         ]);
     }
 
@@ -31,6 +37,7 @@ class ProfilesController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
+            "profile_id",
             "enterprise_id" => "required",
             "profile_name",
             "profile_status",
@@ -43,6 +50,7 @@ class ProfilesController extends Controller
             "position_id",
             "birthday",
             "salary_id",
+            "diploma_id",
         ]);
         if ($validator->fails()) {
             $arr = [
@@ -67,6 +75,7 @@ class ProfilesController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
+            "profile_id",
             "profile_name" => "required",
             "profile_status" => "required",
             "identify_num" => "required",
@@ -79,6 +88,7 @@ class ProfilesController extends Controller
             "birthday",
             "enterprise_id",
             "salary_id",
+            "diploma_id",
         ]);
         if ($validator->fails()) {
             $arr = [
@@ -88,6 +98,7 @@ class ProfilesController extends Controller
             ];
             return response()->json($arr, 200);
         }
+        $profiles->profile_id=$input['profile_id'];
         $profiles->profile_name = $input['profile_name'];
         $profiles->phone = $input['phone'];
         $profiles->email = $input['email'];

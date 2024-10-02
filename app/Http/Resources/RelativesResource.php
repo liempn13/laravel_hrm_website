@@ -11,9 +11,9 @@ class RelativesResource extends JsonResource
         return
             [
                 "profile_id" => $this->profile_id,
-                "relative_birthday" => $this->relative_birthday,
-                "relative_name" => $this->relative_name,
-                "relative_phone" => $this->relative_phone,
+                "relatives_birthday" => $this->relatives_birthday,
+                "relatives_name" => $this->relatives_name,
+                "relatives_phone" => $this->relatives_phone,
             ];
     }
 }

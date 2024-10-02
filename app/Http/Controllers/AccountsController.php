@@ -8,15 +8,16 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\AccountsResource as AccountsResource;
 use App\Models\Enterprises;
+use App\Models\Profiles;
 use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class AccountsController extends Controller
 {
-    public function index()
-    {
-        $accounts = Accounts::all();
-        return response()->json($accounts);
-    }
+    // public function index()
+    // {
+    //     $accounts = Accounts::all();
+    //     return response()->json($accounts);
+    // }
 
     public function show(string $id)
     {
@@ -25,17 +26,26 @@ class AccountsController extends Controller
         ]);
     }
 
-    public function showAdminAccounts(string $id)//Superadmin
+    public function showAdminAccounts()//Superadmin
     {
         return ([
-            'accounts' => Accounts::where(['permission'],[])->get()
+            'accounts' => Accounts::where( 'permission', '<',2)->get()// chỉ lấy ra những tài khoản admin của doanh nghiệp và tài khoản superadmin
         ]);
     }
 
     public function showAccountsByEnterpriseID(string $enterprise_id)//Admin of Enterprise
     {
         return ([
-            'accounts' => Accounts::where(['enterprise_id'],[$enterprise_id])->get()
+            'accounts' => Accounts::where('enterprise_id', $enterprise_id)
+            ->where('permission','>',0)
+            ->get()// lấy ra những tài khoản thuộc doanh nghiệp
+        ]);
+    }
+
+    public function getUserProfileData(){
+        return ([
+            // Accounts::where('accounts_id',)=>
+            // Profiles::where(['profile_id'])->get()
         ]);
     }
 
@@ -67,7 +77,9 @@ class AccountsController extends Controller
         return response()->json($arr, 201);
     }
 
-    public function edit($id) {}
+    public function edit($id) {
+
+    }
 
     public function update(Request $request, Accounts $accounts)
     {

@@ -12,13 +12,23 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class RelativesController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $relatives = Relatives::all();
+    //     return response()->json($relatives);
+    // }
+    public function show(string $id)
     {
-        $relatives = Relatives::all();
-        return response()->json($relatives);
-        // return RelativesResource::collection($relatives);
+        return ([
+            'relatives' => Relatives::findOrFail($id)
+        ]);
     }
-
+    public function showRelativesOf(string $profile_id)//
+    {
+        return ([
+            'relatives' => Relatives::where('profile_id',$profile_id)->get()//
+        ]);
+    }
     public function store(Request $request)
     {
         $input = $request->all();
