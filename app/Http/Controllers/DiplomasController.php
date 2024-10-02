@@ -7,6 +7,8 @@ use App\Models\Diplomas;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\DiplomasResource as DiplomasResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class DiplomasController extends Controller
 {

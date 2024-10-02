@@ -7,16 +7,23 @@ use App\Models\Departments;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\DepartmentsResource as DepartmentsResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class DepartmentsController extends Controller
 {
     public function index()
     {
         $department = Departments::all();
-        // return response()->json($department);
-        return DepartmentsResource::collection($department);
+        return response()->json($department);
+        // return DepartmentsResource::collection($department);
     }
-
+    public function showDepartmentsByEnterpriseID(string $enterprise_id)
+    {
+        return ([
+            'departments' => Departments::where(['','enterprise_id'], [$enterprise_id])->get()
+        ]);
+    }
     public function store(Request $request)
     {
         $input = $request->all();
@@ -43,9 +50,7 @@ class DepartmentsController extends Controller
         return response()->json($arr, 201);
     }
 
-    public function edit($id)
-    {
-    }
+    public function edit($id) {}
 
     public function update(Request $request, Departments $departments)
     {

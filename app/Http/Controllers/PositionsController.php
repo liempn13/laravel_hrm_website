@@ -7,6 +7,8 @@ use App\Models\Positions;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\PositionsResource as PositionsResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class PositionsController extends Controller
 {
@@ -17,7 +19,12 @@ class PositionsController extends Controller
         // return PositionsResource::collection($position);
     }
 
-
+    public function show(string $id)
+    {
+        return ([
+            'positions' => Positions::findOrFail($id)
+        ]);
+    }
 
     public function store(Request $request)
     {

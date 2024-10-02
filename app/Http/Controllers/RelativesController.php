@@ -7,14 +7,16 @@ use App\Models\Relatives;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\RelativesResource as RelativesResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class RelativesController extends Controller
 {
     public function index()
     {
         $relatives = Relatives::all();
-        // return response()->json($relatives);
-        return RelativesResource::collection($relatives);
+        return response()->json($relatives);
+        // return RelativesResource::collection($relatives);
     }
 
     public function store(Request $request)

@@ -7,6 +7,8 @@ use App\Models\Accounts;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\AccountsResource as AccountsResource;
+use App\Models\Enterprises;
+use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class AccountsController extends Controller
 {
@@ -14,7 +16,27 @@ class AccountsController extends Controller
     {
         $accounts = Accounts::all();
         return response()->json($accounts);
-        // return AccountsResource::collection($accounts);
+    }
+
+    public function show(string $id)
+    {
+        return ([
+            'accounts' => Accounts::findOrFail($id)
+        ]);
+    }
+
+    public function showAdminAccounts(string $id)//Superadmin
+    {
+        return ([
+            'accounts' => Accounts::where(['permission'],[])->get()
+        ]);
+    }
+
+    public function showAccountsByEnterpriseID(string $enterprise_id)//Admin of Enterprise
+    {
+        return ([
+            'accounts' => Accounts::where(['enterprise_id'],[$enterprise_id])->get()
+        ]);
     }
 
     public function store(Request $request)
@@ -45,9 +67,7 @@ class AccountsController extends Controller
         return response()->json($arr, 201);
     }
 
-    public function edit($id)
-    {
-    }
+    public function edit($id) {}
 
     public function update(Request $request, Accounts $accounts)
     {
