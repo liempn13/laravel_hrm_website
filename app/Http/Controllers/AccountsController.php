@@ -21,32 +21,33 @@ class AccountsController extends Controller
 
     public function show(string $id)
     {
-        return ([
-            'accounts' => Accounts::findOrFail($id)
-        ]);
+        return (
+            Accounts::findOrFail($id)
+        );
     }
 
-    public function showAdminAccounts()//Superadmin
+    public function showAdminAccounts() //Superadmin
     {
-        return ([
-            'accounts' => Accounts::where( 'permission', '<',2)->get()// chỉ lấy ra những tài khoản admin của doanh nghiệp và tài khoản superadmin
-        ]);
+        return (
+            Accounts::where('permission', '<', 2)->get() // chỉ lấy ra những tài khoản admin của doanh nghiệp và tài khoản superadmin
+        );
     }
 
-    public function showAccountsByEnterpriseID(string $enterprise_id)//Admin of Enterprise
+    public function showAccountsByEnterpriseID(string $enterprise_id) //Admin of Enterprise
     {
-        return ([
-            'accounts' => Accounts::where('enterprise_id', $enterprise_id)
-            ->where('permission','>',0)
-            ->get()// lấy ra những tài khoản thuộc doanh nghiệp
-        ]);
+        return (
+            Accounts::where('enterprise_id', $enterprise_id)
+            ->where('permission', '>', 0)
+            ->get() // lấy ra những tài khoản thuộc doanh nghiệp
+        );
     }
 
-    public function getUserProfileData(){
-        return ([
-            // Accounts::where('accounts_id',)=>
-            // Profiles::where(['profile_id'])->get()
-        ]);
+    public function getUserProfileData()
+    {
+        return (
+            Accounts::where('accounts_id',)->
+            Profiles::where(['profile_id'],)->get()
+        );
     }
 
     public function store(Request $request)
@@ -77,9 +78,7 @@ class AccountsController extends Controller
         return response()->json($arr, 201);
     }
 
-    public function edit($id) {
-
-    }
+    public function edit($id) {}
 
     public function update(Request $request, Accounts $accounts)
     {

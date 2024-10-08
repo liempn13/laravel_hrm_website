@@ -16,7 +16,6 @@ class DiplomasController extends Controller
     {
         $diploma = Diplomas::all();
         return response()->json($diploma);
-        // return DiplomasResource::collection($diploma);
     }
 
     public function store(Request $request)

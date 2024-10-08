@@ -16,39 +16,29 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('accounts', AccountsController::class);
-//
-Route::apiResource('profiles', ProfilesController::class);
-//
-Route::apiResource('positions', PositionsController::class);
-//
-Route::apiResource('departments', DepartmentsController::class);
-//
-Route::apiResource('decisions', DecisionsController::class);
-//
-Route::apiResource('diplomas', DiplomasController::class);
-//
-Route::apiResource('enterprises', EnterprisesController::class);
-//
-Route::apiResource('relatives', RelativesController::class);
-//
-Route::apiResource('salaries', SalariesController::class);
-//
-Route::apiResource('projects', ProjectsController::class);
-//
-Route::apiResource('workingprocesses', WorkingProcessesController::class);
+// Route::apiResource('accounts', AccountsController::class);
+// Route::apiResource('profiles', ProfilesController::class);
+// Route::apiResource('positions', PositionsController::class);
+// Route::apiResource('departments', DepartmentsController::class);
+// Route::apiResource('decisions', DecisionsController::class);
+// Route::apiResource('diplomas', DiplomasController::class);
+// Route::apiResource('enterprises', EnterprisesController::class);
+// Route::apiResource('relatives', RelativesController::class);
+// Route::apiResource('salaries', SalariesController::class);
+// Route::apiResource('projects', ProjectsController::class);
+// Route::apiResource('workingprocesses', WorkingProcessesController::class);
 
 Route::controller(AccountsController::class)->group(function () {
-    Route::get('/superadmin/accounts', 'showAdminAccounts');
-    Route::get('/admin/accounts/{id}', 'showAccountsByEnterpriseID');
-    Route::get('/identity/v2/auth/login', 'login');
-    Route::get('/identity/v2/auth/account', 'getUserProfileData');
+    Route::get('/v1/superadmin/accounts', 'showAdminAccounts');
+    Route::get('/v1/admin/accounts/{id}', 'showAccountsByEnterpriseID');
+    Route::get('/identity/v1/auth/login', 'login');
+    Route::get('/identity/v1/auth/account', 'getUserProfileData');
     Route::put('/accounts/{id}', 'update');
     Route::post('', );
 });
 //
 Route::controller(EnterprisesController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/v1/enterprises', 'index');
     Route::put('', '');
     Route::post('', '');
     Route::delete('', '');
@@ -69,7 +59,7 @@ Route::controller(DepartmentsController::class)->group(function () {
 });
 //
 Route::controller(DecisionsController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/v1/decisions/{id}', 'showDecisionsByEnterpriseID');
     Route::put('', '');
     Route::post('',);
     Route::delete('', '');

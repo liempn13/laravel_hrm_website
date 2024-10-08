@@ -20,15 +20,15 @@ class PositionsController extends Controller
 
     public function showPositionsByEnterpriseID(string $enterprise_id)
     {
-        return ([
-            'positions' => Positions::where('enterprise_id',$enterprise_id)->get()
-        ]);
+        return (
+            Positions::where('enterprise_id',$enterprise_id)->get()
+        );
     }
     public function show(string $id)
     {
-        return ([
-            'positions' => Positions::findOrFail($id)
-        ]);
+        return (
+            Positions::findOrFail($id)
+        );
     }
     public function store(Request $request)
     {

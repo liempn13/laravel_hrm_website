@@ -21,16 +21,16 @@ class ProfilesController extends Controller
 
     public function showProfile(string $id)
     {
-        return ([
-            'profiles' => Profiles::findOrFail($id)
-        ]);
+        return (
+             Profiles::findOrFail($id)
+        );
     }
 
     public function showProfilesByEnterpriseID(string $enterprise_id)
     {
-        return ([
-            'profiles' => Profiles::where('enterprise_id', $enterprise_id)->get()
-        ]);
+        return (
+             Profiles::where('enterprise_id', $enterprise_id)->get()
+        );
     }
 
     public function store(Request $request)

@@ -19,15 +19,15 @@ class SalariesController extends Controller
     // }
     public function show(string $id)
     {
-        return ([
-            'salaries' => Salaries::findOrFail($id)
-        ]);
+        return (
+            Salaries::findOrFail($id)
+        );
     }
     public function getSalariesByEnterpriseID(string $enterprise_id)//
     {
-        return ([
-            'salaries' => Salaries::where('enterprise_id',$enterprise_id)->get()//
-        ]);
+        return (
+            Salaries::where('enterprise_id',$enterprise_id)->get()//
+        );
     }
 
     public function store(Request $request)

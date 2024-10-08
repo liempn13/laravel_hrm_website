@@ -12,17 +12,22 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class DecisionsController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $decisions = Decisions::all();
+    //     return response()->json($decisions);
+    // }
+    public function show(string $id)
     {
-        $decisions = Decisions::all();
-        return response()->json($decisions);
-        // return DecisionsResource::collection($decisions);
+        return (
+             Decisions::findOrFail($id)
+        );
     }
     public function showByEnterpriseID(string $id)
     {
-        return ([
-            'decisions' => Decisions::where(['enterprise_id'],[])->get()
-        ]);
+        return (
+         Decisions::where('enterprise_id',$id)->get()
+        );
     }
     public function store(Request $request)
     {

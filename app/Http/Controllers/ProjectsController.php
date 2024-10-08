@@ -10,11 +10,10 @@ use App\Http\Resources\ProjectsResource as ProjectsResource;
 
 class ProjectsController extends Controller
 {
-    public function index(){
-        $projects = Projects::all();
-        return response()->json($projects);
-        // return ProjectsResource::collection($projects);
-    }
+    // public function index(){
+    //     $projects = Projects::all();
+    //     return response()->json($projects);
+    // }
 
     public function store(Request $request)
     {
