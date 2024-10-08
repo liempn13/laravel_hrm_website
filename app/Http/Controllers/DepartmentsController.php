@@ -19,15 +19,15 @@ class DepartmentsController extends Controller
     // }
     public function show(string $id)
     {
-        return ([
-            'departments' => Departments::findOrFail($id)
-        ]);
+        return (
+             Departments::findOrFail($id)
+        );
     }
     public function showDepartmentsByEnterpriseID(string $enterprise_id)
     {
-        return ([
-            'departments' => Departments::where('enterprise_id', $enterprise_id)->get()
-        ]);
+        return (
+             Departments::where('enterprise_id', $enterprise_id)->get()
+        );
     }
     public function store(Request $request)
     {

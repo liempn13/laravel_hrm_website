@@ -17,9 +17,9 @@ class EnterprisesController extends Controller
     }
     public function show(string $id)
     {
-        return ([
-            'enterprises' => Enterprises::findOrFail($id)
-        ]);
+        return (
+             Enterprises::findOrFail($id)
+        );
     }
     public function store(Request $request)
     {

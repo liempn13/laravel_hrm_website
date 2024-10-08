@@ -38,7 +38,7 @@ Route::controller(AccountsController::class)->group(function () {
 });
 //
 Route::controller(EnterprisesController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/v1/enterprises', 'index');
     Route::put('', '');
     Route::post('', '');
     Route::delete('', '');
@@ -59,7 +59,7 @@ Route::controller(DepartmentsController::class)->group(function () {
 });
 //
 Route::controller(DecisionsController::class)->group(function () {
-    Route::get('', '');
+    Route::get('/v1/decisions/{id}', 'showDecisionsByEnterpriseID');
     Route::put('', '');
     Route::post('',);
     Route::delete('', '');

@@ -12,12 +12,11 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class WorkingProcessesController extends Controller
 {
-    public function index()
-    {
-        $workingprocess = WorkingProcesses::all();
-        return response()->json($workingprocess);
-        // return WorkingProcessesResource::collection($workingprocess);
-    }
+    // public function index()
+    // {
+    //     $workingprocess = WorkingProcesses::all();
+    //     return response()->json($workingprocess);
+    // }
 
     public function store(Request $request)
     {

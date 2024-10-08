@@ -19,15 +19,15 @@ class RelativesController extends Controller
     // }
     public function show(string $id)
     {
-        return ([
-            'relatives' => Relatives::findOrFail($id)
-        ]);
+        return (
+             Relatives::findOrFail($id)
+        );
     }
     public function showRelativesOf(string $profile_id)//
     {
-        return ([
-            'relatives' => Relatives::where('profile_id',$profile_id)->get()//
-        ]);
+        return (
+           Relatives::where('profile_id',$profile_id)->get()//
+        );
     }
     public function store(Request $request)
     {
