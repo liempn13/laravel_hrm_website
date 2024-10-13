@@ -29,25 +29,21 @@ class RelativesController extends Controller
            Relatives::where('profile_id',$profile_id)->get()//
         );
     }
-    public function store(Request $request)
+    public function createNewDepartment(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, []);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $relatives = Relatives::create($input);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new RelativesResource($relatives)
-        ];
-        return response()->json($arr, 201);
+        $fields = $request->validate([
+            "profile_id" => 'required|integer',
+            "relatives_name" => "required|string",
+            "relatives_phone" => "nullable|string",
+            "relatives_birthday" => "date"
+        ]);
+        $newDepartment = Relatives::create([
+            'profile_id'=>($fields['profile_id']),
+            'relatives_name'=>($fields['relatives_name']),
+            'relatives_phone'=> $fields['relatives_phone'],
+            'relatives_birthday'=> $fields['relatives_birthday']
+        ]);
+        return response()->json([], 201);
     }
 
     public function edit($id)

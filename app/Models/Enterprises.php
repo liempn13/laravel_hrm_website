@@ -15,7 +15,7 @@ class Enterprises extends Model
         "name",
         "email",
         "phone",
-        "licensenum",
+        "license_num",
         "assign_date",
         "enterprise_status",
         ] ;

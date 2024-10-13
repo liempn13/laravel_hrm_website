@@ -18,34 +18,19 @@ class DiplomasController extends Controller
         return response()->json($diploma);
     }
 
-    public function store(Request $request)
+    public function createNewDiploma(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            "enterprise_id" => "required",
-            "diploma_name",
-            "enterprise_id"
+        $fields = $request->validate([
+            "diploma_name" => "required|string",
+            "enterprise_id" => 'required|integer',
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $diplomas = Diplomas::create($input);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new DiplomasResource($diplomas)
-        ];
-        return response()->json($arr, 201);
+        $newDiploma = Diplomas::create([
+            'diploma_name'=>($fields['diploma_name']),
+            'enterprise_id'=>($fields['enterprise_id']),
+        ]);
+        return response()->json([], 201);
     }
 
-    public function edit($id)
-    {
-    }
 
     public function update(Request $request, Diplomas $diplomas)
     {

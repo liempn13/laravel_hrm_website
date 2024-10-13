@@ -30,28 +30,19 @@ class PositionsController extends Controller
             Positions::findOrFail($id)
         );
     }
-    public function store(Request $request)
+    public function createNewPosition(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            "enterprise_id" => "required",
-            "" => "",
+        $fields = $request->validate([
+            "position_id"=>"required|string",
+            "position_name" => "required|string",
+            "enterprise_id" => 'required|integer',
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $positions = Positions::create($input);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new PositionsResource($positions)
-        ];
-        return response()->json($arr, 201);
+        $newAccount = Positions::create([
+            'position_id'=>($fields['position_id']),
+            'position_name'=>($fields['position_name']),
+            'enterprise_id'=>($fields['enterprise_id'])
+        ]);
+        return response()->json([], 201);
     }
 
     public function edit($id)

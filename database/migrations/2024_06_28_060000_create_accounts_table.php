@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
+            $table->string('email_or_phone');
             $table->string('password');
             $table->tinyInteger('permission');
             $table->tinyInteger('account_status');

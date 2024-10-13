@@ -32,9 +32,9 @@ Route::controller(AccountsController::class)->group(function () {
     Route::get('/v1/superadmin/accounts', 'showAdminAccounts');
     Route::get('/v1/admin/accounts/{id}', 'showAccountsByEnterpriseID');
     Route::get('/identity/v1/auth/login', 'login');
-    Route::get('/identity/v1/auth/account', 'getUserProfileData');
+    // Route::get('/identity/v1/auth/account/{id}', 'getUserProfileData');
+    Route::post('/v1/register','registerNewAccount');
     Route::put('/accounts/{id}', 'update');
-    Route::post('', );
 });
 //
 Route::controller(EnterprisesController::class)->group(function () {
@@ -66,7 +66,7 @@ Route::controller(DecisionsController::class)->group(function () {
 });
 //
 Route::controller(ProfilesController::class)->group(function () {
-    Route::get('/profile/{id}', 'showProfile');
+    Route::get('/profile/{id}', 'getUserProfile');
     Route::get('/v1/profiles/{id}', 'showProfilesByEnterpriseID');
     Route::put('', '');
     Route::post('',);

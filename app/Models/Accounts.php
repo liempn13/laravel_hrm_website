@@ -13,8 +13,9 @@ class Accounts extends Model
     protected $primaryKey = "account_id";
 
     protected $fillable = [
-        "username",
+        "email_or_phone",
         "permission",// mặc định 0 là superadmin, 1 là admin, 2 là nhân viên
+        'enterprise_id',
         'password',
         "account_status"
     ];

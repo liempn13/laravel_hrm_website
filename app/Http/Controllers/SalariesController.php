@@ -30,32 +30,23 @@ class SalariesController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function createNewSalary(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'salary_id' => "",
-            'salary_name' => "",
-            'salary' => "",
-            'allowances' => "",
-            'salary_status' => "",
-            'enterprise_id' => "",
+        $fields = $request->validate([
+            "salary_name" => "required|string",
+            "salary" => "required|double",
+            "enterprise_id" => 'required|integer',
+            "allowances" => "nullable|double",
+            "salary_status" => "integer"
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $salaries = Salaries::create($input);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new SalariesResource($salaries)
-        ];
-        return response()->json($arr, 201);
+        $newSalary = Salaries::create([
+            'salary_name'=>($fields['salary_name']),
+            'salary' => bcrypt($fields['salary']),
+            'enterprise_id'=>($fields['enterprise_id']),
+            'allowances'=> $fields['allowances'],
+            'salary_status'=> $fields['salary_status']
+        ]);
+        return response()->json([], 201);
     }
 
     public function edit($id)
