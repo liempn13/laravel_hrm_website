@@ -12,11 +12,11 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class PositionsController extends Controller
 {
-    // public function index()
-    // {
-    //     $position = Positions::all();
-    //     return response()->json($position);
-    // }
+    public function index()
+    {
+        $position = Positions::all();
+        return response()->json($position);
+    }
 
     public function showPositionsByEnterpriseID(string $enterprise_id)
     {

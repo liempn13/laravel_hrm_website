@@ -12,11 +12,11 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class RelativesController extends Controller
 {
-    // public function index()
-    // {
-    //     $relatives = Relatives::all();
-    //     return response()->json($relatives);
-    // }
+    public function index()
+    {
+        $relatives = Relatives::all();
+        return response()->json($relatives);
+    }
     public function show(string $id)
     {
         return ([

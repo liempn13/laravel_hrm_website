@@ -13,11 +13,11 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class AccountsController extends Controller
 {
-    // public function index()
-    // {
-    //     $accounts = Accounts::all();
-    //     return response()->json($accounts);
-    // }
+    public function index()
+    {
+        $accounts = Accounts::all();
+        return response()->json($accounts);
+    }
 
     public function show(string $id)
     {

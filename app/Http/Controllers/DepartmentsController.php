@@ -15,8 +15,8 @@ class DepartmentsController extends Controller
     public function index()
     {
         $department = Departments::all();
-        // return response()->json($department);
-        return DepartmentsResource::collection($department);
+        return response()->json($department);
+        // return DepartmentsResource::collection($department);
     }
     public function showDepartmentsByEnterpriseID(string $enterprise_id)
     {

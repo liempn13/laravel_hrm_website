@@ -13,11 +13,11 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfilesController extends Controller
 {
-    // public function index()
-    // {
-    //     $profile = Profiles::all();
-    //     return response()->json($profile);
-    // }
+    public function index()
+    {
+        $profile = Profiles::all();
+        return response()->json($profile);
+    }
 
     public function showProfile(string $id)
     {

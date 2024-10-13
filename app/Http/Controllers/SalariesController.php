@@ -12,11 +12,11 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class SalariesController extends Controller
 {
-    // public function index()
-    // {
-    //     $salaries = Salaries::all();
-    //     return response()->json($salaries);
-    // }
+    public function index()
+    {
+        $salaries = Salaries::all();
+        return response()->json($salaries);
+    }
     public function show(string $id)
     {
         return ([
