@@ -15,27 +15,19 @@ class ProjectsController extends Controller
     //     return response()->json($projects);
     // }
 
-    public function store(Request $request)
+    public function createNewPosition(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-
+        $fields = $request->validate([
+            "project_id"=>"required|string",
+            "project_name" => "required|string",
+            "enterprise_id" => 'required|integer',
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
-            ];
-            return response()->json($arr,200);
-        }
-        $projects = Projects::create($input);
-        $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new ProjectsResource($projects)
-        ];
-        return response()->json( $arr,201);
+        $newAccount = Projects::create([
+            'project_id'=>($fields['project_id']),
+            'project_name'=>($fields['project_name']),
+            'enterprise_id'=>($fields['enterprise_id'])
+        ]);
+        return response()->json([], 201);
     }
 
     public function edit($id){

@@ -19,18 +19,21 @@ class ProfilesController extends Controller
     //     return response()->json($profile);
     // }
 
-    public function showProfile(string $id)
+    public function getUserProfile(string $id)
     {
         return (
              Profiles::findOrFail($id)
+
         );
     }
 
-    public function showProfilesByEnterpriseID(string $enterprise_id)
+    public function showProfilesByEnterpriseID(int $enterprise_id)
     {
-        return (
-             Profiles::where('enterprise_id', $enterprise_id)->get()
-        );
+        return
+            //  Profiles::where('enterprise_id', $enterprise_id)->  get()
+            Enterprises::select('name')->whereColumn('enterprise_id','profiles.id')
+
+        ;
     }
 
     public function store(Request $request)

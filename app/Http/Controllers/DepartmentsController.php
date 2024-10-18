@@ -29,30 +29,21 @@ class DepartmentsController extends Controller
              Departments::where('enterprise_id', $enterprise_id)->get()
         );
     }
-    public function store(Request $request)
+    public function createNewDepartment(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            "department_id" => "required",
-            "department_name" => "required",
-            "department_status" => "required",
-            "enterprise_id" => "required",
+        $fields = $request->validate([
+            "department_name" => "required|string",
+            "enterprise_id" => 'required|integer',
+            "manager_id" => "integer",
+            "department_status" => "integer"
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $departments = Departments::create($input);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new DepartmentsResource($departments)
-        ];
-        return response()->json($arr, 201);
+        $newDepartment = Departments::create([
+            'department_name'=>($fields['department_name']),
+            'enterprise_id'=>($fields['enterprise_id']),
+            'manager_id'=> $fields['manager_id'],
+            'department_status'=> $fields['department_status']
+        ]);
+        return response()->json([], 201);
     }
 
     public function edit($id) {}

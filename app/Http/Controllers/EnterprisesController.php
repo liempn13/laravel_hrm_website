@@ -21,28 +21,25 @@ class EnterprisesController extends Controller
              Enterprises::findOrFail($id)
         );
     }
-    public function store(Request $request)
+    public function createNewEnterprise(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            "enterprise_id" => "required",
-            "" => "",
+        $fields = $request->validate([
+            "license_num" => "required|string",
+            "name"=>"required|string",
+            "phone"=>"nullable|string",
+            "email"=>"nullable|string",
+            "assign_date"=>"date",
+
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $enterprises = Enterprises::create($input);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new EnterprisesResource($enterprises)
-        ];
-        return response()->json($arr, 201);
+        $newAccount = Enterprises::create([
+            'license_num'=>($fields['license_num']),
+            'name'=>($fields['name']),
+            'phone'=>($fields['phone']),
+            'email'=>($fields['email']),
+            'assign_date'=>($fields['assign_date']),
+        ]);
+        $token = $newAccount->createToken('')->plainTextToken; // chưa chạy
+        return response()->json(['token'=> $token], 201);
     }
 
     public function edit($id) {}
