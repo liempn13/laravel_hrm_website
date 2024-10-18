@@ -12,16 +12,20 @@ class Profiles extends Model
     protected $primaryKey = "profile_id";
 
     protected $fillable = [
+        "profile_id",
         "profile_name",
-        "profile_status",
+        "birthday",
+        "place_of_birth",
         "identify_num",
-        "id_expire_day",
+        "id_license_day",
+
         "gender",
         "phone",
         "email",
+        "profile_status",
+        //foriegn key
         "department_id",
         "position_id",
-        "birthday",
         "enterprise_id",
         "salary_id",
         ] ;

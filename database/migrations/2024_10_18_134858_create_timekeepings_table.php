@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('timekeepings', function (Blueprint $table) {
             $table->id();
-            $table->string('email_or_phone');
-            $table->string('password');
-            $table->tinyInteger('permission');
-            $table->tinyInteger('account_status');
-            $table->integer('enterprise_id');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('timekeepings');
     }
 };
