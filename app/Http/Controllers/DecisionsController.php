@@ -12,42 +12,55 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class DecisionsController extends Controller
 {
+    public function index()
+    {
+        $decisions = Decisions::all();
+        return response()->json($decisions);
+    }
     public function show(string $id)
     {
         return (
-             Decisions::findOrFail($id)
+            Decisions::findOrFail($id)
         );
     }
-    public function showByEnterpriseID(string $id)
+    public function showByID(string $id)
     {
         return (
-         Decisions::where('enterprise_id',$id)->get()
+            Decisions::where('', $id)->get()
         );
     }
     public function createNewdecision(Request $request)
     {
         $fields = $request->validate([
+            "decision_id" => "required|string",
             "decision_name" => "required|string",
-            "enterprise_id" => 'required|integer',
-            "decision_status" => "integer"
+            "assign_date" => "required|date",
+            "decision_status" => "required|boolean",
+            "decision_image" => "required|string",
+            "profile_id" => "nullable|string"
         ]);
         $newDecision = Decisions::create([
-            'decision_name'=>($fields['decision_name']),
-            'enterprise_id'=>($fields['enterprise_id']),
-            'decision_status'=> $fields['decision_status']
+            'decision_name' => ($fields['decision_name']),
+            'decision_status' => $fields['decision_status'],
+            'profile_id' => $fields['profile_id'],
+            'assign_date' => $fields['assign_date'],
+            'decision_id' => $fields['decision_id'],
+            'decision_image' => $fields['decision_image'],
+
         ]);
         return response()->json([], 201);
-    }
-
-    public function edit($id)
-    {
     }
 
     public function update(Request $request, Decisions $decisions)
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "" => "",
+            "decision_id" => "required|string",
+            "decision_name" => "required|string",
+            "assign_date" => "required|datetime",
+            "decision_status" => "required|boolean",
+            "decision_image" => "required|string",
+            "profile_id" => "nullable|string"
         ]);
         if ($validator->fails()) {
             $arr = [

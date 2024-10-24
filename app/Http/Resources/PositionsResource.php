@@ -12,7 +12,6 @@ class PositionsResource extends JsonResource
             [
                 'position_id' => $this->position_id,
                 'position_name' => $this->position_name,
-                'enterprise_id' => $this->enterprise_id,
             ];
     }
 }

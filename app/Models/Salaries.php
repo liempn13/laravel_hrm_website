@@ -11,7 +11,14 @@ class Salaries extends Model
     protected $table = "salaries";
     protected $primaryKey = "salary_id";
     protected $keyType = "string";
-    protected $fillable = ["",""] ;
+    protected $fillable = [
+        "salary_coefficient",
+        "allowances",
+        "minus",
+        "personal_tax",
+        "bonus",
+        "advance_money"
+        ] ;
     public $timestamps = false;
     protected $casts = [""] ;
 }

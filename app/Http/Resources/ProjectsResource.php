@@ -14,7 +14,6 @@ class ProjectsResource extends JsonResource
                 'project_name' => $this->project_name,
                 'project_status' => $this->project_status,
                 'department_id' => $this->department_id,
-                'enterprise_id' => $this->enterprise_id,
             ];
     }
 }

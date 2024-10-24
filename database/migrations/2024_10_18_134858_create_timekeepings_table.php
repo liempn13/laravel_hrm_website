@@ -14,7 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('timekeepings', function (Blueprint $table) {
-            $table->id();
+            $table->id('timekeeping_id');
+            $table->time('checkin');
+            $table->time('checkout');
+            $table->date('date');
+            $table->time('late');
+            $table->time('leaving_soon');
+            $table->tinyInteger('status');
+            $table->string('shift_id');
+            $table->string('profile_id');
             $table->timestamps();
         });
     }

@@ -13,11 +13,10 @@ class WorkingProcessesResource extends JsonResource
                 'workingprocesses_id' => $this->workingprocesses_id,
                 'profile_id' => $this->profile_id,
                 'workingprocesses_content' => $this->workingprocesses_content,
-                'workingprocesses_starttime' => $this->workingprocesses_starttime->format('d/m/Y'),
-                'workingprocesses_endtime' => $this->workingprocesses_endtime->format('d/m/Y'),
+                'start_time' => $this->start_time->format('d/m/Y'),
+                'end_time' => $this->end_time->format('d/m/Y'),
                 'workingprocesses_status' => $this->workingprocesses_status,
-                'workingprocesses_workplace' => $this->workingprocesses_workplace,
-                'enterprise_id' => $this->enterprise_id,
+                'workplace_name' => $this->workplace_name,
             ];
     }
 }

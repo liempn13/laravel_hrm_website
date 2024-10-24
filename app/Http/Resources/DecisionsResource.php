@@ -10,12 +10,13 @@ class DecisionsResource extends JsonResource
     {
         return
             [
-                "decision_name" => $this->id,
+                "decision_id" => $this->decision_id,
+                "decision_name" => $this->decision_name,
                 "decision_content" => $this->decision_content,
                 "decision_status" => $this->deccision_status,
-                "salary_id" => $this->salary_id,
-                "enterprise_id" => $this->enterprise_id,
-                "assign_date" => $this->assign_date
+                "decision_image" => $this->decision_image,
+                "assign_date" => $this->assign_date,
+                "profile_id" => $this->profile_id
             ];
     }
 }

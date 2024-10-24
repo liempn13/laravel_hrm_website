@@ -7,38 +7,24 @@ use App\Models\WorkingProcesses;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\WorkingProcessesResource as WorkingProcessesResource;
-use App\Models\Enterprises;
-use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class WorkingProcessesController extends Controller
 {
-    // public function index()
-    // {
-    //     $workingprocess = WorkingProcesses::all();
-    //     return response()->json($workingprocess);
-    // }
-
-    public function store(Request $request)
+    public function showWorkingProcessesOfProfileID(string $profile_id)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'workingprocesses_id' => "",
-            'profile_id' => "required",
-            'workingprocesses_content' => "",
-            'workingprocesses_starttime' => "",
-            'workingprocesses_endtime' => "",
-            'workingprocesses_status' => "",
-            'workingprocesses_workplace' => "",
-            'enterprise_id' => "",
+        return WorkingProcesses::where('profile_id', $profile_id)->get();
+    }
+    public function addNewWWorkingProcesses(Request $request)
+    {
+        $input = $request->validate([
+            'workingprocesses_id' => "string",
+            'profile_id' => "required|string",
+            'workingprocesses_content' => "required|string",
+            'start_time' => "required|date",
+            'end_time' => "nullable|date",
+            'workingprocesses_status' => "required|boolean",
+            'workplace_name' => "required|string",
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
         $workingProcesses = WorkingProcesses::create($input);
         $arr = [
             "status" => true,
@@ -48,40 +34,28 @@ class WorkingProcessesController extends Controller
         return response()->json($arr, 201);
     }
 
-    public function edit($id)
+    public function update(Request $request)
     {
-    }
-
-    public function update(Request $request, WorkingProcesses $workingProcesses)
-    {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $workingProcesses = WorkingProcesses::find($request->workingprocesses_id);
+        $input = $request->validate([
             'workingprocesses_id' => "",
-            'profile_id' => "",
-            'workingprocesses_content' => "",
-            'workingprocesses_starttime' => "",
-            'workingprocesses_endtime' => "",
-            'workingprocesses_status' => "",
-            'workingprocesses_workplace' => "",
-            'enterprise_id' => "",
+            'profile_id' => "string|required",
+            'workingprocesses_content' => "string|required",
+            'start_time' => "date|required",
+            'end_time' => "nullable|date",
+            'workingprocesses_status' => "boolean",
+            'workplace_name' => "string",
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-
         $workingProcesses->workingprocesses_content = $input['workingprocesses_content'];
-        $workingProcesses->workingprocesses_workplace = $input['workingprocesses_content'];
-
+        $workingProcesses->workplace_name = $input['workplace_name'];
+        $workingProcesses->workingprocesses_status = $input['workingprocesses_status'];
+        $workingProcesses->start_time = $input['start_time'];
+        $workingProcesses->end_time = $input['end_time'];
+        $workingProcesses->profile_id = $input['profile_id'];
         $workingProcesses->save();
         $arr = [
             "status" => true,
             "message" => "Save successful",
-            "data" => new WorkingProcessesResource($workingProcesses)
         ];
         return response()->json($arr, 200);
     }
@@ -89,11 +63,6 @@ class WorkingProcessesController extends Controller
     public function delete(WorkingProcesses $workingProcesses)
     {
         $workingProcesses->delete();
-        $arr = [
-            "status" => true,
-            "message" => "Delete success",
-            "data" => []
-        ];
-        return response()->json($arr, 200);
+        return response()->json(["message" => "Delete success",], 200);
     }
 }

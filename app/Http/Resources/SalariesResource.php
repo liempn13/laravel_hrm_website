@@ -11,11 +11,12 @@ class SalariesResource extends JsonResource
         return
             [
                 'salary_id' => $this->salary_id,
-                'salary_name' => $this->salary_name,
-                'salary' => $this->salary,
+                'salary_coefficient' => $this->salary_coefficient,
                 'allowances' => $this->allowances,
-                'salary_status' => $this->salary_status,
-                'enterprise_id' => $this->enterprise_id,
+                'personal_tax'=>$this->personal_tax,
+                'advance_money'=>$this->advance_money,
+                'bonus'=>$this->bonus,
+                'minus'=>$this->minus
             ];
     }
 }

@@ -9,8 +9,18 @@ class Relatives extends Model
 {
     use HasFactory;
     protected $table = "relatives";
-    protected $primaryKey = "profile_id";
-    protected $fillable = ["relatives_name", "relatives_phone", "relatives_birthday"];
+    protected $primaryKey = "relative_id";
+    protected $fillable = [
+        "relative_name",
+        "relationship",
+        "relative_phone",
+        "relative_birthday",
+        "relative_temp_address",
+        "relative_current_address",
+        "relative_nation",
+        "relavtive_job",
+        "profile_id"
+    ];
     public $timestamps = false;
     protected $casts = [""];
 }

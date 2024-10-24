@@ -16,6 +16,11 @@ return new class extends Migration
         Schema::create('enterprises', function (Blueprint $table) {
             $table->id();
             $table->integer('enterprise_id');
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('license_num');
+            $table->date('assign_date');
             $table->timestamps();
         });
     }
