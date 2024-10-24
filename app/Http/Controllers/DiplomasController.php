@@ -21,12 +21,27 @@ class DiplomasController extends Controller
     public function createNewDiploma(Request $request)
     {
         $fields = $request->validate([
+            "diploma_id" => "required|string",
+            "diploma_degree_name" => "required|string",
+            "diploma_image" => "required|string",
+            "ranking" => "required|string",
+            "license_date" => "required|date",
             "diploma_name" => "required|string",
-            "enterprise_id" => 'required|integer',
+            "diploma_type" => "required|string",
+            "granted_by" => "required|string",
+            "major" => "required|string",
+            "mode_of_study" => "required|string",
         ]);
         $newDiploma = Diplomas::create([
-            'diploma_name'=>($fields['diploma_name']),
-            'enterprise_id'=>($fields['enterprise_id']),
+            'diploma_id' => ($fields['diploma_name']),
+            'mode_of_study' => ($fields['mode_of_study']),
+            'granted_by' => ($fields['grandted_by']),
+            'license_date' => ($fields['license_date']),
+            'diploma_degree_name' => ($fields['diploma_degree_name']),
+            'major' => ($fields['major']),
+            'diploma_type' => ($fields['diploma_type']),
+            'diploma_image' => ($fields['diploma_image']),
+            'ranking' => ($fields['ranking']),
         ]);
         return response()->json([], 201);
     }
@@ -36,8 +51,16 @@ class DiplomasController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            "diploma_name" => "",
-            "diploma_id" => "",
+            "diploma_id" => "required|string",
+            "diploma_degree_name" => "required|string",
+            "diploma_image" => "required|string",
+            "ranking" => "required|string",
+            "license_date" => "required|date",
+            "diploma_name" => "required|string",
+            "diploma_type" => "required|string",
+            "granted_by" => "required|string",
+            "major" => "required|string",
+            "mode_of_study" => "required|string",
         ]);
         if ($validator->fails()) {
             $arr = [

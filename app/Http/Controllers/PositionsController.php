@@ -12,17 +12,10 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class PositionsController extends Controller
 {
-    // public function index()
-    // {
-    //     $position = Positions::all();
-    //     return response()->json($position);
-    // }
-
-    public function showPositionsByEnterpriseID(string $enterprise_id)
+    public function index()
     {
-        return (
-            Positions::where('enterprise_id',$enterprise_id)->get()
-        );
+        $position = Positions::all();
+        return response()->json($position);
     }
     public function show(string $id)
     {
@@ -33,44 +26,32 @@ class PositionsController extends Controller
     public function createNewPosition(Request $request)
     {
         $fields = $request->validate([
-            "position_id"=>"required|string",
+            "position_id" => "required|string",
             "position_name" => "required|string",
-            "enterprise_id" => 'required|integer',
         ]);
-        $newAccount = Positions::create([
-            'position_id'=>($fields['position_id']),
-            'position_name'=>($fields['position_name']),
-            'enterprise_id'=>($fields['enterprise_id'])
+        $newPosition = Positions::create([
+            'position_id' => ($fields['position_id']),
+            'position_name' => ($fields['position_name']),
         ]);
-        return response()->json([], 201);
-    }
-
-    public function edit($id)
-    {
-    }
-
-    public function update(Request $request, Positions $positions)
-    {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            "" => "",
-        ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $positions->name = $input['name'];
-        $positions->save();
         $arr = [
             "status" => true,
-            "message" => "Save successful",
-            "data" => new PositionsResource($positions)
+            "message" => "Delete success",
+            "data" => new PositionsResource($newPosition)
         ];
-        return response()->json($arr, 200);
+        response()->json($arr, 201);
+    }
+
+    public function update(Request $request)
+    {
+        $position = Positions::find($request->position_id);
+        $input = $request->validate([
+            "position_id" => "string",
+            "position_name" => "string",
+        ]);
+        $position->position_id = $input['position_id'];
+        $position->position_name = $input['position_name'];
+        $position->save();
+        return response()->json(["message" => "Update data success"], 200);
     }
 
     public function delete(Positions $positions)

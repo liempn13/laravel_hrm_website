@@ -13,6 +13,9 @@ class Decisions extends Model
     protected $fillable = [
         "decision_name",
         "decision_content",
+        "profile_id",
+        "assign_date",
+        "decision_image",
         "decision_status",
         ] ;
     public $timestamps = false;

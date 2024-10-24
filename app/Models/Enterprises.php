@@ -14,10 +14,9 @@ class Enterprises extends Model
         "enterprise_id",
         "name",
         "email",
-        "phone",
         "license_num",
+        "phone",
         "assign_date",
-        "enterprise_status",
         ] ;
     public $timestamps = false;
     protected $casts = [

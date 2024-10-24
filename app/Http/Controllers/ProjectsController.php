@@ -10,65 +10,34 @@ use App\Http\Resources\ProjectsResource as ProjectsResource;
 
 class ProjectsController extends Controller
 {
-    // public function index(){
-    //     $projects = Projects::all();
-    //     return response()->json($projects);
-    // }
+    public function show()
+    {
+        return Projects::where('');
+    }
 
-    public function createNewPosition(Request $request)
+    public function createNewProject(Request $request)
     {
         $fields = $request->validate([
-            "project_id"=>"required|string",
+            "project_id" => "required|string",
             "project_name" => "required|string",
-            "enterprise_id" => 'required|integer',
+            "project_status" => "required|integer",
         ]);
         $newAccount = Projects::create([
-            'project_id'=>($fields['project_id']),
-            'project_name'=>($fields['project_name']),
-            'enterprise_id'=>($fields['enterprise_id'])
+            'project_id' => $fields['project_id'],
+            'project_name' => $fields['project_name'],
+            "project_status" => $fields['project_status'],
         ]);
         return response()->json([], 201);
     }
 
-    public function edit($id){
-
-    }
-
-    public function update(Request $request, Projects $projects){
+    public function update(Request $request, Projects $projects)
+    {
         $input = $request->all();
-        $validator = Validator::make($input, [
-
-        ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success"=> false,
-                "message"=> "Data check error",
-                "data"=> $validator->errors(),
-            ];
-            return response()->json($arr,200);
-        }
+        $validator = Validator::make($input, []);
         $projects->project_id = $input['project_id'];
         $projects->project_name = $input['project_name'];
-        $projects->department_id = $input['department_id'];
-        $projects->enterprise_id = $input['enterprise_id'];
         $projects->project_status = $input['project_status'];
         $projects->save();
-        $arr = [
-            "status"=> true,
-            "message"=> "Save successful",
-            "data"=> new ProjectsResource($projects)
-        ];
-        return response()->json( $arr,200);
+        return response()->json([], 200);
     }
-
-    public function delete(Projects $projects){
-        $projects -> delete();
-        $arr = [
-            "status"=> true,
-            "message"=> "Delete success",
-            "data"=> []
-        ];
-        return response()->json( $arr,200);
-    }
-
 }

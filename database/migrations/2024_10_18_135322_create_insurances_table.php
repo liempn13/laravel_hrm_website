@@ -14,7 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('insurances', function (Blueprint $table) {
-            $table->id();
+            $table->id('insurance_id');
+            $table->foreignId('profile_id');
+            $table->date('start_time');
+            $table->date('end_time');
+            $table->double('insurance_percent');
+            $table->string('insurance_type_name');
             $table->timestamps();
         });
     }

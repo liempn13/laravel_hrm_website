@@ -12,84 +12,64 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class SalariesController extends Controller
 {
-    // public function index()
-    // {
-    //     $salaries = Salaries::all();
-    //     return response()->json($salaries);
-    // }
+    public function index()
+    {
+        $salaries = Salaries::all();
+        return response()->json($salaries);
+    }
     public function show(string $id)
     {
         return (
             Salaries::findOrFail($id)
         );
     }
-    public function getSalariesByEnterpriseID(string $enterprise_id)//
+    public function getSalariesByID(string $id)
     {
         return (
-            Salaries::where('enterprise_id',$enterprise_id)->get()//
+            Salaries::where('', $id)->get()
         );
     }
 
-    public function createNewSalary(Request $request)
+    public function addNewSalary(Request $request)
     {
         $fields = $request->validate([
-            "salary_name" => "required|string",
-            "salary" => "required|double",
-            "enterprise_id" => 'required|integer',
+            "salary_id" => "required|string",
+            "salary_coefficient" => "required|double",
             "allowances" => "nullable|double",
-            "salary_status" => "integer"
+            "salary_status" => "integer",
+            "bonus" => "nullable|double",
+            "minus" => "nullable|double",
         ]);
         $newSalary = Salaries::create([
-            'salary_name'=>($fields['salary_name']),
-            'salary' => bcrypt($fields['salary']),
-            'enterprise_id'=>($fields['enterprise_id']),
-            'allowances'=> $fields['allowances'],
-            'salary_status'=> $fields['salary_status']
+            'salary_id' => ($fields['salary_id']),
+            'allowances' => $fields['allowances'],
+            'salary_status' => $fields['salary_status']
         ]);
-        return response()->json([], 201);
-    }
-
-    public function edit($id)
-    {
+        response()->json([], 201);
     }
 
     public function update(Request $request, Salaries $salaries)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
-            'salary_id' => "",
-            'salary_name' => "",
-            'salary' => "",
-            'allowances' => "",
-            'salary_status' => "",
-            'enterprise_id' => "",
+        $input = $request->validate([
+            "salary_id" => "required|string",
+            "salary_coefficient" => "required|double",
+            "allowances" => "nullable|double",
+            "salary_status" => "integer",
+            "bonus" => "nullable|double",
+            "minus" => "nullable|double",
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
-        $salaries->name = $input['name'];
+        $salaries->salary_id = $input['salary_id'];
+        $salaries->salary_coefficient = $input['salary_coefficient'];
+        $salaries->bonus = $input['bonus'];
+        $salaries->minus = $input['minus'];
+        $salaries->allowances = $input['alloawances'];
         $salaries->save();
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new SalariesResource($salaries)
-        ];
-        return response()->json($arr, 200);
+        response()->json([], 200);
     }
 
     public function delete(Salaries $salaries)
     {
         $salaries->delete();
-        $arr = [
-            "status" => true,
-            "message" => "Delete success",
-            "data" => []
-        ];
-        return response()->json($arr, 200);
+        return response()->json(["message" => "Delete success",], 200);
     }
 }

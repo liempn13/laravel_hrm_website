@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('shifts', function (Blueprint $table) {
-            $table->id();
+            $table->id('shift_id');
+            $table->string('shift_name');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

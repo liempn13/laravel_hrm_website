@@ -16,7 +16,6 @@ class EnterprisesResource extends JsonResource
             "phone" => $this->phone,
             "license_num" => $this->license_num,
             "assign_date" => $this->assign_date,
-            "enterprise_status" => $this->enterprise_status,
         ];
     }
 }
