@@ -14,10 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('relatives', function (Blueprint $table) {
-            $table->id('');
-            $table->date('relatives_birthday');
+            $table->id('relative_id');
             $table->text('relatives_name');
+            $table->date('relatives_birthday');
             $table->string('relatives_phone');
+            $table->string('relationship');
+            $table->string('relative_job');
+            $table->string('relative_nation');
+            $table->string('relative_temp-address');
+            $table->string('relative_current_address');
+            $table->string('profile_id');
             $table->timestamps();
         });
     }

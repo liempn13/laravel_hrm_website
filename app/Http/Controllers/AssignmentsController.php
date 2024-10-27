@@ -6,7 +6,7 @@ use App\Http\Resources\AssignmentsResource;
 use App\Models\Assignments;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AssignmentsController extends Controller
 {
@@ -19,6 +19,22 @@ class AssignmentsController extends Controller
     public function show(string $id)
     {
         return (Assignments::findOrFail($id));
+    }
+    public function getAssigmentDetails(string $department_id)
+    {
+        return
+            DB::table('assignments')
+            ->join('profiles', 'assignments.profile_id', '=', 'profiles.profile_id')
+            ->join('projects', 'assignments.project_id', '=', 'projects.project_id')
+            ->join('tasks', 'assignments.task_id', '=', 'tasks.task_id')
+            ->select(
+
+                'profiles.profile_name',
+                'tasks.*'
+            )
+            ->where([['assignments.assignment_id', '=', $department_id]],)
+            ->get()
+        ;
     }
     public function create(Request $request)
     {
@@ -39,21 +55,13 @@ class AssignmentsController extends Controller
 
     public function update(Request $request, Assignments $assignments)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $input = $request->validate([
             "assignment_id" => "required|string",
             "profile_id" => "required|string",
             "task_id" => 'nullable|string',
             "project_id" => "required|string",
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
+
         $assignments->assignment_id = $input['assignment_id'];
         $assignments->profile_id = $input['profile_id'];
         $assignments->task_id = $input['task_id'];

@@ -17,7 +17,14 @@ class Decisions extends Model
         "assign_date",
         "decision_image",
         "decision_status",
-        ] ;
+    ];
     public $timestamps = false;
-    protected $casts = [""] ;
+    protected $casts = [
+        "decision_id" => "string",
+        "decision_name" => "string",
+        "assign_date" => "date",
+        "decision_status" => "boolean",
+        "decision_image" => "string",
+        "profile_id" => "string"
+    ];
 }

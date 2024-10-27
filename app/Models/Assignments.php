@@ -17,5 +17,10 @@ class Assignments extends Model
         "task_id",
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "assignment_id" => "string",
+        "profile_id" => "string",
+        "task_id" => 'string',
+        "project_id" => "string",
+    ];
 }

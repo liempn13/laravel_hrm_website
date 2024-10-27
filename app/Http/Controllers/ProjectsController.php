@@ -32,8 +32,12 @@ class ProjectsController extends Controller
 
     public function update(Request $request, Projects $projects)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, []);
+        
+        $input = $request->validate([
+            "project_id" => "required|string",
+            "project_name" => "required|string",
+            "project_status" => "required|integer",
+        ]);
         $projects->project_id = $input['project_id'];
         $projects->project_name = $input['project_name'];
         $projects->project_status = $input['project_status'];

@@ -22,5 +22,16 @@ class Relatives extends Model
         "profile_id"
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "relative_id" => 'string',
+        "relative_name" => "string",
+        "relative_phone" => "string",
+        "relative_birthday" => "date",
+        "relationship" => "string",
+        "relative_job" => "string",
+        "relative_nation" => "string",
+        "relative_temp_address" => "string",
+        "relative_current_address" => "string",
+        "profile_id" => 'string',
+    ];
 }

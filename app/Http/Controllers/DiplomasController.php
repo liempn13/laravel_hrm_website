@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Diplomas;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\DiplomasResource as DiplomasResource;
 use App\Models\Enterprises;
 use App\Http\Resources\EnterprisesResource as EnterprisesResource;
@@ -16,6 +16,20 @@ class DiplomasController extends Controller
     {
         $diploma = Diplomas::all();
         return response()->json($diploma);
+    }
+
+    public function getDiplomaOfProfile(string $profile_id)
+    {
+        return
+            DB::table('diplomas')
+            ->join('profiles', 'diplomas.profile_id', '=', 'profiles.profile_id')
+            ->select(
+                'profiles.profile_name',
+                'diplomas.*'
+            )
+            ->where([['profiles.profile_id', '=', $profile_id]],)
+            ->get()
+        ;
     }
 
     public function createNewDiploma(Request $request)
@@ -49,8 +63,7 @@ class DiplomasController extends Controller
 
     public function update(Request $request, Diplomas $diplomas)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $input = $request->validate( [
             "diploma_id" => "required|string",
             "diploma_degree_name" => "required|string",
             "diploma_image" => "required|string",
@@ -62,14 +75,7 @@ class DiplomasController extends Controller
             "major" => "required|string",
             "mode_of_study" => "required|string",
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
+
         $diplomas->name = $input['diploma_name'];
         $diplomas->name = $input['diploma_id'];
         $diplomas->save();

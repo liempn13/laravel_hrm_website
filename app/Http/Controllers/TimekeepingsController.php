@@ -6,19 +6,31 @@ use App\Http\Resources\TimekeepingsResource;
 use Illuminate\Routing\Controller;
 use App\Models\Timekeepings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TimekeepingsController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $timekeepings = Timekeepings::all();
+    //     return response()->json($timekeepings);
+    // }
+    public function getTimeKeepingsList()
     {
-        $timekeepings = Timekeepings::all();
-        return response()->json($timekeepings);
+        return
+            DB::table('timekeepings')
+            ->join('profiles', 'timekeepings.profile_id', '=', 'profiles.profile_id')
+            ->select(
+                'timekeepings.*',
+                'profiles.profile_name'
+            )
+            ->get()
+        ;
     }
-
     public function checkIn(Request $request)
     {
         $input = $request->validate([
-            'timekeeping_id' => "",
+            'timekeeping_id' => "integer",
             'profile_id' => "required",
             'late' => "nullable|time",
             'checkin' => "required|time",

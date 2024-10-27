@@ -18,5 +18,12 @@ class LaborContracts extends Model
         "department_id",
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "labor_contract_id" => "string",
+        "end_time" => "datetime",
+        "start_time" => "datetime",
+        "image" => "string",
+        "enterprise_id" => "boolean",
+        "deparment_id" => "string",
+    ];
 }

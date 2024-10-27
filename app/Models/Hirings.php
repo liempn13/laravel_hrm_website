@@ -24,5 +24,19 @@ class Hirings extends Model
         "work_experience"
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "educational_level" => "string",
+        "profile_name" => "string",
+        "phone" => "string",
+        "email" => "string",
+        "birthday" => "date",
+        "gender" => "boolean",
+        "apply_for" => "string",
+        "current_address" => "string",
+        "nation" => "string",
+        "place_of_birth" => "string",
+        "hiring_status" => "integer",
+        "hiring_profile_image" => "string",
+        "work_experience" => "string",
+    ];
 }

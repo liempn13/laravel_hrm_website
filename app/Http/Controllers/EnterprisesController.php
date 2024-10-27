@@ -10,10 +10,14 @@ use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class EnterprisesController extends Controller
 {
+    public function index()
+    {
+        return Enterprises::all();
+    }
     public function update(Request $request, Enterprises $enterprises)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $this->authorize('isBoardOfDirectors');
+        $input = $request->validate([
             "license_num" => "required|string",
             "name" => "required|string",
             "phone" => "required|string",

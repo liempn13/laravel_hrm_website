@@ -15,7 +15,10 @@ class HiringsController extends Controller
         $hirings = Hirings::all();
         return response()->json($hirings);
     }
-
+    public function show(string $profile_id)
+    {
+        return Hirings::findOrFail($profile_id);
+    }
     public function createNewHiringProfile(Request $request)
     {
         $fields = $request->validate([
@@ -25,13 +28,13 @@ class HiringsController extends Controller
             "email" => "nullable|string",
             "birthday" => "required|date",
             "gender" => "boolean|required",
-            "apply_for" => "required",
-            "current_address" => "required",
-            "nation" => "required",
+            "apply_for" => "required|string",
+            "current_address" => "required|string",
+            "nation" => "required|string",
             "place_of_birth" => "required|date",
-            "hiring_status" => "required",
-            "hiring_profile_image" => "required",
-            "work_experience" => "required",
+            "hiring_status" => "required|integer",
+            "hiring_profile_image" => "required|string",
+            "work_experience" => "required|string",
         ]);
         $newAccount = Hirings::create([
             'name' => ($fields['name']),
@@ -53,8 +56,7 @@ class HiringsController extends Controller
 
     public function update(Request $request, Hirings $hiring)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $input = $request->validate([
             "educational_level" => "required|string",
             "profile_name" => "required|string",
             "phone" => "required|string",

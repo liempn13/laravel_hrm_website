@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('decisions', function (Blueprint $table) {
-            $table->id();
+            $table->id('decision_id');
             $table->date('assign_date');
             $table->string('decision_name');
             $table->tinyInteger('decision_status');

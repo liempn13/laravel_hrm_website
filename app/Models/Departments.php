@@ -16,5 +16,8 @@ class Departments extends Model
         "department_name",
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "department_id" => "string",
+        "department_name" => "string",
+    ];
 }

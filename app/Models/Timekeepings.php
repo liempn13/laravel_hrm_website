@@ -21,5 +21,15 @@ class Timekeepings extends Model
         "profile_id"
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        'timekeeping_id' => "integer",
+        'profile_id' => "string",
+        'late' => "time",
+        'checkin' => "time",
+        'checkout' => "time",
+        'shift_id' => "string",
+        'leaving_soon' => "time",
+        'date' => "date",
+        'status' => 'integer'
+    ];
 }
