@@ -18,7 +18,14 @@ class Salaries extends Model
         "personal_tax",
         "bonus",
         "advance_money"
-        ] ;
+    ];
     public $timestamps = false;
-    protected $casts = [""] ;
+    protected $casts = [
+        "salary_id" => "string",
+        "salary_coefficient" => "double",
+        "allowances" => "double",
+        "salary_status" => "integer",
+        "bonus" => "double",
+        "minus" => "double",
+    ];
 }

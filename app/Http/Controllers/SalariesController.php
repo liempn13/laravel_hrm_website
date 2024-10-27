@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Salaries;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\SalariesResource as SalariesResource;
 use App\Models\Enterprises;
 use App\Http\Resources\EnterprisesResource as EnterprisesResource;
@@ -23,11 +23,20 @@ class SalariesController extends Controller
             Salaries::findOrFail($id)
         );
     }
-    public function getSalariesByID(string $id)
+    public function getSalarySlip(string $salary_id)
     {
-        return (
-            Salaries::where('', $id)->get()
-        );
+        return
+            DB::table('salaries')
+            ->join('profiles', 'salaries.salarie_id', '=', 'profiles.salarie_id')
+            ->join('positions', 'profiles.position_id', '=', 'positions.position_id')
+            ->select(
+                'profiles.profile_name',
+                'positions.position_name',
+                'salaries.*'
+            )
+            ->where([['salaries.salarie_id', '=', $salary_id]],)
+            ->get()
+        ;
     }
 
     public function addNewSalary(Request $request)

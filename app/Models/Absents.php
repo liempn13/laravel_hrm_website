@@ -9,7 +9,7 @@ class Absents extends Model
 {
     protected $table = "absents";
     protected $primaryKey = "ID";
-    protected $keyType = "string";
+    protected $keyType = "integer";
     protected $fillable = [
         "from",
         "reason",
@@ -19,5 +19,12 @@ class Absents extends Model
         "days_off"
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "from" => "datetime",
+        "to" => 'datetime',
+        "reason" => "string",
+        "profile_id" => "string",
+        "days_off" => "double",
+        "status" => "",
+    ];
 }

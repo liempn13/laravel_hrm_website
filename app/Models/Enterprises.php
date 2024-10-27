@@ -17,9 +17,13 @@ class Enterprises extends Model
         "license_num",
         "phone",
         "assign_date",
-        ] ;
+    ];
     public $timestamps = false;
     protected $casts = [
-        ""
-        ] ;
+        "license_num" => "string",
+        "name" => "string",
+        "phone" => "string",
+        "email" => "string",
+        "assign_date" => "date",
+    ];
 }

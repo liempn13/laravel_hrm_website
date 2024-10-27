@@ -14,7 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('absents', function (Blueprint $table) {
-            $table->id('');
+            $table->id('ID');
+            $table->dateTime('from');
+            $table->dateTime('to');
+            $table->string('reason');
+            $table->double('days_off');
+            $table->string('profile_id');
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

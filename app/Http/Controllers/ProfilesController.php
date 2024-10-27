@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Profiles;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\ProfilesResource as ProfilesResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
 
@@ -15,21 +14,56 @@ class ProfilesController extends Controller
 {
     public function index()
     {
+
         $profiles = Profiles::all();
         return response()->json($profiles);
     }
 
-    public function getUserProfile(string $id)
+    public function show(string $profile_id)
     {
-        return (
-            Profiles::findOrFail($id)
-        );
+        return Profiles::findOrFail($profile_id);
     }
 
-    public function showProfilesByDepartmentID(int $department_id)
+    public function getUserProfileInfo(string $profile_id)
     {
+        return DB::table('profiles')
+            ->join('departments', 'department_id', '=', 'departments.department_id')
+            ->join('positions', 'position_id', '=', 'positions.position_id')
+            ->join('salaries', 'salary_id', '=', 'salaries.salary_id')
+            ->join('labor_contract', 'labor_contract_id', '=', '')
+            ->select(
+                "profiles.profile_id",
+                "profiles.profile_name",
+                "profiles.identify_num",
+                "profiles.id_license_day",
+                "profiles.gender",
+                "profiles.profiles.phone",
+                "profiles.email",
+                "profiles.birthday",
+                "profiles.marriage",
+                "profiles.temporary_address",
+                "profiles.current_address",
+                "profiles.nation",
+                "place_of_birth",
+                'departments.*',
+                'positions.*'
+            )->where('profiles.profile_id', $profile_id)
+            ->get();
+    }
+    public function getDepartmentMembers(string $department_id)
+    {
+        $this->authorize('view_department_members');
         return
-            Profiles::where('department_id', $department_id)->get();
+            DB::table('departments')
+            ->join('profiles', 'departments.department_id', '=', 'profiles.department_id')
+            ->join('positions', 'profiles.position_id', '=', 'positions.position_id')
+            ->select(
+                'profiles.profile_name',
+                'positions.position_name'
+            )
+            ->where([['departments.department_id', '=', $department_id]],)
+            ->get()
+        ;
     }
 
     public function emailLogin(Request $request)
@@ -38,6 +72,12 @@ class ProfilesController extends Controller
             "email" => "required|string",
             "password" => "required|string",
         ]);
+        if (!Auth::attempt($request->only(['email', 'password']))) {
+            return response()->json([
+                'status' => false,
+                'messsage' => 'Email & password does not match with record.'
+            ], 401);
+        }
 
         //Check email
         $user = Profiles::where('email', $fields['email'])->first();
@@ -48,7 +88,7 @@ class ProfilesController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
-        response()->json([]);
+        return response()->json([], 200);
     }
     public function phoneNumberLogin(Request $request)
     {
@@ -56,6 +96,13 @@ class ProfilesController extends Controller
             "phone" => "required|string",
             "password" => "required|string",
         ]);
+        if (!Auth::attempt($request->only(['phone', 'password']))) {
+            return response()->json([
+                'status' => false,
+                'messsage' => 'Phone & password does not match with record.'
+            ], 401);
+        }
+
         //Check phone
         $user = Profiles::where('phone', $fields['phone'])->first();
         //Check password
@@ -64,7 +111,7 @@ class ProfilesController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
-        response()->json([]);
+        response()->json([], 200);
     }
 
     public function registerNewProfile(Request $request)
@@ -84,15 +131,18 @@ class ProfilesController extends Controller
             "temporary_address" => "required|string",
             "current_address" => "required|string",
             "nation" => "required|string",
-            "permission" => "required|integer",
             "place_of_birth" => "required|string",
+            "permission" => "required|integer",
+            "profile_image" => "required|string",
             //foriegn key
             "department_id" => "nullable|string",
             "position_id" => "nullable|string",
             "salary_id" => "nullable|string",
             "labor_contract_id" => "nullable|string",
         ]);
+
         $newProfile = Profiles::create([
+            'profile_id' => $fields['profile_id'],
             'profile_name' => $fields['profile_name'],
             'profile_image' => $fields['profile_image'],
             'birthday' => $fields['birthday'],
@@ -104,10 +154,11 @@ class ProfilesController extends Controller
             'marriage' => $fields['marriage'],
             'temporary_address' => $fields['temporary_address'],
             'current_address' => $fields['current_address'],
-            'permission' => $fields['permission'],
             'identify_num' => $fields['identify_num'],
             'id_license_day' => $fields['id_license_day'],
             'password' => bcrypt($fields['password']),
+            'permission' => $fields['permission'],
+            'profile_status' => $fields['profile_status'],
             //fk
             "department_id" => $fields["department_id"],
             "position_id" => $fields["position_id"],
@@ -115,8 +166,11 @@ class ProfilesController extends Controller
             "labor_contract_id" => $fields["labor_contract_id"],
         ]);
 
-        $token = $newProfile->createToken('myapptoken')->plainTextToken;
-        response()->json(['token' => $token], 201);
+        $token = $newProfile->createToken('API TOKEN')->plainTextToken;
+        return response()->json([
+            'profile' => $newProfile,
+            'token' => $token
+        ], 201);
     }
 
     public function logout(Request $request)
@@ -124,9 +178,7 @@ class ProfilesController extends Controller
         if (Auth::check() && Auth::user()->is_active != 1) {
             Auth::logout();
         };
-        return [];
     }
-
     public function update(Request $request, Profiles $profiles)
     {
         $input = $request->validate([
@@ -144,14 +196,13 @@ class ProfilesController extends Controller
             "temporary_address" => "string",
             "current_address" => "string",
             "nation" => "required|string",
-            "permission" => "integer",
             "place_of_birth" => "string",
+            "permission" => "integer",
             //foriegn key
             "department_id" => "nullable|string",
             "position_id" => "nullable|string",
             "salary_id" => "nullable|string",
             "labor_contract_id" => "nullable|string",
-
         ]);
         $profiles->profile_id = $input['profile_id'];
         $profiles->profile_name = $input['profile_name'];

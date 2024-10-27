@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Departments;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\DepartmentsResource as DepartmentsResource;
-use App\Models\Enterprises;
-use App\Http\Resources\EnterprisesResource as EnterprisesResource;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentsController extends Controller
 {
@@ -17,14 +14,14 @@ class DepartmentsController extends Controller
         $department = Departments::all();
         return response()->json($department);
     }
-    public function show(string $id)
+    public function show(string $profile_id)
     {
-        return (
-            Departments::findOrFail($id)
-        );
+        return Departments::findOrFail($profile_id);
     }
+    
     public function createNewDepartment(Request $request)
     {
+        $this->authorize('isBoardOfDirectors');
         $fields = $request->validate([
             "department_id" => "required|string|unique:departments,department_id",
             "department_name" => "required|string|unique:departments,department_name",

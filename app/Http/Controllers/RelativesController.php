@@ -5,18 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Relatives;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\RelativesResource as RelativesResource;
-use App\Models\Enterprises;
-use App\Http\Resources\EnterprisesResource as EnterprisesResource;
 
 class RelativesController extends Controller
 {
-    // public function index()
-    // {
-    //     $relatives = Relatives::all();
-    //     return response()->json($relatives);
-    // }
     public function show(string $id)
     {
         return (
@@ -25,9 +18,7 @@ class RelativesController extends Controller
     }
     public function showRelativesOf(string $profile_id)
     {
-        return (
-            Relatives::where('profile_id', $profile_id)->get()
-        );
+        return Relatives::where('profile_id', $profile_id)->get();
     }
     public function addNewRelatives(Request $request)
     {
@@ -60,8 +51,7 @@ class RelativesController extends Controller
 
     public function update(Request $request, Relatives $relatives)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $input = $request->validate([
             "relative_id" => 'required|string',
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
@@ -73,14 +63,7 @@ class RelativesController extends Controller
             "relative_current_address" => "required|string",
             "profile_id" => 'required|string',
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
+
         $relatives->relative_name = $input['relative_name'];
         $relatives->relative_phone = $input["relative_phone"];
         $relatives->relative_birthday = $input["relative_birthday"];

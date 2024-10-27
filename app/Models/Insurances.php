@@ -17,5 +17,12 @@ class Insurances extends Model
         "profile_id"
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "profile_id" => "string",
+        "start_time" => "date",
+        "end_time" => "date",
+        "insurance_type_name" => "double",
+        "insurance_id" => "string",
+        "insurance_percent" => "double",
+    ];
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Positions;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\PositionsResource as PositionsResource;
 use App\Models\Enterprises;
 use App\Http\Resources\EnterprisesResource as EnterprisesResource;
