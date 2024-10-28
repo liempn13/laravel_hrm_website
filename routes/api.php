@@ -86,7 +86,7 @@ Route::controller(ProfilesController::class)->group(function () {
     Route::get('/v1/profiles', 'index');
     Route::get('/v1/profile/info/{id}', 'getUserProfileInfo');
     Route::get('/v1/department/members/{department_id}', 'getDepartmentMembers');
-    Route::post('v1/profile/auth/register', 'registerNewProfiles');
+    Route::post('v1/profile/auth/register', 'registerNewProfile');
     Route::post('v1/auth/login/email', 'emailLogin');
     Route::post('v1/auth/login/phone', 'phoneLogin');
 });
