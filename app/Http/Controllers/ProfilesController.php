@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Response;
 
 class ProfilesController extends Controller
 {
@@ -30,7 +29,7 @@ class ProfilesController extends Controller
             ->join('departments', 'department_id', '=', 'departments.department_id')
             ->join('positions', 'position_id', '=', 'positions.position_id')
             ->join('salaries', 'salary_id', '=', 'salaries.salary_id')
-            ->join('labor_contract', 'labor_contract_id', '=', '')
+            ->join('labor_contract', 'labor_contract_id', '=', 'labor_contract.labor_contract_id')
             ->select(
                 "profiles.profile_id",
                 "profiles.profile_name",
@@ -44,7 +43,7 @@ class ProfilesController extends Controller
                 "profiles.temporary_address",
                 "profiles.current_address",
                 "profiles.nation",
-                "place_of_birth",
+                "profiles.place_of_birth",
                 'departments.*',
                 'positions.*'
             )->where('profiles.profile_id', $profile_id)
@@ -72,12 +71,6 @@ class ProfilesController extends Controller
             "email" => "required|string",
             "password" => "required|string",
         ]);
-        if (!Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json([
-                'status' => false,
-                'messsage' => 'Email & password does not match with record.'
-            ], 401);
-        }
 
         //Check email
         $user = Profiles::where('email', $fields['email'])->first();
@@ -96,12 +89,6 @@ class ProfilesController extends Controller
             "phone" => "required|string",
             "password" => "required|string",
         ]);
-        if (!Auth::attempt($request->only(['phone', 'password']))) {
-            return response()->json([
-                'status' => false,
-                'messsage' => 'Phone & password does not match with record.'
-            ], 401);
-        }
 
         //Check phone
         $user = Profiles::where('phone', $fields['phone'])->first();

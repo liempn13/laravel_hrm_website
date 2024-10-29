@@ -3,16 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
-
-use App\Models\Departments;
-use App\Models\Enterprises;
 use App\Models\Profiles;
-use App\Models\Projects;
-use App\Policies\BoardofDirectors;
-use App\Policies\DepartmentManager;
-use App\Policies\HRDirector;
-use App\Policies\HRManager;
-use App\Policies\ProjectOwner;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 

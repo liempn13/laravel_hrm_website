@@ -4,6 +4,7 @@ use App\Http\Controllers\DecisionsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\DiplomasController;
 use App\Http\Controllers\EnterprisesController;
+use App\Http\Controllers\LaborContractsController;
 use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RelativesController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\SalariesController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\WorkingProcessesController;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //
@@ -86,10 +86,19 @@ Route::controller(ProfilesController::class)->group(function () {
     Route::get('/v1/profiles', 'index');
     Route::get('/v1/profile/info/{id}', 'getUserProfileInfo');
     Route::get('/v1/department/members/{department_id}', 'getDepartmentMembers');
-    Route::post('v1/profile/auth/register', 'registerNewProfile');
-    Route::post('v1/auth/login/email', 'emailLogin');
-    Route::post('v1/auth/login/phone', 'phoneLogin');
+    Route::post('/v1/profile/auth/register', 'registerNewProfile');
+    Route::post('/v1/auth/login/email', 'emailLogin');
+    Route::post('/v1/auth/login/phone', 'phoneNumberLogin');
+});
+
+Route::controller(LaborContractsController::class)->group(function () {
+    Route::get('/v1/profile/labor-contract/{id}', 'showLaborContractDetails');
+    Route::get('/v1', '');
+    Route::get('/v1', '');
+    Route::post('v1', '');
+    Route::post('v1', '');
+    Route::post('v1', '');
 });
 Route::middleware(['auth:sanctum'])->group(function () {
-    // Route::get
+    // Route::get('/v1/department/members/{department_id}', 'getDepartmentMembers');
 });
