@@ -39,7 +39,10 @@ class LaborContractsController extends Controller
                 "profiles.phone",
                 "profiles.current_address",
             )
-            ->where(['profiles.profile_id' => $profile_id])
+            ->where([
+                ['profiles.profile_id' => $profile_id],
+                ['labor_contract.labor_contract_id' => 'profiles.labor_contract_id']
+            ])
             ->get();
     }
     public function createNewLaborContract(Request $request)

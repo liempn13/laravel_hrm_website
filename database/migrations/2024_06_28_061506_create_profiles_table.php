@@ -28,7 +28,7 @@ return new class extends Migration
             $table->date('id_license_day');
             $table->boolean('gender');
             $table->boolean('marriage');
-            $table->tinyInteger('permission');
+            $table->tinyInteger('role_id');
             $table->tinyInteger('profile_status');
             $table->string('department_id');
             $table->string('position_id');

@@ -119,7 +119,7 @@ class ProfilesController extends Controller
             "current_address" => "required|string",
             "nation" => "required|string",
             "place_of_birth" => "required|string",
-            "permission" => "required|integer",
+            "role_id" => "required|integer",
             "profile_image" => "required|string",
             //foriegn key
             "department_id" => "nullable|string",
@@ -144,7 +144,7 @@ class ProfilesController extends Controller
             'identify_num' => $fields['identify_num'],
             'id_license_day' => $fields['id_license_day'],
             'password' => bcrypt($fields['password']),
-            'permission' => $fields['permission'],
+            'role_id' => $fields['role_id'],
             'profile_status' => $fields['profile_status'],
             //fk
             "department_id" => $fields["department_id"],
@@ -166,8 +166,9 @@ class ProfilesController extends Controller
             Auth::logout();
         };
     }
-    public function update(Request $request, Profiles $profiles)
+    public function update(Request $request)
     {
+        $profiles = Profiles::find($request->profile_id);
         $input = $request->validate([
             "profile_id" => "string",
             "profile_name" => "string",
@@ -184,7 +185,7 @@ class ProfilesController extends Controller
             "current_address" => "string",
             "nation" => "required|string",
             "place_of_birth" => "string",
-            "permission" => "integer",
+            "role_id" => "integer",
             //foriegn key
             "department_id" => "nullable|string",
             "position_id" => "nullable|string",
@@ -207,7 +208,7 @@ class ProfilesController extends Controller
         $profiles->identify_num = $input['identify_num'];
         $profiles->id_license_day = $input['id_license_day'];
         $profiles->password = $input['password'];
-        $profiles->permission = $input['permission'];
+        $profiles->role_id = $input['role_id'];
         //fk
         $profiles->salary_id = $input['salary_id'];
         $profiles->department_id = $input['department_id'];
