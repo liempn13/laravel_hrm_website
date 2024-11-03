@@ -34,7 +34,6 @@ return new class extends Migration
             $table->string('position_id');
             $table->string('salary_id');
             $table->string('labor_contract_id');
-            $table->timestamps();
         });
     }
 

@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('trainingprocesses', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
         });
     }
 

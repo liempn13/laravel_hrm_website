@@ -81,7 +81,9 @@ class ProfilesController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
-        return response()->json([], 200);
+        return response()->json([
+            $user
+        ], 200);
     }
     public function phoneNumberLogin(Request $request)
     {
@@ -98,7 +100,9 @@ class ProfilesController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
-        response()->json([], 200);
+        return response()->json([
+            $user
+        ], 200);
     }
 
     public function registerNewProfile(Request $request)
@@ -165,6 +169,9 @@ class ProfilesController extends Controller
         if (Auth::check() && Auth::user()->is_active != 1) {
             Auth::logout();
         };
+        return [
+            "message" => "Logged out"
+        ];
     }
     public function update(Request $request)
     {

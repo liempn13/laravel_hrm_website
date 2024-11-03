@@ -21,7 +21,6 @@ return new class extends Migration
             $table->double('days_off');
             $table->string('profile_id');
             $table->tinyInteger('status');
-            $table->timestamps();
         });
     }
 

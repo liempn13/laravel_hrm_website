@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('end_time');
             $table->double('insurance_percent');
             $table->string('insurance_type_name');
-            $table->timestamps();
         });
     }
 

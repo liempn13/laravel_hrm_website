@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id('permission_id');
             $table->string('permission_name');
             $table->string('description');
-            $table->timestamps();
         });
     }
 
