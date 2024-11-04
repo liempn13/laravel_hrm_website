@@ -23,7 +23,6 @@ return new class extends Migration
             $table->tinyInteger('status');
             $table->string('shift_id');
             $table->string('profile_id');
-            $table->timestamps();
         });
     }
 

@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('absents', function (Blueprint $table) {
-            $table->id('ID');
-            $table->dateTime('from');
-            $table->dateTime('to');
-            $table->string('reason');
-            $table->double('days_off');
-            $table->string('profile_id');
-            $table->tinyInteger('status');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id('role_id');
+            $table->string('role_name');
+            $table->string('description');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('absents');
+        Schema::dropIfExists('roles');
     }
 };

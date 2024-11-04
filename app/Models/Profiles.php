@@ -31,7 +31,7 @@ class Profiles extends Model
         "password",
         "nation",
         "marriage",
-        "permission",
+        "role_id",
         "temporary_address",
         "current_address",
         "profile_status",
@@ -43,7 +43,7 @@ class Profiles extends Model
         "labor_contract_id"
     ];
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 
@@ -63,7 +63,7 @@ class Profiles extends Model
         "temporary_address" => "string",
         "current_address" => "string",
         "nation" => "string",
-        "permission" => "integer",
+        "role_id" => "integer",
         "place_of_birth" => "string",
         //foriegn key
         "department_id" => "string",

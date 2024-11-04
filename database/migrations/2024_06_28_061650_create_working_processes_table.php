@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('workingprocesses', function (Blueprint $table) {
             $table->id('');
-            $table->timestamps();
         });
     }
 

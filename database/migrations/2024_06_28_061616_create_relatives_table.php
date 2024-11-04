@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('relative_temp-address');
             $table->string('relative_current_address');
             $table->string('profile_id');
-            $table->timestamps();
         });
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Response;
+use Laravel\Sanctum\HasApiTokens;
 
 class ProfilesController extends Controller
 {
@@ -30,7 +30,7 @@ class ProfilesController extends Controller
             ->join('departments', 'department_id', '=', 'departments.department_id')
             ->join('positions', 'position_id', '=', 'positions.position_id')
             ->join('salaries', 'salary_id', '=', 'salaries.salary_id')
-            ->join('labor_contract', 'labor_contract_id', '=', '')
+            ->join('labor_contract', 'labor_contract_id', '=', 'labor_contract.labor_contract_id')
             ->select(
                 "profiles.profile_id",
                 "profiles.profile_name",
@@ -44,7 +44,7 @@ class ProfilesController extends Controller
                 "profiles.temporary_address",
                 "profiles.current_address",
                 "profiles.nation",
-                "place_of_birth",
+                "profiles.place_of_birth",
                 'departments.*',
                 'positions.*'
             )->where('profiles.profile_id', $profile_id)
@@ -72,15 +72,9 @@ class ProfilesController extends Controller
             "email" => "required|string",
             "password" => "required|string",
         ]);
-        if (!Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json([
-                'status' => false,
-                'messsage' => 'Email & password does not match with record.'
-            ], 401);
-        }
 
         //Check email
-        $user = Profiles::where('email', $fields['email'])->first();
+        $user = Profiles::where(["email" => $fields['email'], "profile_status" => 1])->first();
 
         //Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
@@ -88,7 +82,11 @@ class ProfilesController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
-        return response()->json([], 200);
+
+        return response()->json(
+            $user,
+            200
+        );
     }
     public function phoneNumberLogin(Request $request)
     {
@@ -96,22 +94,20 @@ class ProfilesController extends Controller
             "phone" => "required|string",
             "password" => "required|string",
         ]);
-        if (!Auth::attempt($request->only(['phone', 'password']))) {
-            return response()->json([
-                'status' => false,
-                'messsage' => 'Phone & password does not match with record.'
-            ], 401);
-        }
 
         //Check phone
-        $user = Profiles::where('phone', $fields['phone'])->first();
+        $user = Profiles::where(["phone" => $fields['phone'], "profile_status" => 1])->first();
         //Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'Bad creds'
             ], 401);
         }
-        response()->json([], 200);
+
+        return response()->json(
+            $user,
+            200
+        );
     }
 
     public function registerNewProfile(Request $request)
@@ -132,7 +128,7 @@ class ProfilesController extends Controller
             "current_address" => "required|string",
             "nation" => "required|string",
             "place_of_birth" => "required|string",
-            "permission" => "required|integer",
+            "role_id" => "required|integer",
             "profile_image" => "required|string",
             //foriegn key
             "department_id" => "nullable|string",
@@ -157,7 +153,7 @@ class ProfilesController extends Controller
             'identify_num' => $fields['identify_num'],
             'id_license_day' => $fields['id_license_day'],
             'password' => bcrypt($fields['password']),
-            'permission' => $fields['permission'],
+            'role_id' => $fields['role_id'],
             'profile_status' => $fields['profile_status'],
             //fk
             "department_id" => $fields["department_id"],
@@ -175,12 +171,14 @@ class ProfilesController extends Controller
 
     public function logout(Request $request)
     {
-        if (Auth::check() && Auth::user()->is_active != 1) {
-            Auth::logout();
-        };
+        $request->user()->tokens()->delete();
+        return response()->json([
+            "message" => "Logged out"
+        ]);
     }
-    public function update(Request $request, Profiles $profiles)
+    public function update(Request $request)
     {
+        $profiles = Profiles::find($request->profile_id);
         $input = $request->validate([
             "profile_id" => "string",
             "profile_name" => "string",
@@ -197,7 +195,7 @@ class ProfilesController extends Controller
             "current_address" => "string",
             "nation" => "required|string",
             "place_of_birth" => "string",
-            "permission" => "integer",
+            "role_id" => "integer",
             //foriegn key
             "department_id" => "nullable|string",
             "position_id" => "nullable|string",
@@ -220,7 +218,7 @@ class ProfilesController extends Controller
         $profiles->identify_num = $input['identify_num'];
         $profiles->id_license_day = $input['id_license_day'];
         $profiles->password = $input['password'];
-        $profiles->permission = $input['permission'];
+        $profiles->role_id = $input['role_id'];
         //fk
         $profiles->salary_id = $input['salary_id'];
         $profiles->department_id = $input['department_id'];

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('assign_date');
             $table->string('decision_name');
             $table->tinyInteger('decision_status');
-            $table->timestamps();
         });
     }
 

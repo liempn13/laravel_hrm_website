@@ -76,8 +76,8 @@ class DiplomasController extends Controller
             "mode_of_study" => "required|string",
         ]);
 
-        $diplomas->name = $input['diploma_name'];
-        $diplomas->name = $input['diploma_id'];
+        $diplomas->diploma_degree_name = $input['diploma_name'];
+        $diplomas->diploma_type = $input['diploma_id'];
         $diplomas->save();
         $arr = [
             "status" => true,
