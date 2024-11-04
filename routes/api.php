@@ -89,8 +89,9 @@ Route::controller(ProfilesController::class)->group(function () {
     Route::post('/v1/profile/auth/register', 'registerNewProfile');
     Route::post('/v1/auth/login/email', 'emailLogin');
     Route::post('/v1/auth/login/phone', 'phoneNumberLogin');
-    Route::put('/v1/profile/info/update','update');
-    Route::put('/v1/profile/lock');// khoá tài khoản - xoá nhân viên tạm thời, update trạng thái về 0
+    Route::post('/v1/logout', 'logout');
+    Route::put('/v1/profile/info/update', 'update');
+    Route::put('/v1/profile/lock'); // khoá tài khoản - xoá nhân viên tạm thời, update trạng thái về 0
 });
 
 Route::controller(LaborContractsController::class)->group(function () {

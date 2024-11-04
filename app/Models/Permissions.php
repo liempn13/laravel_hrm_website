@@ -14,12 +14,12 @@ class Permissions extends Model
     protected $fillable = [
         "permission_id",
         "permission_name",
-        "description"
+
     ];
     public $timestamps = false;
     protected $casts = [
         "permission_id" => "string",
         "permission_name" => "string",
-        "description" => "string",
+
     ];
 }

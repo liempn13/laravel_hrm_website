@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
 
 class ProfilesController extends Controller
 {
@@ -73,7 +74,7 @@ class ProfilesController extends Controller
         ]);
 
         //Check email
-        $user = Profiles::where('email', $fields['email'])->first();
+        $user = Profiles::where(["email" => $fields['email'], "profile_status" => 1])->first();
 
         //Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
@@ -81,9 +82,11 @@ class ProfilesController extends Controller
                 'message' => 'Bad creds'
             ], 401);
         }
-        return response()->json([
-            $user
-        ], 200);
+
+        return response()->json(
+            $user,
+            200
+        );
     }
     public function phoneNumberLogin(Request $request)
     {
@@ -93,16 +96,18 @@ class ProfilesController extends Controller
         ]);
 
         //Check phone
-        $user = Profiles::where('phone', $fields['phone'])->first();
+        $user = Profiles::where(["phone" => $fields['phone'], "profile_status" => 1])->first();
         //Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'Bad creds'
             ], 401);
         }
-        return response()->json([
-            $user
-        ], 200);
+
+        return response()->json(
+            $user,
+            200
+        );
     }
 
     public function registerNewProfile(Request $request)
@@ -166,12 +171,10 @@ class ProfilesController extends Controller
 
     public function logout(Request $request)
     {
-        if (Auth::check() && Auth::user()->is_active != 1) {
-            Auth::logout();
-        };
-        return [
+        $request->user()->tokens()->delete();
+        return response()->json([
             "message" => "Logged out"
-        ];
+        ]);
     }
     public function update(Request $request)
     {

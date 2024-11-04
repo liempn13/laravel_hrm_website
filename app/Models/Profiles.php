@@ -43,7 +43,7 @@ class Profiles extends Model
         "labor_contract_id"
     ];
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 

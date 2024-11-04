@@ -14,12 +14,10 @@ class Role extends Model
     protected $fillable = [
         "role_id",
         "role_name",
-        "description",
     ];
     public $timestamps = false;
     protected $casts = [
         "role_id" => "integer",
         "role_name" => "string",
-        "description" => "string",
     ];
 }

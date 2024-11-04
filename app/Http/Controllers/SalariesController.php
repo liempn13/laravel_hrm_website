@@ -45,14 +45,12 @@ class SalariesController extends Controller
             "salary_id" => "required|string",
             "salary_coefficient" => "required|double",
             "allowances" => "nullable|double",
-            "salary_status" => "integer",
-            "bonus" => "nullable|double",
-            "minus" => "nullable|double",
+            "personal_tax" => "double",
         ]);
         $newSalary = Salaries::create([
             'salary_id' => ($fields['salary_id']),
             'allowances' => $fields['allowances'],
-            'salary_status' => $fields['salary_status']
+            'personal_tax' => $fields['personal_tax']
         ]);
         response()->json([], 201);
     }
@@ -63,15 +61,13 @@ class SalariesController extends Controller
             "salary_id" => "required|string",
             "salary_coefficient" => "required|double",
             "allowances" => "nullable|double",
-            "salary_status" => "integer",
-            "bonus" => "nullable|double",
-            "minus" => "nullable|double",
+            "personal_tax" => "double",
+
         ]);
         $salaries->salary_id = $input['salary_id'];
         $salaries->salary_coefficient = $input['salary_coefficient'];
-        $salaries->bonus = $input['bonus'];
-        $salaries->minus = $input['minus'];
-        $salaries->allowances = $input['alloawances'];
+        $salaries->allowances = $input['allowances'];
+        $salaries->personal_tax = $input['personal_tax'];
         $salaries->save();
         response()->json([], 200);
     }
