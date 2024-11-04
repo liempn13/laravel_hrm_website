@@ -179,6 +179,10 @@ class ProfilesController extends Controller
     public function update(Request $request)
     {
         $profiles = Profiles::find($request->profile_id);
+        // Kiểm tra xem hồ sơ có tồn tại không
+    if (!$profiles) {
+        return response()->json(['message' => 'Profile not found'], 404);
+    }
         $input = $request->validate([
             "profile_id" => "string",
             "profile_name" => "string",
@@ -196,6 +200,7 @@ class ProfilesController extends Controller
             "nation" => "required|string",
             "place_of_birth" => "string",
             "role_id" => "integer",
+            "profile_image" => "nullable|string",
             //foriegn key
             "department_id" => "nullable|string",
             "position_id" => "nullable|string",
@@ -219,6 +224,13 @@ class ProfilesController extends Controller
         $profiles->id_license_day = $input['id_license_day'];
         $profiles->password = $input['password'];
         $profiles->role_id = $input['role_id'];
+        if (isset($input['profile_image'])) {
+            $profiles->profile_image = $input['profile_image'];
+        }
+        // Chỉ cập nhật mật khẩu nếu nó có giá trị
+    if (isset($input['password'])) {
+        $profiles->password = bcrypt($input['password']); // Mã hóa mật khẩu trước khi lưu
+    }
         //fk
         $profiles->salary_id = $input['salary_id'];
         $profiles->department_id = $input['department_id'];
