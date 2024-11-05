@@ -18,7 +18,7 @@ class DepartmentsController extends Controller
     {
         return Departments::findOrFail($profile_id);
     }
-    
+
     public function createNewDepartment(Request $request)
     {
         $this->authorize('isBoardOfDirectors');

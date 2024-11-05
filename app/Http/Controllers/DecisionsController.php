@@ -26,7 +26,7 @@ class DecisionsController extends Controller
     public function showByID(string $id)
     {
         return (
-            Decisions::where('', $id)->get()
+            Decisions::where('profile_id', $id)->get()
         );
     }
     public function createNewdecision(Request $request)
@@ -51,10 +51,10 @@ class DecisionsController extends Controller
         return response()->json([], 201);
     }
 
-    public function update(Request $request, Decisions $decisions)
+    public function update(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $decisions = Decisions::find($request->decision_id);
+        $input = $request->validate([
             "decision_id" => "required|string",
             "decision_name" => "required|string",
             "assign_date" => "required|datetime",
@@ -62,14 +62,7 @@ class DecisionsController extends Controller
             "decision_image" => "required|string",
             "profile_id" => "nullable|string"
         ]);
-        if ($validator->fails()) {
-            $arr = [
-                "success" => false,
-                "message" => "Data check error",
-                "data" => $validator->errors(),
-            ];
-            return response()->json($arr, 200);
-        }
+
         $decisions->name = $input['name'];
         $decisions->save();
         $arr = [

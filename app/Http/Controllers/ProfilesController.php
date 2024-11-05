@@ -180,9 +180,9 @@ class ProfilesController extends Controller
     {
         $profiles = Profiles::find($request->profile_id);
         // Kiểm tra xem hồ sơ có tồn tại không
-    if (!$profiles) {
-        return response()->json(['message' => 'Profile not found'], 404);
-    }
+        if (!$profiles) {
+            return response()->json(['message' => 'Profile not found'], 404);
+        }
         $input = $request->validate([
             "profile_id" => "string",
             "profile_name" => "string",
@@ -228,14 +228,29 @@ class ProfilesController extends Controller
             $profiles->profile_image = $input['profile_image'];
         }
         // Chỉ cập nhật mật khẩu nếu nó có giá trị
-    if (isset($input['password'])) {
-        $profiles->password = bcrypt($input['password']); // Mã hóa mật khẩu trước khi lưu
-    }
+        if (isset($input['password'])) {
+            $profiles->password = bcrypt($input['password']); // Mã hóa mật khẩu trước khi lưu
+        }
         //fk
         $profiles->salary_id = $input['salary_id'];
         $profiles->department_id = $input['department_id'];
         $profiles->position_id = $input['position_id'];
         $profiles->labor_contract_id = $input['labor_contract_id'];
+        $profiles->save();
+        return response()->json([], 200);
+    }
+    public function lockAndUnlock(Request $request)
+    {
+        $profiles = Profiles::find($request->profile_id);
+        // Kiểm tra xem hồ sơ có tồn tại không
+        if (!$profiles) {
+            return response()->json(['message' => 'Profile not found'], 404);
+        }
+        $input = $request->validate([
+            "profile_status" => "required|integer",
+        ]);
+
+        $profiles->profile_status = $input['profile_status'];
         $profiles->save();
         return response()->json([], 200);
     }
