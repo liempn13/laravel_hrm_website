@@ -49,8 +49,9 @@ class RelativesController extends Controller
         return response()->json([], 201);
     }
 
-    public function update(Request $request, Relatives $relatives)
+    public function update(Request $request)
     {
+        $relatives = Relatives::find($request->relative_id);
         $input = $request->validate([
             "relative_id" => 'required|string',
             "relative_name" => "required|string",
