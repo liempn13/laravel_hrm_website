@@ -23,7 +23,7 @@ class RelativesController extends Controller
     public function addNewRelatives(Request $request)
     {
         $fields = $request->validate([
-            "relative_id" => 'required|string',
+            "relative_id" => 'required|integer',
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
             "relative_birthday" => "required|date",
@@ -53,7 +53,7 @@ class RelativesController extends Controller
     {
         $relatives = Relatives::find($request->relative_id);
         $input = $request->validate([
-            "relative_id" => 'required|string',
+            "relative_id" => 'required|integer',
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
             "relative_birthday" => "required|date",

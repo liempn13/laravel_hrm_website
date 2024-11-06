@@ -10,6 +10,7 @@ class Relatives extends Model
     use HasFactory;
     protected $table = "relatives";
     protected $primaryKey = "relative_id";
+    protected $keyType = "integer";
     protected $fillable = [
         "relative_name",
         "relationship",
@@ -23,7 +24,7 @@ class Relatives extends Model
     ];
     public $timestamps = false;
     protected $casts = [
-        "relative_id" => 'string',
+        "relative_id" => 'integer',
         "relative_name" => "string",
         "relative_phone" => "string",
         "relative_birthday" => "date",
