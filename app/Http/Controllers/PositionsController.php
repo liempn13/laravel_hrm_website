@@ -45,8 +45,8 @@ class PositionsController extends Controller
     {
         $position = Positions::find($request->position_id);
         $input = $request->validate([
-            "position_id" => "string",
-            "position_name" => "string",
+            "position_id" => "required|string",
+            "position_name" => "required|string",
         ]);
         $position->position_id = $input['position_id'];
         $position->position_name = $input['position_name'];
@@ -54,14 +54,34 @@ class PositionsController extends Controller
         return response()->json(["message" => "Update data success"], 200);
     }
 
-    public function delete(Positions $positions)
-    {
-        $positions->delete();
-        $arr = [
-            "status" => true,
-            "message" => "Delete success",
+    // public function delete(Positions $positions)
+    // {
+    //     $positions->delete();
+    //     $arr = [
+    //         "status" => true,
+    //         "message" => "Delete success",
+    //         "data" => []
+    //     ];
+    //     return response()->json($arr, 200);
+    // }
+    public function delete($id)
+{
+    $position = Positions::find($id);
+
+    if (!$position) {
+        return response()->json([
+            "status" => false,
+            "message" => "Position not found",
             "data" => []
-        ];
-        return response()->json($arr, 200);
+        ], 404);
     }
+
+    $position->delete();
+    return response()->json([
+        "status" => true,
+        "message" => "Delete success",
+        "data" => []
+    ], 200);
+}
+
 }
