@@ -43,25 +43,29 @@ class SalariesController extends Controller
     {
         $fields = $request->validate([
             "salary_id" => "required|string",
-            "salary_coefficient" => "required|double",
-            "allowances" => "nullable|double",
-            "personal_tax" => "double",
+            "salary_coefficient" => "required|numeric",
+            "allowances" => "nullable|numeric",
+            "personal_tax" => "required|numeric",
         ]);
+    
         $newSalary = Salaries::create([
-            'salary_id' => ($fields['salary_id']),
+            'salary_id' => $fields['salary_id'],
+            'salary_coefficient' => $fields['salary_coefficient'],
             'allowances' => $fields['allowances'],
             'personal_tax' => $fields['personal_tax']
         ]);
-        response()->json([], 201);
+    
+        return response()->json($newSalary, 201);
     }
+    
 
     public function update(Request $request, Salaries $salaries)
     {
         $input = $request->validate([
             "salary_id" => "required|string",
-            "salary_coefficient" => "required|double",
-            "allowances" => "nullable|double",
-            "personal_tax" => "double",
+            "salary_coefficient" => "required|numeric",
+            "allowances" => "nullable|numeric",
+            "personal_tax" => "nullable|numeric",
 
         ]);
         $salaries->salary_id = $input['salary_id'];

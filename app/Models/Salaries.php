@@ -10,6 +10,7 @@ class Salaries extends Model
     protected $primaryKey = "salary_id";
     protected $keyType = "string";
     protected $fillable = [
+        "salary_id", // Thêm vào đây
         "salary_coefficient",
         "allowances",
         "personal_tax",

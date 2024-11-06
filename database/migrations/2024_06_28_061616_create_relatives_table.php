@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('relationship');
             $table->string('relative_job');
             $table->string('relative_nation');
-            $table->string('relative_temp-address');
+            $table->string('relative_temp_address');
             $table->string('relative_current_address');
             $table->string('profile_id');
+            $table->timestamps();
         });
     }
 
