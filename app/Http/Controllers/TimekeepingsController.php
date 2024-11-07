@@ -10,11 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class TimekeepingsController extends Controller
 {
-    // public function index()
-    // {
-    //     $timekeepings = Timekeepings::all();
-    //     return response()->json($timekeepings);
-    // }
+    public function show()
+    {
+        return DB::table('timekeepings')
+            ->join('profiles', 'timekeepings.profile_id', '=', 'profiles.profile_id')
+            ->join('shifts', '')
+            ->select(
+                'profiles.profile_id',
+                'profiles.profile_name',
+                'shifts.shift_name'
+            )
+            ->get();
+    }
     public function getTimeKeepingsList()
     {
         return
