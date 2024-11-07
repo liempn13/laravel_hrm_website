@@ -14,7 +14,6 @@ class Shifts extends Model
         "shift_name",
         "start_time",
         "end_time",
-        "status",
     ];
     public $timestamps = false;
     protected $casts = [""];

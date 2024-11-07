@@ -6,7 +6,7 @@ use App\Models\Absents;
 use App\Http\Resources\AbsentsResource as AbsentsResource;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AbsentsController extends Controller
 {
@@ -21,11 +21,15 @@ class AbsentsController extends Controller
             Absents::findOrFail($ID)
         );
     }
-    public function showByProfileID(string $profile_id)
+    public function showAbsentOfProfile(string $profile_id)
     {
-        return (
-            Absents::where('profile_id', $profile_id)->get()
-        );
+        return DB::table('absents')
+            ->join('', '')
+            ->select(
+                'profiles.profile_name',
+                'absents.*'
+            )
+            ->get();
     }
     public function createNewAbsentRequest(Request $request)
     {
@@ -34,8 +38,8 @@ class AbsentsController extends Controller
             "to" => 'nullable|datetime',
             "reason" => "nullable|string",
             "profile_id" => "required|string",
-            "days_off" => "nullable|double",
-            "status" => "",
+            "days_off" => "nullable|numeric",
+            "status" => "required|integer",
         ]);
         $newDecision = Absents::create([
             'from' => ($fields['from']),
@@ -56,8 +60,8 @@ class AbsentsController extends Controller
             "to" => 'nullable|datetime',
             "reason" => "nullable|string",
             "profile_id" => "required|string",
-            "days_off" => "nullable|double",
-            "status" => "integer",
+            "days_off" => "nullable|numeric",
+            "status" => "required|integer",
         ]);
         $absents->from = $input['from'];
         $absents->to = $input['to'];
@@ -71,11 +75,5 @@ class AbsentsController extends Controller
             "data" => new AbsentsResource($absents)
         ];
         return response()->json($arr, 200);
-    }
-
-    public function delete(Absents $absents)
-    {
-        $absents->delete();
-        return response()->json([], 200);
     }
 }

@@ -22,7 +22,6 @@ class ShiftsController extends Controller
             'shift_name' => "required|string",
             'start_time' => "required|time",
             'end_time' => "required|time",
-            'status' => 'required|integer'
         ]);
         $shifts = Shifts::create($input);
         $arr = [
@@ -38,7 +37,9 @@ class ShiftsController extends Controller
         return Shifts::where('shift_id', $shift_id)->get();
     }
 
-    public function update(Request $request) {}
+    public function update(Request $request) {
+        
+    }
 
     public function delete(Shifts $shifts) {
         $shifts->delete();

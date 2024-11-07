@@ -16,6 +16,7 @@ class PayrollDetails extends Model
         "salary_id",
         "advance_money",
         "month",
+        "status"
     ];
     public $timestamps = false;
     protected $casts = [
@@ -25,5 +26,6 @@ class PayrollDetails extends Model
         "minus" => "double",
         "advance_money" => "double",
         "month" => "date",
+        "status" => "boolean"
     ];
 }

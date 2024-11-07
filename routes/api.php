@@ -1,19 +1,46 @@
 <?php
 
+use App\Http\Controllers\AbsentsController;
 use App\Http\Controllers\DecisionsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\DiplomasController;
 use App\Http\Controllers\EnterprisesController;
 use App\Http\Controllers\LaborContractsController;
+use App\Http\Controllers\PayrollDetailsController;
 use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RelativesController;
 use App\Http\Controllers\SalariesController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\ShiftsController;
+use App\Http\Controllers\TimekeepingsController;
 use App\Http\Controllers\WorkingProcessesController;
-
 use Illuminate\Support\Facades\Route;
 
+Route::controller(ShiftsController::class)->group(function () {
+    Route::get('/v1/shift/{id}', '');
+    Route::put('/v1/shift/update/{id}', 'update');
+    Route::post('/v1/shift/create', 'store');
+    Route::delete('/v1/shift/delete', 'delete');
+});
+//
+Route::controller(AbsentsController::class)->group(function () {
+    Route::get('/v1/absents/{profile_id}', 'showAbsentOfProfile');
+    Route::put('/v1/absent/update/{id}', 'update');
+    Route::post('/v1/absent/create', 'createNewAbsentRequest');
+});
+//
+Route::controller(TimekeepingsController::class)->group(function () {
+    Route::get('/v1/timekeepings', 'index');
+    Route::put('/v1/absent/update/{id}', 'update');
+    Route::post('/v1/checkin/{profileID}', 'checkIn');
+});
+//
+Route::controller(PayrollDetailsController::class)->group(function () {
+    Route::get('/v1/payrolls', '');
+    Route::put('/v1/absent/update/{id}', 'update');
+    Route::post('/v1/checkin/{profileID}', 'checkIn');
+});
 //
 Route::controller(DiplomasController::class)->group(function () {
     Route::get('/v1/diploma/{profile_id}', 'getDiplomaOfProfile');
