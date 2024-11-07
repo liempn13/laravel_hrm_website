@@ -26,7 +26,7 @@ Route::controller(DepartmentsController::class)->group(function () {
     Route::get('/v1/departments', 'index');
     Route::put('/v1/department/update', 'update');
     Route::post('/v1/department/create', 'createNewDepartment');
-    Route::delete('/v1/department/delete', 'delete');
+    Route::delete('/v1/department/delete/{id}', 'delete');
 });
 //
 Route::controller(DecisionsController::class)->group(function () {
@@ -39,9 +39,9 @@ Route::controller(DecisionsController::class)->group(function () {
 //
 Route::controller(PositionsController::class)->group(function () {
     Route::get('/v1/positions', 'index');
-    Route::put('/v1/position/update/{id}', 'update');
+    Route::put('/v1/position/update', 'update');
     Route::post('/v1/position/create', 'createNewPosition');
-    Route::delete('/v1/position/delete', 'delete');
+    Route::delete('/v1/position/delete/{id}', 'delete');
 });
 //
 Route::controller(EnterprisesController::class)->group(function () {

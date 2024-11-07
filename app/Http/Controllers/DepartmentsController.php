@@ -46,10 +46,29 @@ class DepartmentsController extends Controller
         $department->update();
         return response()->json([], 200);
     }
-
-    public function delete(Departments $departments)
+    
+    // public function delete(Departments $departments)
+    // {
+    //     $departments->delete();
+    //     return response()->json([], 200);
+    // }
+    public function delete($id)
     {
+        $departments = Departments::find($id);
+    
+        if (!$departments) {
+            return response()->json([
+                "status" => false,
+                "message" => "Department not found",
+                "data" => []
+            ], 404);
+        }
+    
         $departments->delete();
-        return response()->json([], 200);
+        return response()->json([
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ], 200);
     }
 }
