@@ -23,7 +23,7 @@ class SalariesController extends Controller
             Salaries::findOrFail($id)
         );
     }
-    public function getSalarySlip(string $salary_id)
+    public function getSalarySlip(string $profile_id)
     {
         return
             DB::table('salaries')
@@ -34,7 +34,7 @@ class SalariesController extends Controller
                 'positions.position_name',
                 'salaries.*'
             )
-            ->where([['salaries.salary_id', '=', $salary_id]],)
+            ->where([['profiles.profile_id', '=', $profile_id]],)
             ->get()
         ;
     }
