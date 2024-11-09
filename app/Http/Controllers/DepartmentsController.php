@@ -18,7 +18,21 @@ class DepartmentsController extends Controller
     {
         return Departments::findOrFail($profile_id);
     }
-
+    public function getDepartmentMembers(string $department_id)
+    {
+        $this->authorize('view_department_members');
+        return
+            DB::table('departments')
+            ->join('profiles', 'departments.department_id', '=', 'profiles.department_id')
+            ->join('positions', 'profiles.position_id', '=', 'positions.position_id')
+            ->select(
+                'profiles.profile_name',
+                'positions.position_name'
+            )
+            ->where([['departments.department_id', '=', $department_id]],)
+            ->get()
+        ;
+    }
     public function createNewDepartment(Request $request)
     {
         $this->authorize('isBoardOfDirectors');
@@ -33,7 +47,6 @@ class DepartmentsController extends Controller
         return response()->json([], 201);
     }
 
-
     public function update(Request $request)
     {
         $department = Departments::find($request->department_id);
@@ -46,7 +59,7 @@ class DepartmentsController extends Controller
         $department->update();
         return response()->json([], 200);
     }
-    
+
     // public function delete(Departments $departments)
     // {
     //     $departments->delete();
@@ -55,7 +68,7 @@ class DepartmentsController extends Controller
     public function delete($id)
     {
         $departments = Departments::find($id);
-    
+
         if (!$departments) {
             return response()->json([
                 "status" => false,
@@ -63,7 +76,7 @@ class DepartmentsController extends Controller
                 "data" => []
             ], 404);
         }
-    
+
         $departments->delete();
         return response()->json([
             "status" => true,

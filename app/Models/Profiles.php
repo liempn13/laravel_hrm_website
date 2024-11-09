@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Events\Authenticated;
-use Illuminate\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
-
-class Profiles extends Model
+class Profiles extends Authenticatable
 {
-    use Notifiable, MustVerifyEmail, HasFactory, HasApiTokens;
+    use Notifiable, HasApiTokens;
 
     protected $table = "profiles";
     protected $primaryKey = "profile_id";
@@ -71,4 +69,27 @@ class Profiles extends Model
         "salary_id" => "string",
         "labor_contract_id" => "string",
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'profiles');
+    }
+    public function department()
+    {
+        return $this->belongsToMany(Departments::class, 'profiles');
+    }
+    public function position()
+    {
+        return $this->belongsToMany(Positions::class, 'profiles');
+    }
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('name', $permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -18,8 +18,12 @@ class Permissions extends Model
     ];
     public $timestamps = false;
     protected $casts = [
-        "permission_id" => "string",
+        "permission_id" => "integer",
         "permission_name" => "string",
-
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'role_permission');
+    }
 }
