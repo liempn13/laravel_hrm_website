@@ -109,13 +109,10 @@ Route::controller(SalariesController::class)->group(function () {
 });
 
 Route::controller(ProfilesController::class)->group(function () {
-    Route::get('/v1/profiles', 'index');
     Route::get('/v1/profile/info/{id}', 'getUserProfileInfo');
-    Route::get('/v1/department/members/{department_id}', 'getDepartmentMembers'); //Load danh sách nhân viên của phòng ban theo mã phòng
     Route::post('/v1/profile/auth/register', 'registerNewProfile');
     Route::post('/v1/auth/login/email', 'emailLogin');
     Route::post('/v1/auth/login/phone', 'phoneNumberLogin');
-    Route::post('/v1/logout', 'logout');
     Route::put('/v1/profile/info/update', 'update');
     Route::put('/v1/profile/lock', 'lockAndUnlock'); // khoá tài khoản tạm thời = 0 và mở khoá = 1
 });
@@ -129,5 +126,9 @@ Route::controller(LaborContractsController::class)->group(function () {
     Route::post('v1', '');
 });
 Route::middleware(['auth:sanctum'])->group(function () {
-    // Route::get('/v1/department/members/{department_id}', 'getDepartmentMembers');
+    Route::post('/v1/logout', [ProfilesController::class, 'logout']);
+    Route::middleware(['can:Manage your department members', 'can:Manage BoD & HR accounts'])
+        ->get('/v1/department/members/{department_id}', [DepartmentsController::class, 'getDepartmentMembers']);
+    Route::middleware(['can:Manage BoD & HR accounts'])
+        ->get('/v1/profiles', [ProfilesController::class, 'index']);
 });

@@ -6,15 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Profiles;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 
 class ProfilesController extends Controller
 {
     public function index()
     {
-
         $profiles = Profiles::all();
         return response()->json($profiles);
     }
@@ -50,21 +47,6 @@ class ProfilesController extends Controller
             )->where('profiles.profile_id', $profile_id)
             ->get();
     }
-    public function getDepartmentMembers(string $department_id)
-    {
-        $this->authorize('view_department_members');
-        return
-            DB::table('departments')
-            ->join('profiles', 'departments.department_id', '=', 'profiles.department_id')
-            ->join('positions', 'profiles.position_id', '=', 'positions.position_id')
-            ->select(
-                'profiles.profile_name',
-                'positions.position_name'
-            )
-            ->where([['departments.department_id', '=', $department_id]],)
-            ->get()
-        ;
-    }
 
     public function emailLogin(Request $request)
     {
@@ -79,15 +61,28 @@ class ProfilesController extends Controller
         //Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Bad creds'
+                'message' => 'Sai mật khẩu hoặc email/ số điện thoại'
             ], 401);
-        }
+        } else {
+            // Tạo API token cho người dùng
+            $token = $user->createToken('API TOKEN')->plainTextToken;
 
-        return response()->json(
-            $user,
-            200
-        );
+            return response()->json(
+                [
+                    'user' => $user,
+                    'token' => $token,
+                    'role_permissions' =>
+                    DB::table('role_permission')
+                        ->join('roles', 'role_permission.role_id', '=', 'roles.role_id')
+                        ->join('permissions', 'role_permission.permission_id', '=', 'permissions.permission_id')
+                        ->select('permissions.permission_name')
+                        ->where('role_permission.role_id', $user->role_id)->get(),
+                ],
+                200
+            );
+        }
     }
+
     public function phoneNumberLogin(Request $request)
     {
         $fields = $request->validate([
@@ -100,14 +95,27 @@ class ProfilesController extends Controller
         //Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Bad creds'
+                'message' => 'Sai mật khẩu hoặc email/ số điện thoại'
             ], 401);
-        }
+        } else {
+            // Tạo API token cho người dùng
+            $token = $user->createToken('API TOKEN')->plainTextToken;
 
-        return response()->json(
-            $user,
-            200
-        );
+            return response()->json(
+                [
+                    'user' => $user,
+                    'token' => $token,
+                    'role_permissions' =>
+                    DB::table('role_permission')
+                        ->join('roles', 'role_permission.role_id', '=', 'roles.role_id')
+                        ->join('permissions', 'role_permission.permission_id', '=', 'permissions.permission_id')
+                        ->select('permissions.permission_name')
+                        ->where('role_permission.role_id', $user->role_id)->get(),
+
+                ],
+                200
+            );
+        }
     }
 
     public function registerNewProfile(Request $request)
@@ -161,17 +169,20 @@ class ProfilesController extends Controller
             "salary_id" => $fields["salary_id"],
             "labor_contract_id" => $fields["labor_contract_id"],
         ]);
-
+        // Tạo API token cho người dùng
         $token = $newProfile->createToken('API TOKEN')->plainTextToken;
-        return response()->json([
-            'profile' => $newProfile,
-            'token' => $token
-        ], 201);
+        return response()->json(
+            [
+                'user' => $newProfile,
+                'token' => $token
+            ],
+            201
+        );
     }
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        $request->user()->currentAccessToken()->delete();
         return response()->json([
             "message" => "Logged out"
         ]);
