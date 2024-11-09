@@ -20,7 +20,18 @@ class ProfilesController extends Controller
     {
         return Profiles::findOrFail($profile_id);
     }
-
+    public function departmentMembersCount(string $department_id) //SL nhân viên đang làm việc tại phòng ban
+    {
+        return Profiles::where(['department_id' => $department_id, 'profile_status' => 1])->count();;
+    }
+    public function positionMembersCount(string $position_id) //SL nhân viên đang làm việc và nắm chức vụ hiện tại
+    {
+        return Profiles::where(['position_id' => $position_id, 'profile_status' => 1])->count();;
+    }
+    public function quitMembersCount() //SL nhân viên đã nghỉ việc
+    {
+        return Profiles::where('profile_status', 0)->count();;
+    }
     public function getUserProfileInfo(string $profile_id)
     {
         return DB::table('profiles')

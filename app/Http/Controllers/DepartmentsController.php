@@ -18,9 +18,10 @@ class DepartmentsController extends Controller
     {
         return Departments::findOrFail($profile_id);
     }
+
     public function getDepartmentMembers(string $department_id)
     {
-        $this->authorize('view_department_members');
+        $this->authorizeEither('', 'Manage BoD & HR accounts');
         return
             DB::table('departments')
             ->join('profiles', 'departments.department_id', '=', 'profiles.department_id')
