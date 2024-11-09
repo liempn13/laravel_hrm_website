@@ -34,8 +34,8 @@ class AbsentsController extends Controller
     public function createNewAbsentRequest(Request $request)
     {
         $fields = $request->validate([
-            "from" => "required|datetime",
-            "to" => 'nullable|datetime',
+            'from' => 'required|date_format:d-m-Y', // Xác thực ngày từ
+            'to' => 'nullable|date_format:d-m-Y',   // Xác thực ngày đến, có thể là null
             "reason" => "nullable|string",
             "profile_id" => "required|string",
             "days_off" => "nullable|numeric",

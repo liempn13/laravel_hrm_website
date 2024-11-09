@@ -33,7 +33,7 @@ class RelativesController extends Controller
             "relative_current_address" => "required|string",
             "profile_id" => 'required|string',
         ]);
-        $newDepartment = Relatives::create(attributes: [
+        $newRelative = Relatives::create(attributes: [
             'profile_id' => $fields['profile_id'],
             'relative_name' => $fields['relative_name'],
             'relative_phone' => $fields['relative_phone'],
@@ -44,12 +44,23 @@ class RelativesController extends Controller
             "relative_temp_address" => $fields["relative_temp_address"],
             "relationship" => $fields["relationship"],
         ]);
-        return response()->json([], 201);
+        $arr = [
+            "status" => true,
+            "message" => "Delete success",
+            "data" => new RelativesResource($newRelative)
+        ];
+        return response()->json([$arr], 201);
     }
 
     public function update(Request $request)
     {
         $relatives = Relatives::find($request->relative_id);
+        // Kiểm tra xem relative có tồn tại không
+    if (!$relatives) {
+        return response()->json([
+            'message' => 'Relative not found'
+        ], 404);  // Trả về lỗi 404 nếu không tìm thấy relative
+    }
         $input = $request->validate([
             "relative_id" => 'required|integer',
             "relative_name" => "required|string",
