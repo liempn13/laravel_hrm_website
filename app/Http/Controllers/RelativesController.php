@@ -21,7 +21,7 @@ class RelativesController extends Controller
     public function addNewRelatives(Request $request)
     {
         $fields = $request->validate([
-            "relative_id" => "required|integer",
+            "relative_id" => "integer",
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
             "relative_birthday" => "required|date",
