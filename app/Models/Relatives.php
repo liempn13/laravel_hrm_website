@@ -12,15 +12,16 @@ class Relatives extends Model
     protected $primaryKey = "relative_id";
     protected $keyType = "integer";
     protected $fillable = [
+        "relative_id",
         "relative_name",
-        "relationship",
         "relative_phone",
         "relative_birthday",
+        "relationship",
+        "relative_job",
+        "relative_nation",
         "relative_temp_address",
         "relative_current_address",
-        "relative_nation",
-        "relavtive_job",
-        "profile_id"
+        "profile_id",
     ];
     public $timestamps = false;
     protected $casts = [
@@ -33,6 +34,6 @@ class Relatives extends Model
         "relative_nation" => "string",
         "relative_temp_address" => "string",
         "relative_current_address" => "string",
-        "profile_id" => 'string',
+        "profile_id" => "string",
     ];
 }

@@ -21,7 +21,6 @@ class DepartmentsController extends Controller
 
     public function getDepartmentMembers(string $department_id)
     {
-        $this->authorizeEither('', 'Manage BoD & HR accounts');
         return
             DB::table('departments')
             ->join('profiles', 'departments.department_id', '=', 'profiles.department_id')
@@ -61,11 +60,6 @@ class DepartmentsController extends Controller
         return response()->json([], 200);
     }
 
-    // public function delete(Departments $departments)
-    // {
-    //     $departments->delete();
-    //     return response()->json([], 200);
-    // }
     public function delete($id)
     {
         $departments = Departments::find($id);

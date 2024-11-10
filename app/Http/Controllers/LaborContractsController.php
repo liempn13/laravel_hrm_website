@@ -53,7 +53,7 @@ class LaborContractsController extends Controller
             "start_time" => "required|datetime",
             "image" => "nullable|string",
             "enterprise_id" => "integer|required",
-            "deparment_id" => "required",
+            "deparment_id" => "required|string",
         ]);
         $newLaborContract = LaborContracts::create([
             'labor_contract_id' => ($fields['labor_contract_id']),
@@ -74,7 +74,7 @@ class LaborContractsController extends Controller
             "start_time" => "required|datetime",
             "image" => "nullable|string",
             "enterprise_id" => "boolean|required",
-            "deparment_id" => "required",
+            "deparment_id" => "required|string",
         ]);
         $laborContracts->labor_contract_id = $input['labor_contract_id'];
         $laborContracts->start_time = $input['start_time'];

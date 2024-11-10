@@ -19,9 +19,8 @@ class DecisionsController extends Controller
     }
     public function show(string $id)
     {
-        return (
-            Decisions::findOrFail($id)
-        );
+        return
+            Decisions::findOrFail($id);
     }
     public function showByID(string $id)
     {

@@ -20,16 +20,11 @@ class ShiftsController extends Controller
         $input = $request->validate([
             'shift_id' => "required|string",
             'shift_name' => "required|string",
-            'start_time' => "required|time",
-            'end_time' => "required|time",
+            'start_time' => "required|date_format:H:i",
+            'end_time' => "required|date_format:H:i",
         ]);
-        $shifts = Shifts::create($input);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new ShiftsResource($shifts)
-        ];
-        return response()->json($arr, 201);
+        Shifts::create($input);
+        return response()->json([], 201);
     }
 
     public function show(string $shift_id)
@@ -37,12 +32,45 @@ class ShiftsController extends Controller
         return Shifts::where('shift_id', $shift_id)->get();
     }
 
-    public function update(Request $request) {
-        
+    public function update(Request $request)
+    {
+        $checkOut = Shifts::find($request->shift_id);
+        $input = $request->validate([
+            'shift_id' => "required|string",
+            'shift_name' => "required|string",
+            'start_time' => "required|date_format:H:i",
+            'end_time' => "required|date_format:H:i",
+        ]);
+        $checkOut->shift_id = $input['shift_id'];
+        $checkOut->shift_name = $input['shift_name'];
+        $checkOut->start_time = $input['start_time'];
+        $checkOut->end_time = $input['end_time'];
+        $checkOut->save();
+        return response()->json([], 200);
     }
 
-    public function delete(Shifts $shifts) {
+    // public function delete(Shifts $shifts)
+    // {
+    //     $shifts->delete();
+    //     return response()->json(["message" => "Delete success",], 200);
+    // }
+    public function delete($id)
+    {
+        $shifts = Shifts::find($id);
+    
+        if (!$shifts) {
+            return response()->json([
+                "status" => false,
+                "message" => "Shifts not found",
+                "data" => []
+            ], 404);
+        }
+    
         $shifts->delete();
-        return response()->json(["message" => "Delete success",], 200);
+        return response()->json([
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ], 200);
     }
 }
