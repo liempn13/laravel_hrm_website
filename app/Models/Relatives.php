@@ -26,7 +26,7 @@ class Relatives extends Model
     public $timestamps = false;
     protected $casts = [
         "relative_id" => 'integer',
-        "relative_name",
+        "relative_name" => "string",
         "relative_phone" => "string",
         "relative_birthday" => "date",
         "relationship" => "string",
@@ -34,6 +34,6 @@ class Relatives extends Model
         "relative_nation" => "string",
         "relative_temp_address" => "string",
         "relative_current_address" => "string",
-        "profile_id" => 'string',
+        "profile_id" => "string",
     ];
 }
