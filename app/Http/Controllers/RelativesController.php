@@ -23,6 +23,7 @@ class RelativesController extends Controller
     public function addNewRelatives(Request $request)
     {
         $fields = $request->validate([
+            "relative_id" => "required|integer",
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
             "relative_birthday" => "required|date",
@@ -34,6 +35,7 @@ class RelativesController extends Controller
             "profile_id" => 'required|string',
         ]);
         $newRelative = Relatives::create(attributes: [
+            'relative_id' => $fields['relative_id'],
             'profile_id' => $fields['profile_id'],
             'relative_name' => $fields['relative_name'],
             'relative_phone' => $fields['relative_phone'],
