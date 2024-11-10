@@ -10,9 +10,14 @@ class Projects extends Model
     protected $primaryKey = "project_id";
     protected $keyType = "string";
     protected $fillable = [
+        "project_id",
         "project_name",
         "project_status",
-        ] ;
+    ];
     public $timestamps = false;
-    protected $casts = [""] ;
+    protected $casts = [
+        "project_id"=>"string",
+        "project_name" => "string",
+        "project_status" => "integer",
+    ];
 }

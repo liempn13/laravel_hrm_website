@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Profiles;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class ProfilesController extends Controller
 {
@@ -22,15 +24,27 @@ class ProfilesController extends Controller
     }
     public function departmentMembersCount(string $department_id) //SL nhân viên đang làm việc tại phòng ban
     {
-        return Profiles::where(['department_id' => $department_id, 'profile_status' => 1])->count();;
+        $profiles = Profiles::where(['department_id' => $department_id, 'profile_status' => 1])->get();;
+        return response()->json([
+            'profiles' => $profiles,
+            'totals' => $profiles->count(),
+        ]);
     }
     public function positionMembersCount(string $position_id) //SL nhân viên đang làm việc và nắm chức vụ hiện tại
     {
-        return Profiles::where(['position_id' => $position_id, 'profile_status' => 1])->count();;
+        $profiles = Profiles::where(['position_id' => $position_id, 'profile_status' => 1])->get();;
+        return response()->json([
+            'profiles' => $profiles,
+            'totals' => $profiles->count(),
+        ]);
     }
     public function quitMembersCount() //SL nhân viên đã nghỉ việc
     {
-        return Profiles::where('profile_status', 0)->count();;
+        $profiles = Profiles::where('profile_status', 0)->get();;
+        return response()->json([
+            'profiles' => $profiles,
+            'totals' => $profiles->count(),
+        ]);
     }
     public function getUserProfileInfo(string $profile_id)
     {
@@ -275,5 +289,30 @@ class ProfilesController extends Controller
         $profiles->profile_status = $input['profile_status'];
         $profiles->save();
         return response()->json([], 200);
+    }
+    public function changePassword(Request $request)
+    {
+        // Xác thực dữ liệu đầu vào
+        $request->validate([
+            'password' => 'required|string',
+            'new_password' => 'required|string|confirmed', // Sử dụng "confirmed" để yêu cầu nhập lại
+        ]);
+
+        // Lấy người dùng hiện tại
+        $user = Profiles::find($request->profile_id);
+        // Kiểm tra xem hồ sơ có tồn tại và có đang bị khoá không
+        if (!$user && $user->profile_status == 0) {
+            return response()->json(['message' => 'Profile not found'], 404);
+        }
+
+        // Kiểm tra xem mật khẩu hiện tại có đúng không
+        if (!Hash::check($request->current_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'password' => ['Mật khẩu hiện tại không đúng.'],
+            ]);
+        }
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+        return response()->json(['message' => 'Đổi mật khẩu thành công.'], 200);
     }
 }

@@ -22,14 +22,20 @@ class TimekeepingsController extends Controller
             )
             ->get();
     }
+    public function showByProfileID(string $profile_id)
+    {
+        return Timekeepings::where('profile_id', $profile_id)->get();
+    }
     public function getTimeKeepingsList()
     {
         return
             DB::table('timekeepings')
             ->join('profiles', 'timekeepings.profile_id', '=', 'profiles.profile_id')
+            ->join('shifts', 'timekeepings.shift_id', '=', 'shifts.shift_id')
             ->select(
                 'timekeepings.*',
-                'profiles.profile_name'
+                'profiles.profile_name',
+                'shifts.shift_name',
             )
             ->get()
         ;
@@ -38,7 +44,7 @@ class TimekeepingsController extends Controller
     {
         $input = $request->validate([
             'timekeeping_id' => "integer",
-            'profile_id' => "required",
+            'profile_id' => "required|string",
             'late' => "nullable|time",
             'checkin' => "required|time",
             'checkout' => "nullable|time",
@@ -55,15 +61,30 @@ class TimekeepingsController extends Controller
         ];
         return response()->json($arr, 201);
     }
-
-
-    public function showByProfileID(string $profile_id)
-    {
-        return Timekeepings::where('profile_id', $profile_id)->get();
-    }
-
     public function checkOut(Request $request)
     {
         $checkOut = Timekeepings::find($request->timekeeping_id);
+        $input = $request->validate([
+            'timekeeping_id' => "integer",
+            'profile_id' => "required|string",
+            'late' => "nullable|time",
+            'checkin' => "required|time",
+            'checkout' => "required|time",
+            'shift_id' => "string",
+            'leaving_soon' => "nullable|time",
+            'date' => "required|date",
+            'status' => 'required|integer'
+        ]);
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->save();
+        return response()->json([], 200);
     }
 }

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Projects;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\ProjectsResource as ProjectsResource;
 
 class ProjectsController extends Controller
 {
@@ -32,7 +30,7 @@ class ProjectsController extends Controller
 
     public function update(Request $request, Projects $projects)
     {
-        
+
         $input = $request->validate([
             "project_id" => "required|string",
             "project_name" => "required|string",
@@ -43,5 +41,10 @@ class ProjectsController extends Controller
         $projects->project_status = $input['project_status'];
         $projects->save();
         return response()->json([], 200);
+    }
+    public function delete(Projects $projects)
+    {
+        $projects->delete();
+        return response()->json(["message" => "Delete success"], 200);
     }
 }

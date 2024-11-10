@@ -18,7 +18,7 @@ class AssignmentsController extends Controller
 
     public function show(string $id)
     {
-        return (Assignments::findOrFail($id));
+        return Assignments::findOrFail($id);
     }
     public function getAssigmentDetails(string $department_id)
     {
@@ -39,7 +39,7 @@ class AssignmentsController extends Controller
     public function create(Request $request)
     {
         $fields = $request->validate([
-            "assignment_id" => "required|string",
+            "assignment_id" => "required|integer",
             "profile_id" => "required|string",
             "task_id" => 'nullable|string',
             "project_id" => "required|string",
@@ -53,10 +53,11 @@ class AssignmentsController extends Controller
         return response()->json([], 201);
     }
 
-    public function update(Request $request, Assignments $assignments)
+    public function update(Request $request)
     {
+        $assignments = Assignments::find($request->assignment_id);
         $input = $request->validate([
-            "assignment_id" => "required|string",
+            "assignment_id" => "required|integer",
             "profile_id" => "required|string",
             "task_id" => 'nullable|string',
             "project_id" => "required|string",
@@ -67,11 +68,6 @@ class AssignmentsController extends Controller
         $assignments->task_id = $input['task_id'];
         $assignments->project_id = $input['project_id'];
         $assignments->save();
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new AssignmentsResource($assignments)
-        ];
-        return response()->json($arr, 200);
+        return response()->json([], 200);
     }
 }
