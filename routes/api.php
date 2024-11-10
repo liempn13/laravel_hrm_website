@@ -49,10 +49,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/v1/department/delete/{id}', 'delete');
     });
     Route::controller(ShiftsController::class)->group(function () {
-        Route::get('/v1/shift/{id}', '');
-        Route::put('/v1/shift/update/{id}', 'update');
+        Route::get('/v1/shifts', 'index');
+        Route::put('/v1/shift/update', 'update');
         Route::post('/v1/shift/create', 'store');
-        Route::delete('/v1/shift/delete', 'delete');
+        Route::delete('/v1/shift/delete/{id}', 'delete');
     });
     //
     Route::controller(AbsentsController::class)->group(function () {
@@ -101,10 +101,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(RelativesController::class)->group(
         function () {
             Route::get('/v1/relative/{id}', '');
-            Route::get('/v1/profile/relatives/{id}', ''); //Lấy ra thông tin các thân nhân của nhân viên có id là id được truyền vào
+            Route::get('/v1/profile/relatives/{id}', 'showRelativesOf'); //Lấy ra thông tin các thân nhân của nhân viên có id là id được truyền vào
             Route::post('/v1/relatives/create', 'addNewRelatives');
-            Route::put('/v1/relatives/update/{id}', 'update');
-            Route::delete('/v1/relatives/delete', 'delete');
+            Route::put('/v1/relatives/update', 'update');
+            Route::delete('/v1/relatives/delete/{profile_id}', 'delete');
         }
     );
     //

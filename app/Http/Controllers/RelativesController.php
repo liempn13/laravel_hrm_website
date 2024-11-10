@@ -21,7 +21,6 @@ class RelativesController extends Controller
     public function addNewRelatives(Request $request)
     {
         $fields = $request->validate([
-            "relative_id" => "integer",
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
             "relative_birthday" => "required|date",
@@ -33,7 +32,6 @@ class RelativesController extends Controller
             "profile_id" => 'required|string',
         ]);
         $newRelative = Relatives::create(attributes: [
-            'relative_id' => $fields['relative_id'],
             'profile_id' => $fields['profile_id'],
             'relative_name' => $fields['relative_name'],
             'relative_phone' => $fields['relative_phone'],
@@ -89,4 +87,30 @@ class RelativesController extends Controller
         $relatives->delete();
         return response()->json(["message" => "Delete success",], 200);
     }
+    // public function delete($profile_id)
+    // {
+    //     // Tìm tất cả relatives có profile_id tương ứng
+    //     $relatives = Relatives::where('profile_id', $profile_id)->get();
+    
+    //     // Nếu không tìm thấy relatives
+    //     if ($relatives->isEmpty()) {
+    //         return response()->json([
+    //             "status" => false,
+    //             "message" => "No relatives found for this profile",
+    //             "data" => []
+    //         ], 404); // Trả về lỗi 404 nếu không tìm thấy
+    //     }
+    
+    //     // Xóa tất cả relatives liên kết với profile_id
+    //     foreach ($relatives as $relative) {
+    //         $relative->delete();
+    //     }
+    
+    //     return response()->json([
+    //         "status" => true,
+    //         "message" => "Relatives deleted successfully",
+    //         "data" => []
+    //     ], 200); // Trả về mã 200 nếu xóa thành công
+    // }
+    
 }

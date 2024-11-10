@@ -11,10 +11,16 @@ class Shifts extends Model
     protected $primaryKey = "shift_id";
     protected $keyType = "string";
     protected $fillable = [
+        "shift_id",
         "shift_name",
         "start_time",
         "end_time",
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        "shift_id" => "string",
+        "shift_name" => "string",
+        "start_time" => "datetime",
+        "end_time" => "datetime",
+    ];
 }
