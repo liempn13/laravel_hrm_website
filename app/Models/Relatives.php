@@ -12,20 +12,21 @@ class Relatives extends Model
     protected $primaryKey = "relative_id";
     protected $keyType = "integer";
     protected $fillable = [
+        "relative_id",
         "relative_name",
-        "relationship",
         "relative_phone",
         "relative_birthday",
+        "relationship",
+        "relative_job",
+        "relative_nation",
         "relative_temp_address",
         "relative_current_address",
-        "relative_nation",
-        "relavtive_job",
-        "profile_id"
+        "profile_id",
     ];
     public $timestamps = false;
     protected $casts = [
         "relative_id" => 'integer',
-        "relative_name" => "string",
+        "relative_name",
         "relative_phone" => "string",
         "relative_birthday" => "date",
         "relationship" => "string",
