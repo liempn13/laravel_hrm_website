@@ -28,8 +28,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProfilesController::class)->group(function () {
         Route::post('/v1/logout', 'logout');
         Route::get('/v1/profiles', 'index');
+        Route::get('/v1/profiles/department{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
+        Route::get('/v1/profiles/position{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
+        Route::get('/v1/profiles/quit', 'quitMembersCount'); //Danh sách nhân viên đã nghỉ việc và số lượng
+        Route::get('/v1/profiles', 'index');
         Route::post('/v1/profile/auth/register', 'registerNewProfile');
-        Route::put('v1/profile/update','update');
+        Route::put('v1/profile/update', 'update');
         Route::put('/v1/profile/lock', 'lockAndUnlock'); // khoá tài khoản tạm thời = 0 và mở khoá = 1
     });
     Route::controller(PositionsController::class)->group(function () {
@@ -45,10 +49,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/v1/department/delete/{id}', 'delete');
     });
     Route::controller(ShiftsController::class)->group(function () {
-        Route::get('/v1/shift/{id}', '');
-        Route::put('/v1/shift/update/{id}', 'update');
+        Route::get('/v1/shifts', 'index');
+        Route::put('/v1/shift/update', 'update');
         Route::post('/v1/shift/create', 'store');
-        Route::delete('/v1/shift/delete', 'delete');
+        Route::delete('/v1/shift/delete/{id}', 'delete');
     });
     //
     Route::controller(AbsentsController::class)->group(function () {
@@ -59,15 +63,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(TimekeepingsController::class)->group(function () {
         Route::get('/v1/timekeepings', 'index');
-        Route::put('/v1/absent/update/{id}', 'update');
         Route::post('/v1/checkin/{profileID}', 'checkIn');
+        Route::put('/v1/absent/update/{id}', 'checkOut');
     });
     //
-    Route::controller(PayrollDetailsController::class)->group(function () {
-        Route::get('/v1/payrolls', '');
-        Route::put('/v1/absent/update/{id}', 'update');
-        Route::post('/v1/checkin/{profileID}', 'checkIn');
-    });
+    // Route::controller(PayrollDetailsController::class)->group(function () {
+    //     Route::get('/v1/payrolls', '');
+    //     Route::put('/v1/update/{id}', 'update');
+    //     Route::post('/v1', '');
+    // });
     //
     Route::controller(DiplomasController::class)->group(function () {
         Route::get('/v1/diploma/{profile_id}', 'getDiplomaOfProfile');
@@ -89,18 +93,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::controller(ProjectsController::class)->group(function () {
         Route::get('/v1', '');
-        Route::put('/v1', '');
-        Route::post('/v1',);
-        Route::delete('/v1', '');
+        Route::put('/v1/project/create', '');
+        Route::post('/v1/project/update',);
+        Route::delete('/v1/project/delete', '');
     });
     //
     Route::controller(RelativesController::class)->group(
         function () {
             Route::get('/v1/relative/{id}', '');
-            Route::get('/v1/profile/relatives/{id}', ''); //Lấy ra thông tin các thân nhân của nhân viên có id là id được truyền vào
+            Route::get('/v1/profile/relatives/{id}', 'showRelativesOf'); //Lấy ra thông tin các thân nhân của nhân viên có id là id được truyền vào
             Route::post('/v1/relatives/create', 'addNewRelatives');
-            Route::put('/v1/relatives/update/{id}', 'update');
-            Route::delete('/v1/relatives/delete', 'delete');
+            Route::put('/v1/relatives/update', 'update');
+            Route::delete('/v1/relatives/delete/{profile_id}', 'delete');
         }
     );
     //
@@ -119,11 +123,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/v1/salary/delete', 'delete');
     });
     Route::controller(LaborContractsController::class)->group(function () {
-        Route::get('/v1/profile/labor-contract/{id}', 'showLaborContractDetails');
-        Route::get('/v1', '');
-        Route::get('/v1', '');
-        Route::post('v1', '');
-        Route::post('v1', '');
-        Route::post('v1', '');
+        Route::get('/v1/profile/contract/{id}', 'showLaborContractDetails');
+        Route::post('/v1/profile/contract', 'createNewLaborContract');
+        Route::put('v1/profile/contract', 'update');
     });
 });

@@ -9,7 +9,7 @@ class Assignments extends Model
 {
     protected $table = "assigments";
     protected $primaryKey = "assigment_id";
-    protected $keyType = "string";
+    protected $keyType = "integer";
     protected $fillable = [
         "assigment_id",
         "profile_id",
@@ -18,7 +18,7 @@ class Assignments extends Model
     ];
     public $timestamps = false;
     protected $casts = [
-        "assignment_id" => "string",
+        "assignment_id" => "integer",
         "profile_id" => "string",
         "task_id" => 'string',
         "project_id" => "string",
