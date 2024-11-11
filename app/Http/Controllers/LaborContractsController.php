@@ -49,11 +49,11 @@ class LaborContractsController extends Controller
     {
         $fields = $request->validate([
             "labor_contract_id" => "required|string",
-            "end_time" => "required|datetime",
-            "start_time" => "required|datetime",
-            "image" => "nullable|string",
-            "enterprise_id" => "integer|required",
-            "deparment_id" => "required|string",
+            "end_time" => "nullable|date_format:d-m-Y",
+            "start_time" => "required|date_format:d-m-Y",
+            "image" => "required|string",
+            "enterprise_id" => "required|integer",
+            "department_id" => "required|string",
         ]);
         $newLaborContract = LaborContracts::create([
             'labor_contract_id' => ($fields['labor_contract_id']),
@@ -61,7 +61,7 @@ class LaborContractsController extends Controller
             'start_time' => ($fields['start_time']),
             'image' => ($fields['image']),
             'end_time' => ($fields['end_time']),
-            'deparment_id' => ($fields['deparment_id']),
+            'department_id' => ($fields['department_id']),
         ]);
         return response()->json([], 201);
     }
@@ -74,13 +74,13 @@ class LaborContractsController extends Controller
             "start_time" => "required|datetime",
             "image" => "nullable|string",
             "enterprise_id" => "boolean|required",
-            "deparment_id" => "required|string",
+            "department_id" => "required|string",
         ]);
         $laborContracts->labor_contract_id = $input['labor_contract_id'];
         $laborContracts->start_time = $input['start_time'];
         $laborContracts->end_time = $input['end_time'];
         $laborContracts->enterprise_id = $input['enterprise_id'];
-        $laborContracts->deparment_id = $input['deparment_id'];
+        $laborContracts->deparment_id = $input['department_id'];
         $laborContracts->image = $input['image'];
         $laborContracts->save();
         return response()->json([], 200);

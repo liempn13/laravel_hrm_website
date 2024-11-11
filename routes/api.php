@@ -92,10 +92,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/v1/enterprise/info/update', 'update');
     });
     Route::controller(ProjectsController::class)->group(function () {
-        Route::get('/v1', '');
-        Route::put('/v1/project/create', '');
-        Route::post('/v1/project/update',);
-        Route::delete('/v1/project/delete', '');
+        Route::get('/v1/projects', 'index');
+        Route::post('/v1/project/create', 'createNewProject');
+        Route::put('/v1/project/update','update');
+        Route::delete('/v1/project/delete/{id}', 'delete');
     });
     //
     Route::controller(RelativesController::class)->group(
@@ -123,8 +123,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/v1/salary/delete', 'delete');
     });
     Route::controller(LaborContractsController::class)->group(function () {
-        Route::get('/v1/profile/contract/{id}', 'showLaborContractDetails');
-        Route::post('/v1/profile/contract', 'createNewLaborContract');
-        Route::put('v1/profile/contract', 'update');
+        Route::get('/v1/contract/{id}', 'showLaborContractDetails');
+        Route::post('/v1/contract/create', 'createNewLaborContract');
+        Route::put('v1/contract/update', 'update');
     });
 });
