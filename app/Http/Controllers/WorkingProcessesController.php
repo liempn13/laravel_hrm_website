@@ -38,7 +38,7 @@ class WorkingProcessesController extends Controller
     {
         $workingProcesses = WorkingProcesses::find($request->workingprocesses_id);
         $input = $request->validate([
-            'workingprocesses_id' => "",
+            'workingprocesses_id' => "string",
             'profile_id' => "string|required",
             'workingprocesses_content' => "string|required",
             'start_time' => "date|required",
