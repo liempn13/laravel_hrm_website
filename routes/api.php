@@ -35,6 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/v1/profile/auth/register', 'registerNewProfile');
         Route::put('v1/profile/update', 'update');
         Route::put('/v1/profile/lock', 'lockAndUnlock'); // khoá tài khoản tạm thời = 0 và mở khoá = 1
+        Route::post('/v1/profile/changePassword', 'changePassword'); // API đổi mật khẩu
     });
     Route::controller(PositionsController::class)->group(function () {
         Route::get('/v1/positions', 'index');
