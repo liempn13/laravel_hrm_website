@@ -9,12 +9,18 @@ class Tasks extends Model
 {
     protected $table = "tasks";
     protected $primaryKey = "task_id";
-    protected $keyType = "string";
+    protected $keyType = "integer";
     protected $fillable = [
+        "task_id",
         "task_name",
         "task_content",
         "task_status",
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        'task_id' => "required|integer",
+        'task_name' => "required|string",
+        'task_content' => "required|string",
+        'task_status' => "required|boolean",
+    ];
 }

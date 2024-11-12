@@ -20,7 +20,7 @@ class Assignments extends Model
     protected $casts = [
         "assignment_id" => "integer",
         "profile_id" => "string",
-        "task_id" => 'string',
+        "task_id" => 'integer',
         "project_id" => "string",
     ];
 }

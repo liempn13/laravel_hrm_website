@@ -13,10 +13,10 @@ class TasksController extends Controller
     public function createNewTask(Request $request)
     {
         $input = $request->validate([
-            'task_id' => "",
+            'task_id' => "required|integer",
             'task_name' => "required|string",
             'task_content' => "required|string",
-            'status' => "required|boolean",
+            'task_status' => "required|boolean",
         ]);
         $tasks = Tasks::create($input);
         $arr = [
@@ -34,12 +34,24 @@ class TasksController extends Controller
     }
 
 
-    public function update(Request $request) {
-        $task = Tasks::where($request->task_id);
-        
+    public function update(Request $request)
+    {
+        $task = Tasks::find($request->ID);
+        $input = $request->validate([
+            'task_id' => "required|integer",
+            'task_name' => "required|string",
+            'task_content' => "required|string",
+            'task_status' => "required|boolean",
+        ]);
+        $task->task_id = $input['task_id'];
+        $task->task_name = $input['task_name'];
+        $task->task_content = $input['task_content'];
+        $task->task_status = $input['task_status'];
+        $task->save();
+        return response()->json([], 200);
     }
 
-    public function destroy(Tasks $tasks)
+    public function delete(Tasks $tasks)
     {
         $tasks->delete();
         return response()->json(["message" => "Delete success",], 200);
