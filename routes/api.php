@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsentsController;
+use App\Http\Controllers\AssignmentsController;
 use App\Http\Controllers\DecisionsController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\DiplomasController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\RelativesController;
 use App\Http\Controllers\SalariesController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ShiftsController;
+use App\Http\Controllers\TasksController;
 use App\Http\Controllers\TimekeepingsController;
 use App\Http\Controllers\WorkingProcessesController;
 use App\Http\Controllers\TrainingProcessesController;
@@ -44,6 +46,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/v1/position/create', 'createNewPosition');
         Route::delete('/v1/position/delete/{id}', 'delete');
     });
+    //
+    Route::controller(TasksController::class)->group(function () {
+        Route::get('/v1/project/task/{id}', 'showTaskDetail');
+        Route::put('/v1/project/task/update', 'update');
+        Route::post('/v1/project/task/create', 'createNewTask');
+        Route::delete('/v1/project/task/delete/{id}', 'delete');
+    });
+    //
+    Route::controller(AssignmentsController::class)->group(function () {
+        Route::get('/v1/assign/task/{id}', 'showTaskDetail');
+        Route::put('/v1/assign/update', 'update');
+        Route::post('/v1/assign/create', 'create');
+        Route::delete('/v1/assign/delete/{id}', 'delete');
+    });
+    //
     Route::controller(DepartmentsController::class)->group(function () {
         Route::get('/v1/departments', 'index');
         Route::put('/v1/department/update', 'update');
