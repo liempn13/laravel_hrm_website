@@ -12,7 +12,8 @@ class EnterprisesController extends Controller
 {
     public function index()
     {
-        return Enterprises::first();
+        $enterprises = Enterprises::all();
+        return response()->json($enterprises);
     }
     public function update(Request $request, Enterprises $enterprises)
     {
