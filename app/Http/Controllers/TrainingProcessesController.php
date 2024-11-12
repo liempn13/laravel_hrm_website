@@ -20,6 +20,7 @@ class TrainingProcessesController extends Controller
         $input = $request->validate([
             'trainingprocesses_id' => "string",
             'profile_id' => "required|string",
+            'trainingprocesses_name' => "required|string",
             'trainingprocesses_content' => "required|string",
             'start_time' => "required|date",
             'end_time' => "nullable|date",
@@ -40,6 +41,7 @@ class TrainingProcessesController extends Controller
         $input = $request->validate([
             'trainingprocesses_id' => "string",
             'profile_id' => "required|string",
+            'trainingprocesses_name' => "required|string",
             'trainingprocesses_content' => "required|string",
             'start_time' => "required|date",
             'end_time' => "nullable|date",
@@ -50,6 +52,7 @@ class TrainingProcessesController extends Controller
         $trainingprocesses->reason = $input['reason'];
         $trainingprocesses->profile_id = $input['profile_id'];
         $trainingprocesses->trainingprocesses_status = $input['trainingprocesses_status'];
+        $trainingprocesses->trainingprocesses_name = $input['trainingprocesses_name'];
         $trainingprocesses->trainingprocesses_content = $input['trainingprocesses_content'];
         $trainingprocesses->save();
         $arr = [
@@ -58,5 +61,10 @@ class TrainingProcessesController extends Controller
             "data" => new TrainingProcessesResource($trainingprocesses)
         ];
         return response()->json($arr, 200);
+    }
+    public function delete(TrainingProcesses $trainingProcesses)
+    {
+        $trainingProcesses->delete();
+        return response()->json(["message" => "Delete success",], 200);
     }
 }

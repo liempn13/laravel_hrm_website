@@ -15,6 +15,7 @@ use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\TimekeepingsController;
 use App\Http\Controllers\WorkingProcessesController;
+use App\Http\Controllers\TrainingProcessesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,8 +29,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProfilesController::class)->group(function () {
         Route::post('/v1/logout', 'logout');
         Route::get('/v1/profiles', 'index');
-        Route::get('/v1/profiles/department{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
-        Route::get('/v1/profiles/position{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
+        Route::get('/v1/profiles/department/{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
+        Route::get('/v1/profiles/position/{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
         Route::get('/v1/profiles/quit', 'quitMembersCount'); //Danh sách nhân viên đã nghỉ việc và số lượng
         Route::get('/v1/profiles', 'index');
         Route::post('/v1/profile/auth/register', 'registerNewProfile');
@@ -95,7 +96,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProjectsController::class)->group(function () {
         Route::get('/v1/projects', 'index');
         Route::post('/v1/project/create', 'createNewProject');
-        Route::put('/v1/project/update','update');
+        Route::put('/v1/project/update', 'update');
         Route::delete('/v1/project/delete/{id}', 'delete');
     });
     //
@@ -105,15 +106,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/v1/profile/relatives/{id}', 'showRelativesOf'); //Lấy ra thông tin các thân nhân của nhân viên có id là id được truyền vào
             Route::post('/v1/relatives/create', 'addNewRelatives');
             Route::put('/v1/relatives/update', 'update');
-            Route::delete('/v1/relatives/delete/{profile_id}', 'delete');
+            Route::delete('/v1/relatives/delete/{relative_id}', 'delete');
         }
     );
     //
     Route::controller(WorkingProcessesController::class)->group(function () {
-        Route::get('', '');
-        Route::put('', '');
-        Route::post('',);
-        Route::delete('', '');
+        Route::get('/v1/profile/workingprocesses/{id}', 'showWorkingProcessesOfProfileID');
+        Route::put('/v1/profile/workingprocesses/update', 'update');
+        Route::post('/v1/profile/workingprocesses/add', 'addNewWWorkingProcesses');
+        Route::delete('/v1/profile/workingprocesses/delete', 'delete');
+    });
+    //
+    Route::controller(TrainingProcessesController::class)->group(function () {
+        Route::get('/v1/profile/trainingProcesses/{id}', 'showTrainingProcessesOfProfile');
+        Route::put('/v1/profile/trainingProcesses/update', 'update');
+        Route::post('/v1/profile/trainingProcesses/add', 'addNewTrainingProccess');
+        Route::delete('/v1/profile/trainingProcesses/delete', 'delete');
     });
     //
     Route::controller(SalariesController::class)->group(function () {

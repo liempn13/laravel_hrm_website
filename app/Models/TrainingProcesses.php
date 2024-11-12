@@ -11,12 +11,22 @@ class TrainingProcesses extends Model
     protected $primaryKey = "trainingprocesses_id";
     protected $keyType = "string";
     protected $fillable = [
+        'trainingprocesses_id',
         "trainingprocesses_name",
         "trainingprocesses_content",
         "trainingprocesses_status",
         "start_time",
-        "end-time"
+        "end-time",
+        'profile_id'
     ];
     public $timestamps = false;
-    protected $casts = [""];
+    protected $casts = [
+        'trainingprocesses_id' => "string",
+        'trainingprocesses_name' => "string",
+        'trainingprocesses_content' => "string",
+        'profile_id' => "string",
+        'start_time' => "date",
+        'end_time' => "date",
+        'trainingprocesses_status' => "integer",
+    ];
 }

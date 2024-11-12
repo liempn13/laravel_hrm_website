@@ -290,60 +290,35 @@ class ProfilesController extends Controller
         $profiles->save();
         return response()->json([], 200);
     }
-    // public function changePassword(Request $request)
-    // {
-    //     // Xác thực dữ liệu đầu vào
-    //     $request->validate([
-    //         'password' => 'required|string',
-    //         'new_password' => 'required|string|confirmed', // Sử dụng "confirmed" để yêu cầu nhập lại
-    //     ]);
 
-    //     // Lấy người dùng hiện tại
-    //     $user = Profiles::find($request->profile_id);
-    //     // Kiểm tra xem hồ sơ có tồn tại và có đang bị khoá không
-    //     if (!$user && $user->profile_status == 0) {
-    //         return response()->json(['message' => 'Profile not found'], 404);
-    //     }
-
-    //     // Kiểm tra xem mật khẩu hiện tại có đúng không
-    //     if (!Hash::check($request->current_password, $user->password)) {
-    //         throw ValidationException::withMessages([
-    //             'password' => ['Mật khẩu hiện tại không đúng.'],
-    //         ]);
-    //     }
-    //     $user->password = bcrypt($request->new_password);
-    //     $user->save();
-    //     return response()->json(['message' => 'Đổi mật khẩu thành công.'], 200);
-    // }
     public function changePassword(Request $request)
-{
-    // Xác thực dữ liệu đầu vào
-    $request->validate([
-        'profile_id' => 'required|string',
-        'current_password' => 'required|string',
-        'new_password' => 'required|string|confirmed', // confirmed sẽ kiểm tra trường `new_password_confirmation`
-    ]);
+    {
+        // Xác thực dữ liệu đầu vào
+        $request->validate([
+            'profile_id' => 'required|string',
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|confirmed', // confirmed sẽ kiểm tra trường `new_password_confirmation`
+        ]);
 
-    // Lấy người dùng hiện tại theo `profile_id`
-    $user = Profiles::find($request->profile_id);
+        // Lấy người dùng hiện tại theo `profile_id`
+        $user = Profiles::find($request->profile_id);
 
-    // Kiểm tra xem hồ sơ có tồn tại và có đang bị khoá không
-    if (!$user) {
-        return response()->json(['message' => 'Profile not found'], 404);
-    } elseif ($user->profile_status == 0) {
-        return response()->json(['message' => 'Profile is inactive'], 403);
+        // Kiểm tra xem hồ sơ có tồn tại và có đang bị khoá không
+        if (!$user) {
+            return response()->json(['message' => 'Profile not found'], 404);
+        } elseif ($user->profile_status == 0) {
+            return response()->json(['message' => 'Profile is inactive'], 403);
+        }
+
+        // Kiểm tra xem mật khẩu hiện tại có đúng không
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['message' => 'Mật khẩu hiện tại không đúng.'], 422);
+        }
+
+        // Cập nhật mật khẩu mới
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Đổi mật khẩu thành công.'], 200);
     }
-
-    // Kiểm tra xem mật khẩu hiện tại có đúng không
-    if (!Hash::check($request->current_password, $user->password)) {
-        return response()->json(['message' => 'Mật khẩu hiện tại không đúng.'], 422);
-    }
-
-    // Cập nhật mật khẩu mới
-    $user->password = bcrypt($request->new_password);
-    $user->save();
-
-    return response()->json(['message' => 'Đổi mật khẩu thành công.'], 200);
-}
-
 }
