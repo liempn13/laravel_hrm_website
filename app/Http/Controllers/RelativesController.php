@@ -82,10 +82,10 @@ class RelativesController extends Controller
         return response()->json([], 200);
     }
 
-    public function delete($profile_id)
+    public function delete(string $relative_id)
     {
-        // Tìm tất cả relatives có profile_id tương ứng
-        $relatives = Relatives::where('profile_id', $profile_id)->get();
+        // Tìm tất cả relatives có relative_id tương ứng
+        $relatives = Relatives::where('relative_id', $relative_id)->get();
 
         // Nếu không tìm thấy relatives
         if ($relatives->isEmpty()) {
