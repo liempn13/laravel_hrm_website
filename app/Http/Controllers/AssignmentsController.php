@@ -41,7 +41,7 @@ class AssignmentsController extends Controller
         $fields = $request->validate([
             "assignment_id" => "required|integer",
             "profile_id" => "required|string",
-            "task_id" => 'nullable|string',
+            "task_id" => 'nullable|integer',
             "project_id" => "required|string",
         ]);
         $newDecision = Assignments::create([
@@ -59,7 +59,7 @@ class AssignmentsController extends Controller
         $input = $request->validate([
             "assignment_id" => "required|integer",
             "profile_id" => "required|string",
-            "task_id" => 'nullable|string',
+            "task_id" => 'nullable|integer',
             "project_id" => "required|string",
         ]);
 
@@ -69,5 +69,17 @@ class AssignmentsController extends Controller
         $assignments->project_id = $input['project_id'];
         $assignments->save();
         return response()->json([], 200);
+    }
+
+    public function delete(int $assignments_id)
+    {
+        $assignments = Assignments::find($assignments_id);
+        $assignments->delete();
+        $arr = [
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ];
+        return response()->json($arr, 200);
     }
 }
