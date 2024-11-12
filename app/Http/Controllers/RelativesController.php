@@ -82,16 +82,36 @@ class RelativesController extends Controller
         return response()->json([], 200);
     }
 
-    public function delete(Relatives $relatives)
+    public function delete($profile_id)
     {
-        $relatives->delete();
-        return response()->json(["message" => "Delete success",], 200);
+        // Tìm tất cả relatives có profile_id tương ứng
+        $relatives = Relatives::where('profile_id', $profile_id)->get();
+
+        // Nếu không tìm thấy relatives
+        if ($relatives->isEmpty()) {
+            return response()->json([
+                "status" => false,
+                "message" => "No relatives found for this profile",
+                "data" => []
+            ], 404); // Trả về lỗi 404 nếu không tìm thấy
+        } else
+            $relatives->delete();
+        // Xóa tất cả relatives liên kết với profile_id
+        // foreach ($relatives as $relative) {
+        //     $relative->delete();
+        // }
+
+        return response()->json([
+            "status" => true,
+            "message" => "Relatives deleted successfully",
+            "data" => []
+        ], 200); // Trả về mã 200 nếu xóa thành công
     }
     // public function delete($profile_id)
     // {
     //     // Tìm tất cả relatives có profile_id tương ứng
     //     $relatives = Relatives::where('profile_id', $profile_id)->get();
-    
+
     //     // Nếu không tìm thấy relatives
     //     if ($relatives->isEmpty()) {
     //         return response()->json([
@@ -100,17 +120,17 @@ class RelativesController extends Controller
     //             "data" => []
     //         ], 404); // Trả về lỗi 404 nếu không tìm thấy
     //     }
-    
+
     //     // Xóa tất cả relatives liên kết với profile_id
     //     foreach ($relatives as $relative) {
     //         $relative->delete();
     //     }
-    
+
     //     return response()->json([
     //         "status" => true,
     //         "message" => "Relatives deleted successfully",
     //         "data" => []
     //     ], 200); // Trả về mã 200 nếu xóa thành công
     // }
-    
+
 }

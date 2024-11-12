@@ -28,8 +28,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProfilesController::class)->group(function () {
         Route::post('/v1/logout', 'logout');
         Route::get('/v1/profiles', 'index');
-        Route::get('/v1/profiles/department{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
-        Route::get('/v1/profiles/position{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
+        Route::get('/v1/profiles/department/{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
+        Route::get('/v1/profiles/position/{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
         Route::get('/v1/profiles/quit', 'quitMembersCount'); //Danh sách nhân viên đã nghỉ việc và số lượng
         Route::get('/v1/profiles', 'index');
         Route::post('/v1/profile/auth/register', 'registerNewProfile');
@@ -95,7 +95,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProjectsController::class)->group(function () {
         Route::get('/v1/projects', 'index');
         Route::post('/v1/project/create', 'createNewProject');
-        Route::put('/v1/project/update','update');
+        Route::put('/v1/project/update', 'update');
         Route::delete('/v1/project/delete/{id}', 'delete');
     });
     //
