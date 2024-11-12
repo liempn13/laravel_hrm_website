@@ -10,7 +10,6 @@ class LaborContracts extends Model
     protected $primaryKey = "labor_contract_id";
     protected $fillable = [
         "labor_contract_id",
-        "profile_id",
         "image",
         "start_time",
         "end_time",
@@ -23,7 +22,7 @@ class LaborContracts extends Model
         "end_time" => "datetime",
         "start_time" => "datetime",
         "image" => "string",
-        "enterprise_id" => "boolean",
-        "deparment_id" => "string",
+        "enterprise_id" => "integer",
+        "department_id" => "string",
     ];
 }

@@ -23,7 +23,7 @@ class RelativesController extends Controller
         $fields = $request->validate([
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
-            "relative_birthday" => "required|date",
+            "relative_birthday" => "required|date_format:d-m-Y",
             "relationship" => "required|string",
             "relative_job" => "required|string",
             "relative_nation" => "required|string",

@@ -8,9 +8,10 @@ use Illuminate\Routing\Controller;
 
 class ProjectsController extends Controller
 {
-    public function show()
+    public function index()
     {
-        return Projects::where('');
+        $projects = Projects::all();
+        return response()->json($projects);
     }
 
     public function createNewProject(Request $request)
@@ -28,9 +29,10 @@ class ProjectsController extends Controller
         return response()->json([], 201);
     }
 
-    public function update(Request $request, Projects $projects)
+    public function update(Request $request)
     {
 
+        $projects = Projects::find($request->project_id);
         $input = $request->validate([
             "project_id" => "required|string",
             "project_name" => "required|string",
@@ -39,12 +41,26 @@ class ProjectsController extends Controller
         $projects->project_id = $input['project_id'];
         $projects->project_name = $input['project_name'];
         $projects->project_status = $input['project_status'];
-        $projects->save();
+        $projects->update();
         return response()->json([], 200);
     }
-    public function delete(Projects $projects)
+    public function delete($id)
     {
+        $projects = Projects::find($id);
+
+        if (!$projects) {
+            return response()->json([
+                "status" => false,
+                "message" => "Department not found",
+                "data" => []
+            ], 404);
+        }
+
         $projects->delete();
-        return response()->json(["message" => "Delete success"], 200);
+        return response()->json([
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ], 200);
     }
 }
