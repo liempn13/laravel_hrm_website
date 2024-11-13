@@ -16,7 +16,7 @@ class TrainingProcesses extends Model
         "trainingprocesses_content",
         "trainingprocesses_status",
         "start_time",
-        "end-time",
+        "end_time",
         'profile_id'
     ];
     public $timestamps = false;
