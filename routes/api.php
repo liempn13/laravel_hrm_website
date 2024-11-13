@@ -123,7 +123,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/v1/profile/relatives/{id}', 'showRelativesOf'); //Lấy ra thông tin các thân nhân của nhân viên có id là id được truyền vào
             Route::post('/v1/relatives/create', 'addNewRelatives');
             Route::put('/v1/relatives/update', 'update');
-            Route::delete('/v1/relatives/delete/{relative_id}', 'delete');
+            Route::delete('/v1/relatives/delete/{relative_id}', 'delete')->where('relative_id', '[0-9]+');
         }
     );
     //
@@ -131,14 +131,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/v1/profile/workingprocesses/{id}', 'showWorkingProcessesOfProfileID');
         Route::put('/v1/profile/workingprocesses/update', 'update');
         Route::post('/v1/profile/workingprocesses/add', 'addNewWWorkingProcesses');
-        Route::delete('/v1/profile/workingprocesses/delete', 'delete');
+        Route::delete('/v1/profile/workingprocesses/delete/{id}', 'delete');
     });
     //
     Route::controller(TrainingProcessesController::class)->group(function () {
         Route::get('/v1/profile/trainingProcesses/{id}', 'showTrainingProcessesOfProfile');
         Route::put('/v1/profile/trainingProcesses/update', 'update');
         Route::post('/v1/profile/trainingProcesses/add', 'addNewTrainingProccess');
-        Route::delete('/v1/profile/trainingProcesses/delete', 'delete');
+        Route::delete('/v1/profile/trainingProcesses/delete/{id}', 'delete');
     });
     //
     Route::controller(SalariesController::class)->group(function () {

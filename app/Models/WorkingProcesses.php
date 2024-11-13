@@ -11,7 +11,7 @@ class WorkingProcesses extends Model
     protected $table = "workingprocesses";
     protected $primaryKey = "workingprocess_id";
     protected $fillable = [
-        'workingprocesses_id',
+        'workingprocess_id',
         'workplace_name',
         "workingprocess_content",
         "workingprocess_status",
@@ -21,12 +21,12 @@ class WorkingProcesses extends Model
     ];
     public $timestamps = false;
     protected $casts = [
-        'workingprocesses_id' => "string",
+        'workingprocess_id' => "string",
         'workplace_name' => "string",
-        'workingprocesses_content' => "string",
+        'workingprocess_content' => "string",
         'profile_id' => "string",
         'start_time' => "date",
         'end_time' => "date",
-        'workingprocesses_status' => "boolean",
+        'workingprocess_status' => "integer",
     ];
 }
