@@ -14,17 +14,16 @@ class TrainingProcessesController extends Controller
     {
         return TrainingProcesses::where('profile_id', $profile_id)->get();
     }
-
     public function addNewTrainingProccess(Request $request)
     {
         $input = $request->validate([
-            'trainingprocesses_id' => "string",
+            'trainingprocesses_id' => "string|required",
             'profile_id' => "required|string",
             'trainingprocesses_name' => "required|string",
             'trainingprocesses_content' => "required|string",
             'start_time' => "required|date",
             'end_time' => "nullable|date",
-            'trainingprocesses_status' => "boolean|required",
+            'trainingprocesses_status' => "integer|required",
         ]);
         $trainingProcesses = TrainingProcesses::create($input);
         $arr = [
@@ -37,9 +36,15 @@ class TrainingProcessesController extends Controller
 
     public function update(Request $request)
     {
-        $trainingprocesses = TrainingProcesses::find($request->ID);
+        $trainingprocesses = TrainingProcesses::find($request->trainingprocesses_id);
+          // Kiểm tra xem relative có tồn tại không
+    if (!$trainingprocesses) {
+        return response()->json([
+            'message' => 'Trainingprocesses not found'
+        ], 404);  // Trả về lỗi 404 nếu không tìm thấy relative
+    }
         $input = $request->validate([
-            'trainingprocesses_id' => "string",
+            'trainingprocesses_id' => "string|required",
             'profile_id' => "required|string",
             'trainingprocesses_name' => "required|string",
             'trainingprocesses_content' => "required|string",
@@ -48,8 +53,8 @@ class TrainingProcessesController extends Controller
             'trainingprocesses_status' => "integer",
         ]);
         $trainingprocesses->start_time = $input['start_time'];
+        $trainingprocesses->trainingprocesses_id = $input['trainingprocesses_id'];
         $trainingprocesses->end_time = $input['end_time'];
-        $trainingprocesses->reason = $input['reason'];
         $trainingprocesses->profile_id = $input['profile_id'];
         $trainingprocesses->trainingprocesses_status = $input['trainingprocesses_status'];
         $trainingprocesses->trainingprocesses_name = $input['trainingprocesses_name'];
@@ -62,9 +67,23 @@ class TrainingProcessesController extends Controller
         ];
         return response()->json($arr, 200);
     }
-    public function delete(TrainingProcesses $trainingProcesses)
+    public function delete($id)
     {
-        $trainingProcesses->delete();
-        return response()->json(["message" => "Delete success",], 200);
+        $trainingprocesses = TrainingProcesses::find($id);
+    
+        if (!$trainingprocesses) {
+            return response()->json([
+                "status" => false,
+                "message" => "TrainingProcesses not found",
+                "data" => []
+            ], 404);
+        }
+    
+        $trainingprocesses->delete();
+        return response()->json([
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ], 200);
     }
 }

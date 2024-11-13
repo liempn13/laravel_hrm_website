@@ -17,12 +17,12 @@ class WorkingProcessesController extends Controller
     public function addNewWWorkingProcesses(Request $request)
     {
         $input = $request->validate([
-            'workingprocesses_id' => "string",
+            'workingprocess_id' => "string|required",
             'profile_id' => "required|string",
-            'workingprocesses_content' => "required|string",
+            'workingprocess_content' => "nullable|string",
             'start_time' => "required|date",
             'end_time' => "nullable|date",
-            'workingprocesses_status' => "required|boolean",
+            'workingprocess_status' => "required|integer",
             'workplace_name' => "required|string",
         ]);
         $workingProcesses = WorkingProcesses::create($input);
@@ -35,34 +35,61 @@ class WorkingProcessesController extends Controller
     }
 
     public function update(Request $request)
-    {
-        $workingProcesses = WorkingProcesses::find($request->workingprocesses_id);
-        $input = $request->validate([
-            'workingprocesses_id' => "string",
-            'profile_id' => "string|required",
-            'workingprocesses_content' => "string|required",
-            'start_time' => "date|required",
-            'end_time' => "nullable|date",
-            'workingprocesses_status' => "boolean",
-            'workplace_name' => "string",
-        ]);
-        $workingProcesses->workingprocesses_content = $input['workingprocesses_content'];
-        $workingProcesses->workplace_name = $input['workplace_name'];
-        $workingProcesses->workingprocesses_status = $input['workingprocesses_status'];
-        $workingProcesses->start_time = $input['start_time'];
-        $workingProcesses->end_time = $input['end_time'];
-        $workingProcesses->profile_id = $input['profile_id'];
-        $workingProcesses->save();
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-        ];
-        return response()->json($arr, 200);
+{
+    // Tìm bản ghi dựa trên ID
+    $workingProcesses = WorkingProcesses::find($request->workingprocess_id);
+    // Kiểm tra xem relative có tồn tại không
+    if (!$workingProcesses) {
+        return response()->json([
+            'message' => 'WorkingProcesses not found'
+        ], 404);  // Trả về lỗi 404 nếu không tìm thấy relative
     }
+    // Validate dữ liệu đầu vào
+    $input = $request->validate([
+        'workingprocess_id' => "string|required",
+        'profile_id' => "string|required",
+        'workingprocess_content' => "string|nullable",
+        'start_time' => "date|required",
+        'end_time' => "nullable|date",
+        'workingprocess_status' => "required|integer",
+        'workplace_name' => "string|required",
+    ]);
 
-    public function delete(WorkingProcesses $workingProcesses)
+    // Cập nhật các trường trong bản ghi
+    $workingProcesses->workingprocess_id = $input['workingprocess_id'];
+    $workingProcesses->workplace_name = $input['workplace_name'];
+    $workingProcesses->workingprocess_status = $input['workingprocess_status'];
+    $workingProcesses->workingprocess_content = $input['workingprocess_content'];
+    $workingProcesses->start_time = $input['start_time'];
+    $workingProcesses->end_time = $input['end_time'];
+    $workingProcesses->profile_id = $input['profile_id'];
+
+    // Lưu bản ghi
+    $workingProcesses->save();
+
+    return response()->json([
+        "status" => true,
+        "message" => "Lưu thành công"
+    ], 200); // Trả về thành công
+    }
+    public function delete($id)
     {
+        $workingProcesses = WorkingProcesses::find($id);
+    
+        if (!$workingProcesses) {
+            return response()->json([
+                "status" => false,
+                "message" => "WorkingProcesses not found",
+                "data" => []
+            ], 404);
+        }
+    
         $workingProcesses->delete();
-        return response()->json(["message" => "Delete success",], 200);
+        return response()->json([
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ], 200);
     }
 }
+
