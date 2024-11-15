@@ -82,8 +82,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(TimekeepingsController::class)->group(function () {
         Route::get('/v1/timekeepings', 'index');
-        Route::post('/v1/checkin/{profileID}', 'checkIn');
-        Route::put('/v1/absent/update/{id}', 'checkOut');
+        Route::post('/v1/checkin', 'checkIn');
+        Route::put('/v1/checkout/{id}', 'checkOut');
     });
     //
     // Route::controller(PayrollDetailsController::class)->group(function () {
