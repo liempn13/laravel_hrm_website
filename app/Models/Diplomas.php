@@ -12,26 +12,32 @@ class Diplomas extends Model
     protected $primaryKey = "diploma_id";
     protected $keyType = "string";
     protected $fillable = [
+        "diploma_id",
         "diploma_degree_name", // tên bằng cấp/ chứng chỉ
-        "diploma_type", // loại ? bằng cấp hoặc chứng chỉ
+        "diploma_image", // ảnh bằng cấp/ chứng chỉ
         "mode_of_study", //hệ đào tạo
         "ranking", // xếp loại
         "license_date", // ngày cấp
-        "grandted_by", // cấp bởi
+        "diploma_type", // loại ? bằng cấp hoặc chứng chỉ
         "major", // nghành nghề
-        "diploma_image", // ảnh bằng cấp/ chứng chỉ
+        "granted_by", // cấp bởi
+        "profile_id"
+      
+
+      
     ];
     public $timestamps = false;
     protected $casts = [
         "diploma_id" => "string",
         "diploma_degree_name" => "string",
         "diploma_image" => "string",
+        "mode_of_study" => "string",
         "ranking" => "string",
         "license_date" => "date",
-        "diploma_name" => "string",
+        "major" => "string",
         "diploma_type" => "string",
         "granted_by" => "string",
-        "major" => "string",
-        "mode_of_study" => "string",
+        "profile_id" => "string",
+      
     ];
 }

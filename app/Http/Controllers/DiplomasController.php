@@ -18,20 +18,23 @@ class DiplomasController extends Controller
         return response()->json($diploma);
     }
 
+    // public function getDiplomaOfProfile(string $profile_id)
+    // {
+    //     return
+    //         DB::table('diplomas')
+    //         ->join('profiles', 'diplomas.profile_id', '=', 'profiles.profile_id')
+    //         ->select(
+    //             'profiles.profile_name',
+    //             'diplomas.*'
+    //         )
+    //         ->where([['profiles.profile_id', '=', $profile_id]],)
+    //         ->get()
+    //     ;
+    // }
     public function getDiplomaOfProfile(string $profile_id)
     {
-        return
-            DB::table('diplomas')
-            ->join('profiles', 'diplomas.profile_id', '=', 'profiles.profile_id')
-            ->select(
-                'profiles.profile_name',
-                'diplomas.*'
-            )
-            ->where([['profiles.profile_id', '=', $profile_id]],)
-            ->get()
-        ;
+        return Diplomas::where('profile_id', $profile_id)->get();
     }
-
     public function createNewDiploma(Request $request)
     {
         $fields = $request->validate([
@@ -40,22 +43,23 @@ class DiplomasController extends Controller
             "diploma_image" => "required|string",
             "ranking" => "required|string",
             "license_date" => "required|date",
-            "diploma_name" => "required|string",
             "diploma_type" => "required|string",
             "granted_by" => "required|string",
             "major" => "required|string",
             "mode_of_study" => "required|string",
+            'profile_id' => "required|string",
         ]);
         $newDiploma = Diplomas::create([
-            'diploma_id' => ($fields['diploma_name']),
+            'diploma_id' => ($fields['diploma_id']),
             'mode_of_study' => ($fields['mode_of_study']),
-            'granted_by' => ($fields['grandted_by']),
+            'granted_by' => ($fields['granted_by']),
             'license_date' => ($fields['license_date']),
             'diploma_degree_name' => ($fields['diploma_degree_name']),
             'major' => ($fields['major']),
             'diploma_type' => ($fields['diploma_type']),
             'diploma_image' => ($fields['diploma_image']),
             'ranking' => ($fields['ranking']),
+            'profile_id' => ($fields['profile_id']),
         ]);
         return response()->json([], 201);
     }
