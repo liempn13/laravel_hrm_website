@@ -82,8 +82,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(TimekeepingsController::class)->group(function () {
         Route::get('/v1/timekeepings', 'index');
-        Route::post('/v1/checkin/{profileID}', 'checkIn');
-        Route::put('/v1/absent/update/{id}', 'checkOut');
+        Route::post('/v1/checkin', 'checkIn');
+        Route::put('/v1/checkout/{id}', 'checkOut');
     });
     //
     // Route::controller(PayrollDetailsController::class)->group(function () {
@@ -93,7 +93,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // });
     //
     Route::controller(DiplomasController::class)->group(function () {
-        Route::get('/v1/diploma/{profile_id}', 'getDiplomaOfProfile');
+        Route::get('/v1/diploma/show/{id}', 'getDiplomaOfProfile');
         Route::put('/v1/diploma/update/{id}', 'update');
         Route::post('/v1/diploma/create', 'createNewDiploma');
         Route::delete('/v1/diploma/delete', 'delete');
@@ -146,7 +146,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/v1/salary/{id}', 'getSalarySlip'); //Load phiếu lương của 1 nhân viên, có tham chiếu khoá ngoại nhiều bảng khác
         Route::put('/v1/salary/update', 'update');
         Route::post('/v1/salary/create', 'addNewSalary');
-        Route::delete('/v1/salary/delete', 'delete');
+        Route::delete('/v1/salary/delete/{id}', 'delete');
     });
     Route::controller(LaborContractsController::class)->group(function () {
         Route::get('/v1/contract/{id}', 'showLaborContractDetails');

@@ -59,8 +59,9 @@ class SalariesController extends Controller
     }
 
 
-    public function update(Request $request, Salaries $salaries)
-    {
+    public function update(Request $request)
+    {   
+        $salaries = Salaries::find($request->salary_id);
         $input = $request->validate([
             "salary_id" => "required|string",
             "salary_coefficient" => "required|numeric",
@@ -75,9 +76,23 @@ class SalariesController extends Controller
         response()->json([], 200);
     }
 
-    public function delete(Salaries $salaries)
+    public function delete($id)
     {
+        $salaries = Salaries::find($id);
+    
+        if (!$salaries) {
+            return response()->json([
+                "status" => false,
+                "message" => "salaries not found",
+                "data" => []
+            ], 404);
+        }
+    
         $salaries->delete();
-        return response()->json(["message" => "Delete success",], 200);
+        return response()->json([
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ], 200);
     }
 }
