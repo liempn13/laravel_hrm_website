@@ -45,11 +45,11 @@ class TimekeepingsController extends Controller
         $input = $request->validate([
             'timekeeping_id' => "integer",
             'profile_id' => "required|string",
-            'late' => "nullable|time",
-            'checkin' => "required|time",
-            'checkout' => "nullable|time",
+            'late' => "nullable|date_format:H:i",
+            'checkin' => "required|date_format:H:i:",
+            'checkout' => "nullable|date_format:H:i",
             'shift_id' => "string",
-            'leaving_soon' => "nullable|time",
+            'leaving_soon' => "nullable|date_format:H:i",
             'date' => "required|date",
             'status' => 'required|integer'
         ]);
@@ -75,15 +75,15 @@ class TimekeepingsController extends Controller
             'date' => "required|date",
             'status' => 'required|integer'
         ]);
+        $checkOut->timekeeping_id = $input['timekeeping_id'];
         $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->shift_id = $input['shift_id'];
+        $checkOut->checkin = $input['checkin'];
+        $checkOut->checkout = $input['checkout'];
+        $checkOut->shift_id = $input['shift_id'];
+        $checkOut->date = $input['date'];
+        $checkOut->late = $input['late'];
+        $checkOut->status = $input['status'];
         $checkOut->save();
         return response()->json([], 200);
     }
