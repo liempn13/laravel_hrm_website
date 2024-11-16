@@ -9,7 +9,7 @@ class Timekeepings extends Model
 {
     protected $table = "timekeepings";
     protected $primaryKey = "timekeeping_id";
-    protected $keyType = "string";
+    protected $keyType = "integer";
     protected $fillable = [
         "checkin",
         "checkout",
@@ -22,13 +22,12 @@ class Timekeepings extends Model
     ];
     public $timestamps = false;
     protected $casts = [
-        'timekeeping_id' => "integer",
         'profile_id' => "string",
-        'late' => "time",
-        'checkin' => "time",
-        'checkout' => "time",
+        'late' => "datetime",
+        'checkin' => "datetime",
+        'checkout' => "datetime",
         'shift_id' => "string",
-        'leaving_soon' => "time",
+        'leaving_soon' => "datetime",
         'date' => "date",
         'status' => 'integer'
     ];

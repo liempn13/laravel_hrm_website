@@ -76,6 +76,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(AbsentsController::class)->group(function () {
         Route::get('/v1/absents/{profile_id}', 'showAbsentOfProfile');
+        Route::get('/v1/absents', 'index');
         Route::put('/v1/absent/update/{id}', 'update');
         Route::post('/v1/absent/create', 'createNewAbsentRequest');
     });
