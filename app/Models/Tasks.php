@@ -18,9 +18,9 @@ class Tasks extends Model
     ];
     public $timestamps = false;
     protected $casts = [
-        'task_id' => "required|integer",
-        'task_name' => "required|string",
-        'task_content' => "required|string",
-        'task_status' => "required|boolean",
+        'task_id' => "integer",
+        'task_name' => "string",
+        'task_content' => "string",
+        'task_status' => "integer",
     ];
 }

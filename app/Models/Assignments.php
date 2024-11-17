@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assignments extends Model
 {
-    protected $table = "assigments";
-    protected $primaryKey = "assigment_id";
+    protected $table = "assignments";
+    protected $primaryKey = "assignment_id";
     protected $keyType = "integer";
     protected $fillable = [
-        "assigment_id",
+        "assignment_id",
         "profile_id",
         "project_id",
         "task_id",
