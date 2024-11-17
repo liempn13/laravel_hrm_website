@@ -65,40 +65,56 @@ class DiplomasController extends Controller
     }
 
 
-    public function update(Request $request, Diplomas $diplomas)
-    {
+    public function update(Request $request)
+    {   
+        $diplomas = Diplomas::find($request->diploma_id);
         $input = $request->validate( [
             "diploma_id" => "required|string",
             "diploma_degree_name" => "required|string",
             "diploma_image" => "required|string",
             "ranking" => "required|string",
             "license_date" => "required|date",
-            "diploma_name" => "required|string",
             "diploma_type" => "required|string",
             "granted_by" => "required|string",
             "major" => "required|string",
             "mode_of_study" => "required|string",
+            'profile_id' => "required|string",
         ]);
 
-        $diplomas->diploma_degree_name = $input['diploma_name'];
-        $diplomas->diploma_type = $input['diploma_id'];
+        $diplomas->diploma_id = $input['diploma_id'];
+        $diplomas->diploma_degree_name = $input['diploma_degree_name'];
+        $diplomas->diploma_image = $input['diploma_image'];
+        $diplomas->ranking = $input['ranking'];
+        $diplomas->license_date = $input['license_date'];
+        $diplomas->granted_by = $input['granted_by'];
+        $diplomas->major = $input['major'];
+        $diplomas->diploma_type = $input['diploma_type'];
+        $diplomas->mode_of_study = $input['mode_of_study'];
+        $diplomas->profile_id = $input['profile_id'];
         $diplomas->save();
-        $arr = [
+        return response()->json([
             "status" => true,
-            "message" => "Save successful",
-            "data" => new DiplomasResource($diplomas)
-        ];
-        return response()->json($arr, 200);
+            "message" => "Lưu thành công"
+        ], 200); 
     }
 
-    public function delete(Diplomas $diplomas)
+    public function delete($id)
     {
+        $diplomas = Diplomas::find($id);
+    
+        if (!$diplomas) {
+            return response()->json([
+                "status" => false,
+                "message" => "diplomas not found",
+                "data" => []
+            ], 404);
+        }
+    
         $diplomas->delete();
-        $arr = [
+        return response()->json([
             "status" => true,
             "message" => "Delete success",
             "data" => []
-        ];
-        return response()->json($arr, 200);
+        ], 200);
     }
 }

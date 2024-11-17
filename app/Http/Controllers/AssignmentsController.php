@@ -20,7 +20,7 @@ class AssignmentsController extends Controller
     {
         return Assignments::findOrFail($id);
     }
-    public function getAssigmentDetails(string $department_id)
+    public function getAssigmentDetails(string $projectId)
     {
         return
             DB::table('assignments')
@@ -28,24 +28,24 @@ class AssignmentsController extends Controller
             ->join('projects', 'assignments.project_id', '=', 'projects.project_id')
             ->join('tasks', 'assignments.task_id', '=', 'tasks.task_id')
             ->select(
-
+                'projects.project_id',
+                'projects.project_name',
+                'profiles.profile_id',
                 'profiles.profile_name',
                 'tasks.*'
             )
-            ->where([['assignments.assignment_id', '=', $department_id]],)
+            ->where([['assignments.project_id', '=', $projectId]],)
             ->get()
         ;
     }
     public function create(Request $request)
     {
         $fields = $request->validate([
-            "assignment_id" => "required|integer",
             "profile_id" => "required|string",
             "task_id" => 'nullable|integer',
             "project_id" => "required|string",
         ]);
         $newDecision = Assignments::create([
-            'assignment_id' => $fields['assignment_id'],
             'profile_id' => $fields['profile_id'],
             'task_id' => $fields['task_id'],
             'project_id' => $fields['project_id'],

@@ -40,12 +40,25 @@ class ProfilesController extends Controller
     }
     public function quitMembersCount() //SL nhân viên đã nghỉ việc
     {
-        $profiles = Profiles::where('profile_status', 0)->get();;
+        $profiles = Profiles::where('profile_status',0)->get();;
         return response()->json([
             'profiles' => $profiles,
             'totals' => $profiles->count(),
         ]);
     }
+    public function MembersCount() // SL nhân viên đã nghỉ việc và đang làm việc
+{
+    // Lấy tất cả nhân viên đã nghỉ việc (profile_status = 0)
+    $quitProfiles = Profiles::where('profile_status', 0)->get();
+    
+    // Lấy tất cả nhân viên đang làm việc (profile_status = 1)
+    $activeProfiles = Profiles::where('profile_status', 1)->get();
+
+    return response()->json([
+        'quitCount' => $quitProfiles->count(), // Số lượng nhân viên đã nghỉ việc
+        'activeCount' => $activeProfiles->count(), // Số lượng nhân viên đang làm việc
+    ]);
+}
     public function getUserProfileInfo(string $profile_id)
     {
         return DB::table('profiles')
