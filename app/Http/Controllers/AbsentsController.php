@@ -21,16 +21,6 @@ class AbsentsController extends Controller
             Absents::findOrFail($ID)
         );
     }
-    // public function showAbsentOfProfile(string $profile_id)
-    // {
-    //     return DB::table('absents')
-    //         ->join('', '')
-    //         ->select(
-    //             'profiles.profile_name',
-    //             'absents.*'
-    //         )
-    //         ->get();
-    // }
     public function showAbsentOfProfile(string $profile_id)
 {
     return DB::table('absents')
