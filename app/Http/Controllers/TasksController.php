@@ -13,10 +13,9 @@ class TasksController extends Controller
     public function createNewTask(Request $request)
     {
         $input = $request->validate([
-            'task_id' => "required|integer",
             'task_name' => "required|string",
             'task_content' => "required|string",
-            'task_status' => "required|boolean",
+            'task_status' => "required|integer",
         ]);
         $tasks = Tasks::create($input);
         $arr = [
@@ -28,9 +27,14 @@ class TasksController extends Controller
     }
 
 
-    public function showTaskDetail(string $task_id)
+    public function showTaskDetail(int $task_id)
     {
         return Tasks::findOrFail($task_id);
+    }
+    public function index()
+    {
+        $tasks = Tasks::all();
+        return response()->json($tasks);
     }
 
 
@@ -41,7 +45,7 @@ class TasksController extends Controller
             'task_id' => "required|integer",
             'task_name' => "required|string",
             'task_content' => "required|string",
-            'task_status' => "required|boolean",
+            'task_status' => "required|integer",
         ]);
         $task->task_id = $input['task_id'];
         $task->task_name = $input['task_name'];
@@ -50,10 +54,15 @@ class TasksController extends Controller
         $task->save();
         return response()->json([], 200);
     }
-
-    public function delete(Tasks $tasks)
+    public function delete(int $task_id)
     {
-        $tasks->delete();
-        return response()->json(["message" => "Delete success",], 200);
+        $task = Tasks::find($task_id);
+        $task->delete();
+        $arr = [
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ];
+        return response()->json($arr, 200);
     }
 }

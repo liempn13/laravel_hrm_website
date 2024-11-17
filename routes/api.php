@@ -18,6 +18,7 @@ use App\Http\Controllers\TasksController;
 use App\Http\Controllers\TimekeepingsController;
 use App\Http\Controllers\WorkingProcessesController;
 use App\Http\Controllers\TrainingProcessesController;
+use App\Http\Controllers\InsurancesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,6 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/v1/profiles/department/{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
         Route::get('/v1/profiles/position/{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
         Route::get('/v1/profiles/quit', 'quitMembersCount'); //Danh sách nhân viên đã nghỉ việc và số lượng
+        Route::get('/v1/profiles/count', 'MembersCount'); //Danh sách nhân viên đã nghỉ việc và số lượng
         Route::get('/v1/profiles', 'index');
         Route::post('/v1/profile/auth/register', 'registerNewProfile');
         Route::put('v1/profile/update', 'update');
@@ -49,13 +51,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(TasksController::class)->group(function () {
         Route::get('/v1/project/task/{id}', 'showTaskDetail');
+        Route::get('/v1/project/task', 'index');
         Route::put('/v1/project/task/update', 'update');
         Route::post('/v1/project/task/create', 'createNewTask');
         Route::delete('/v1/project/task/delete/{id}', 'delete');
     });
     //
     Route::controller(AssignmentsController::class)->group(function () {
-        Route::get('/v1/assign/task/{id}', 'showTaskDetail');
+        Route::get('/v1/assign/task', 'index');
+        Route::get('/v1/assign/task/detail/{id}', 'getAssigmentDetails');
         Route::put('/v1/assign/update', 'update');
         Route::post('/v1/assign/create', 'create');
         Route::delete('/v1/assign/delete/{id}', 'delete');
@@ -94,9 +98,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(DiplomasController::class)->group(function () {
         Route::get('/v1/diploma/show/{id}', 'getDiplomaOfProfile');
-        Route::put('/v1/diploma/update/{id}', 'update');
+        Route::put('/v1/diploma/update', 'update');
         Route::post('/v1/diploma/create', 'createNewDiploma');
-        Route::delete('/v1/diploma/delete', 'delete');
+        Route::delete('/v1/diploma/delete/{id}', 'delete');
+    });
+    //
+    Route::controller(InsurancesController::class)->group(function () {
+        Route::get('/v1/insurances/show/{id}', 'getInsurancesOfProfile');
+        Route::put('/v1/insurances/update', 'update');
+        Route::post('/v1/insurances/create', 'store');
+        Route::delete('/v1/insurances/delete/{id}', 'delete');
     });
     //
     Route::controller(DecisionsController::class)->group(function () {
