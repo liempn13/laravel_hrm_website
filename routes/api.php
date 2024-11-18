@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProfilesController::class)->group(function () {
         Route::post('/v1/logout', 'logout');
         Route::get('/v1/profiles', 'index');
+        Route::get('/v1/profiles/MembersCountGenderAndMaritalStatus', 'MembersCountGenderAndMaritalStatus');
         Route::get('/v1/profiles/department/{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
         Route::get('/v1/profiles/position/{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
         Route::get('/v1/profiles/quit', 'quitMembersCount'); //Danh sách nhân viên đã nghỉ việc và số lượng
@@ -167,5 +168,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/v1/contract/ContactsOfProfile/{id}', 'getLaborContactsOfProfile');
         Route::post('/v1/contract/create', 'createNewLaborContract');
         Route::put('v1/contract/update', 'update');
+        Route::delete('/v1/contract/delete/{id}', 'delete');
     });
 });

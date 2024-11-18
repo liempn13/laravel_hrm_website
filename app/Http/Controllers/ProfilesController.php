@@ -47,7 +47,7 @@ class ProfilesController extends Controller
         ]);
     }
     public function MembersCount() // SL nhân viên đã nghỉ việc và đang làm việc
-{
+    {
     // Lấy tất cả nhân viên đã nghỉ việc (profile_status = 0)
     $quitProfiles = Profiles::where('profile_status', 0)->get();
     
@@ -58,7 +58,32 @@ class ProfilesController extends Controller
         'quitCount' => $quitProfiles->count(), // Số lượng nhân viên đã nghỉ việc
         'activeCount' => $activeProfiles->count(), // Số lượng nhân viên đang làm việc
     ]);
-}
+    }
+    public function MembersCountGenderAndMaritalStatus() // SL nhân viên đã nghỉ việc và đang làm việc
+    {
+    //Lấy count nam
+    $genderManEmloyment = Profiles::where('gender', 0)->get();
+    //Lấy count Nữ
+    $genderWomanEmloyment = Profiles::where('gender', 1)->get();
+
+    $marriedEmloyment = Profiles::where('marriage', 1)->get();
+
+    $unmarriedEmloyment = Profiles::where('marriage', 0)->get();
+
+    return response()->json([
+        'profiles' => $genderManEmloyment,
+        'genderMan' => $genderManEmloyment->count(),
+
+        'profiles' => $genderWomanEmloyment,
+        'genderWoman' => $genderWomanEmloyment->count(), 
+        
+        'profiles' => $marriedEmloyment,
+        'married' => $marriedEmloyment->count(), 
+
+        'profiles' => $unmarriedEmloyment,
+        'unmarried' => $unmarriedEmloyment->count(), 
+    ]);
+    }
     public function getUserProfileInfo(string $profile_id)
     {
         return DB::table('profiles')
