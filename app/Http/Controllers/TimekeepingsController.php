@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TimekeepingsResource;
 use Illuminate\Routing\Controller;
 use App\Models\Timekeepings;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -43,17 +44,26 @@ class TimekeepingsController extends Controller
     public function checkIn(Request $request)
     {
         $input = $request->validate([
-            'timekeeping_id' => "integer",
             'profile_id' => "required|string",
-            'late' => "nullable|time",
-            'checkin' => "required|time",
-            'checkout' => "nullable|time",
-            'shift_id' => "string",
-            'leaving_soon' => "nullable|time",
+            'late' => "nullable|date_format:H:i:s",
+            'checkin' => "required|date_format:H:i:s",
+            'checkout' => "nullable|date_format:H:i:s",
+            'shift_id' => "required|string",
+            'leaving_soon' => "nullable|date_format:H:i:s",
             'date' => "required|date",
             'status' => 'required|integer'
         ]);
-        $timeKeepings = Timekeepings::create($input);
+
+        $timeKeepings = Timekeepings::create([
+            'date'=> $input['date'],
+            'status'=> $input['status'],
+            'late'=> $input['late'],
+            'checkin'=>$input['checkin'],
+            'checkout'=> $input['checkout'],
+            'leaving_soon'=> $input['leaving_soon'],
+            'profile_id'=> $input['profile_id'],
+            'shift_id'=> $input['shift_id'],
+        ]);
         $arr = [
             "status" => true,
             "message" => "Save successful",
@@ -75,15 +85,15 @@ class TimekeepingsController extends Controller
             'date' => "required|date",
             'status' => 'required|integer'
         ]);
+        $checkOut->timekeeping_id = $input['timekeeping_id'];
         $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
-        $checkOut->profile_id = $input['profile_id'];
+        $checkOut->shift_id = $input['shift_id'];
+        $checkOut->checkin = $input['checkin'];
+        $checkOut->checkout = $input['checkout'];
+        $checkOut->shift_id = $input['shift_id'];
+        $checkOut->date = $input['date'];
+        $checkOut->late = $input['late'];
+        $checkOut->status = $input['status'];
         $checkOut->save();
         return response()->json([], 200);
     }

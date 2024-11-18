@@ -17,9 +17,9 @@ class LaborContractsController extends Controller
         return response()->json($laborcontracts);
     }
 
-    public function show(string $id)
+    public function getLaborContactsOfProfile(string $laborcontractsid)
     {
-        return LaborContracts::findOrFail($id);
+        return Laborcontracts::where('labor_contract_id', $laborcontractsid)->get();
     }
 
     public function showLaborContractDetails(string $profile_id)
