@@ -47,9 +47,7 @@ class TimekeepingsController extends Controller
             'profile_id' => "required|string",
             'late' => "nullable|date_format:H:i:s",
             'checkin' => "required|date_format:H:i:s",
-            'checkout' => "nullable|date_format:H:i:s",
             'shift_id' => "required|string",
-            'leaving_soon' => "nullable|date_format:H:i:s",
             'date' => "required|date",
             'status' => 'required|integer'
         ]);
@@ -59,17 +57,10 @@ class TimekeepingsController extends Controller
             'status'=> $input['status'],
             'late'=> $input['late'],
             'checkin'=>$input['checkin'],
-            'checkout'=> $input['checkout'],
-            'leaving_soon'=> $input['leaving_soon'],
             'profile_id'=> $input['profile_id'],
             'shift_id'=> $input['shift_id'],
         ]);
-        $arr = [
-            "status" => true,
-            "message" => "Save successful",
-            "data" => new TimekeepingsResource($timeKeepings)
-        ];
-        return response()->json($arr, 201);
+        return response()->json([], 201);
     }
     public function checkOut(Request $request)
     {
@@ -77,8 +68,8 @@ class TimekeepingsController extends Controller
         $input = $request->validate([
             'timekeeping_id' => "integer",
             'profile_id' => "required|string",
-            'late' => "nullable|time",
-            'checkin' => "required|time",
+            // 'late' => "nullable|time",
+            // 'checkin' => "required|time",
             'checkout' => "required|time",
             'shift_id' => "string",
             'leaving_soon' => "nullable|time",

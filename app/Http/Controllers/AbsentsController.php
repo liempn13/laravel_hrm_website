@@ -26,7 +26,7 @@ class AbsentsController extends Controller
     return DB::table('absents')
         ->join('profiles', 'absents.profile_id', '=', 'profiles.profile_id')
         ->select(
-            'profiles.profile_name', 
+            'profiles.profile_name',
             'absents.*'
         )
         ->where('absents.profile_id', '=', $profile_id)
