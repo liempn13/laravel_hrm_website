@@ -81,8 +81,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(AbsentsController::class)->group(function () {
         Route::get('/v1/absents/{profile_id}', 'showAbsentOfProfile');
         Route::get('/v1/absents', 'index');
-        Route::put('/v1/absent/update/{id}', 'update');
+        Route::get('/v1/absents/attendanceStatistics', 'attendanceStatistics');
+        Route::put('/v1/absent/update', 'update');
         Route::post('/v1/absent/create', 'createNewAbsentRequest');
+        Route::delete('/v1/absent/delete/{id}', 'delete');
     });
     //
     Route::controller(TimekeepingsController::class)->group(function () {
@@ -161,7 +163,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/v1/salary/delete/{id}', 'delete');
     });
     Route::controller(LaborContractsController::class)->group(function () {
-        Route::get('/v1/contract/{id}', 'showLaborContractDetails');
+        // Route::get('/v1/contract/{id}', 'showLaborContractDetails');
+        Route::get('/v1/contract/ContactsOfProfile/{id}', 'getLaborContactsOfProfile');
         Route::post('/v1/contract/create', 'createNewLaborContract');
         Route::put('v1/contract/update', 'update');
     });
