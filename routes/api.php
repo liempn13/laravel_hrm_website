@@ -19,6 +19,7 @@ use App\Http\Controllers\TimekeepingsController;
 use App\Http\Controllers\WorkingProcessesController;
 use App\Http\Controllers\TrainingProcessesController;
 use App\Http\Controllers\InsurancesController;
+use App\Http\Controllers\RolesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -89,15 +90,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(TimekeepingsController::class)->group(function () {
         Route::get('/v1/timekeepings', 'index');
+        Route::get('/v1/late', '');
         Route::post('/v1/checkin', 'checkIn');
         Route::put('/v1/checkout/{id}', 'checkOut');
     });
     //
-    // Route::controller(PayrollDetailsController::class)->group(function () {
-    //     Route::get('/v1/payrolls', '');
-    //     Route::put('/v1/update/{id}', 'update');
-    //     Route::post('/v1', '');
-    // });
+    Route::controller(RolesController::class)->group(function () {
+        Route::get('/v1/roles', 'index');
+    });
     //
     Route::controller(DiplomasController::class)->group(function () {
         Route::get('/v1/diploma/show/{id}', 'getDiplomaOfProfile');
