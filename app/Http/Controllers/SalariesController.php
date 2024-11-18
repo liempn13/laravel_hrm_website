@@ -34,7 +34,7 @@ class SalariesController extends Controller
                 'positions.position_name',
                 'salaries.*'
             )
-            ->where([['profiles.profile_id', '=', $profile_id]],)
+            ->where([['profiles.salary_id', '=', $profile_id]],)
             ->get()
         ;
     }
