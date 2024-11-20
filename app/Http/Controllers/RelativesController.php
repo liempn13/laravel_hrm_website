@@ -82,27 +82,6 @@ class RelativesController extends Controller
         return response()->json([], 200);
     }
 
-    // public function delete(string $relative_id)
-    // {
-    //     // Tìm tất cả relatives có relative_id tương ứng
-    //     $relatives = Relatives::where('relative_id', $relative_id)->get();
-
-    //     // Nếu không tìm thấy relatives
-    //     if ($relatives->isEmpty()) {
-    //         return response()->json([
-    //             "status" => false,
-    //             "message" => "No relatives found for this profile",
-    //             "data" => []
-    //         ], 404); // Trả về lỗi 404 nếu không tìm thấy
-    //     } else
-    //         $relatives->delete();
-
-    //     return response()->json([
-    //         "status" => true,
-    //         "message" => "Relatives deleted successfully",
-    //         "data" => []
-    //     ], 200); // Trả về mã 200 nếu xóa thành công
-    // }
     public function delete(int $relative_id)
     {
         $relatives = Relatives::where('relative_id', $relative_id);

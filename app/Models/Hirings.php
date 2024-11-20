@@ -10,6 +10,7 @@ class Hirings extends Model
     protected $table = "hirings";
     protected $primaryKey = "hiring_profile_id";
     protected $fillable = [
+        "hiring_profile_id",
         "profile_name",
         "birthday",
         "place_of_birth",
@@ -18,6 +19,7 @@ class Hirings extends Model
         "email",
         "nation",
         "apply_for",
+        "educational_level",
         "current_address",
         "hiring_status",
         "hiring_profile_image",
@@ -25,6 +27,7 @@ class Hirings extends Model
     ];
     public $timestamps = false;
     protected $casts = [
+        "hiring_profile_id" => 'integer',
         "educational_level" => "string",
         "profile_name" => "string",
         "phone" => "string",
