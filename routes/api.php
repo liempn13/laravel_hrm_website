@@ -19,6 +19,8 @@ use App\Http\Controllers\TimekeepingsController;
 use App\Http\Controllers\WorkingProcessesController;
 use App\Http\Controllers\TrainingProcessesController;
 use App\Http\Controllers\InsurancesController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\HiringsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,7 +33,6 @@ Route::controller(ProfilesController::class)->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(ProfilesController::class)->group(function () {
         Route::post('/v1/logout', 'logout');
-        Route::get('/v1/profiles', 'index');
         Route::get('/v1/profiles/MembersCountGenderAndMaritalStatus', 'MembersCountGenderAndMaritalStatus');
         Route::get('/v1/profiles/department/{id}', 'departmentMembersCount'); //Danh sách nhân viên thuộc phòng ban và số lượng
         Route::get('/v1/profiles/position/{id}', 'positionMembersCount'); //Danh sách nhân viên giữ chức vụ và số lượng
@@ -90,15 +91,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //
     Route::controller(TimekeepingsController::class)->group(function () {
         Route::get('/v1/timekeepings', 'index');
+        Route::get('/v1/late', '');
         Route::post('/v1/checkin', 'checkIn');
         Route::put('/v1/checkout/{id}', 'checkOut');
     });
     //
-    // Route::controller(PayrollDetailsController::class)->group(function () {
-    //     Route::get('/v1/payrolls', '');
-    //     Route::put('/v1/update/{id}', 'update');
-    //     Route::post('/v1', '');
-    // });
+    Route::controller(RolesController::class)->group(function () {
+        Route::get('/v1/roles', 'index');
+    });
     //
     Route::controller(DiplomasController::class)->group(function () {
         Route::get('/v1/diploma/show/{id}', 'getDiplomaOfProfile');
@@ -115,10 +115,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     //
     Route::controller(DecisionsController::class)->group(function () {
-        Route::get('/v1/decisions', 'index');
+        Route::get('/v1/decisions/abc', 'index');
         Route::put('/v1/decision/update', 'update');
-        Route::post('/v1/decision/create', 'create');
-        Route::delete('/v1/decision/delete', 'delete');
+        Route::post('/v1/decision/create', 'createNewdecision');
+        Route::delete('/v1/decision/delete/{id}', 'delete');
     });
     //
     Route::controller(EnterprisesController::class)->group(function () {
@@ -164,10 +164,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/v1/salary/delete/{id}', 'delete');
     });
     Route::controller(LaborContractsController::class)->group(function () {
-        // Route::get('/v1/contract/{id}', 'showLaborContractDetails');
+        Route::get('/v1/contracts', 'index');
         Route::get('/v1/contract/ContactsOfProfile/{id}', 'getLaborContactsOfProfile');
         Route::post('/v1/contract/create', 'createNewLaborContract');
         Route::put('v1/contract/update', 'update');
         Route::delete('/v1/contract/delete/{id}', 'delete');
+    });
+    Route::controller(HiringsController::class)->group(function () {
+        Route::get('/v1/hirings', 'index');
+        Route::post('/v1/hiring/create', 'createNewHiringProfile');
+        Route::put('v1/hiring/update', 'update');
     });
 });

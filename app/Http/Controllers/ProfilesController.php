@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-
 class ProfilesController extends Controller
 {
     public function index()
@@ -50,13 +49,24 @@ class ProfilesController extends Controller
     {
     // Lấy tất cả nhân viên đã nghỉ việc (profile_status = 0)
     $quitProfiles = Profiles::where('profile_status', 0)->get();
-    
+
     // Lấy tất cả nhân viên đang làm việc (profile_status = 1)
     $activeProfiles = Profiles::where('profile_status', 1)->get();
+    
+    $officialContractsCount = DB::table('profiles')
+        ->join('labor_contract', 'profiles.labor_contract_id', '=', 'labor_contract.labor_contract_id')
+        ->whereNull('labor_contract.end_time')
+        ->count();
 
+    $temporaryContractsCount = DB::table('profiles')
+        ->join('labor_contract', 'profiles.labor_contract_id', '=', 'labor_contract.labor_contract_id')
+        ->whereNotNull('labor_contract.end_time') 
+        ->count();
     return response()->json([
         'quitCount' => $quitProfiles->count(), // Số lượng nhân viên đã nghỉ việc
         'activeCount' => $activeProfiles->count(), // Số lượng nhân viên đang làm việc
+        'officialContractsCount' => $officialContractsCount, // Số lượng hợp đồng chính thức (end_time null)
+        'temporaryContractsCount' => $temporaryContractsCount, // Số lượng hợp đồng có thời hạn (end_time không null)
     ]);
     }
     public function MembersCountGenderAndMaritalStatus() // SL nhân viên đã nghỉ việc và đang làm việc
@@ -267,7 +277,7 @@ class ProfilesController extends Controller
             "phone" => "required|string",
             "email" => "nullable|string",
             "birthday" => "required|date",
-            "password" => "string",
+            // "password" => "nullable|string",
             "marriage" => "required|boolean",
             "temporary_address" => "string",
             "current_address" => "string",
@@ -296,7 +306,7 @@ class ProfilesController extends Controller
         $profiles->profile_status = $input['profile_status'];
         $profiles->identify_num = $input['identify_num'];
         $profiles->id_license_day = $input['id_license_day'];
-        $profiles->password = $input['password'];
+        // $profiles->password = $input['password'];
         $profiles->role_id = $input['role_id'];
         if (isset($input['profile_image'])) {
             $profiles->profile_image = $input['profile_image'];

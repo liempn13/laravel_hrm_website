@@ -44,7 +44,7 @@ class AbsentsController extends Controller
                   ->orWhere('absents.to', '=', $today);
         })
         ->get();
-        
+
     // Lấy danh sách nghỉ không phép (trạng thái khác 1, nhưng ngày hiện tại nằm trong khoảng nghỉ phép)
     $unapprovedLeaves = DB::table('absents')
         ->join('profiles', 'absents.profile_id', '=', 'profiles.profile_id')
@@ -81,7 +81,7 @@ class AbsentsController extends Controller
     return DB::table('absents')
         ->join('profiles', 'absents.profile_id', '=', 'profiles.profile_id')
         ->select(
-            'profiles.profile_name', 
+            'profiles.profile_name',
             'absents.*'
         )
         ->where('absents.profile_id', '=', $profile_id)

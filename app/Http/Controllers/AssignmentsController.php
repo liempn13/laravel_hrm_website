@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AssignmentsResource;
 use App\Models\Assignments;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -38,6 +37,25 @@ class AssignmentsController extends Controller
             ->get()
         ;
     }
+    public function getAssigmentOfStaff(string $profile_id)//Lấy dsach công việc của nhân viên được phân công
+    {
+        return
+            DB::table('assignments')
+            ->join('profiles', 'assignments.profile_id', '=', 'profiles.profile_id')
+            ->join('projects', 'assignments.project_id', '=', 'projects.project_id')
+            ->join('tasks', 'assignments.task_id', '=', 'tasks.task_id')
+            ->select(
+                'projects.project_id',
+                'projects.project_name',
+                'profiles.profile_id',
+                'profiles.profile_name',
+                'tasks.*'
+            )
+            ->where(['assignments.profile_id', '=', $profile_id],)
+            ->get()
+        ;
+    }
+
     public function create(Request $request)
     {
         $fields = $request->validate([

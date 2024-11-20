@@ -31,13 +31,13 @@ class HiringsController extends Controller
             "apply_for" => "required|string",
             "current_address" => "required|string",
             "nation" => "required|string",
-            "place_of_birth" => "required|date",
+            "place_of_birth" => "required|string",
             "hiring_status" => "required|integer",
             "hiring_profile_image" => "required|string",
             "work_experience" => "required|string",
         ]);
         $newAccount = Hirings::create([
-            'name' => ($fields['name']),
+            'profile_name' => ($fields['profile_name']),
             'gender' => ($fields['gender']),
             'phone' => ($fields['phone']),
             'email' => ($fields['email']),
@@ -54,9 +54,17 @@ class HiringsController extends Controller
         return response()->json([], 201);
     }
 
-    public function update(Request $request, Hirings $hiring)
-    {
+    public function update(Request $request)
+    {   
+        $hiring = Hirings::find($request->hiring_profile_id);
+        // Kiểm tra xem relative có tồn tại không
+        if (!$hiring) {
+            return response()->json([
+                'message' => 'Relative not found'
+            ], 404);  // Trả về lỗi 404 nếu không tìm thấy relative
+        }
         $input = $request->validate([
+            "hiring_profile_id" => "required|integer",
             "educational_level" => "required|string",
             "profile_name" => "required|string",
             "phone" => "required|string",
@@ -71,7 +79,8 @@ class HiringsController extends Controller
             "hiring_profile_image" => "required|string",
             "work_experience" => "required|string",
         ]);
-
+        $hiring->hiring_profile_id = $input['hiring_profile_id'];
+        $hiring->educational_level = $input['educational_level'];
         $hiring->profile_name = $input['profile_name'];
         $hiring->gender = $input['gender'];
         $hiring->phone = $input['phone'];

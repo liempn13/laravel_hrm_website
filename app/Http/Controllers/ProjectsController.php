@@ -4,14 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Projects;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
 
 class ProjectsController extends Controller
 {
-    public function index()
+    public function index()//Lấy tất cả dự án của cty
     {
         $projects = Projects::all();
         return response()->json($projects);
+    }
+
+    public function getAssigmentOfDepartments(string $department_id)//Lấy dsach dự án của phòng ban
+    {
+        return DB::table('assignments')
+            ->join('profiles', 'assignments.profile_id', '=', 'profiles.profile_id')
+            ->join('projects', 'assignments.project_id', '=', 'projects.project_id')
+            ->join('tasks', 'assignments.task_id', '=', 'tasks.task_id')
+            ->select(
+                'projects.project_id',
+                'projects.project_name',
+                'profiles.profile_id',
+                'profiles.profile_name',
+                'tasks.*'
+            )
+            ->where(['profiles.department_id', '=', $department_id],)
+            ->get()
+        ;
     }
 
     public function createNewProject(Request $request)
