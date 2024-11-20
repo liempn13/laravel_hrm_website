@@ -20,7 +20,6 @@ class Timekeepings extends Model
         "shift_id",
         "profile_id"
     ];
-    public $timestamps = false;
     protected $casts = [
         'profile_id' => "string",
         'late' => "datetime",

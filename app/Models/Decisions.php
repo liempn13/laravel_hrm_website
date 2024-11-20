@@ -11,6 +11,7 @@ class Decisions extends Model
     protected $table = "decisions";
     protected $primaryKey = "decision_id";
     protected $fillable = [
+        "decision_id",
         "decision_name",
         "decision_content",
         "profile_id",
@@ -23,8 +24,9 @@ class Decisions extends Model
         "decision_id" => "string",
         "decision_name" => "string",
         "assign_date" => "date",
-        "decision_status" => "boolean",
+        "decision_status" => "integer",
         "decision_image" => "string",
+        "decision_content" => "string",
         "profile_id" => "string"
     ];
 }

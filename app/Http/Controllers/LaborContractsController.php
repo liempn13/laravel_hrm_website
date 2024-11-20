@@ -70,8 +70,8 @@ class LaborContractsController extends Controller
         $laborContracts = LaborContracts::find($request->labor_contract_id);
         $input = $request->validate([
             "labor_contract_id" => "required|string",
-            "end_time" => "required|datetime",
-            "start_time" => "required|datetime",
+            "end_time" => "nullable|date_format:d-m-Y",
+            "start_time" => "required|date_format:d-m-Y",
             "image" => "nullable|string",
             "enterprise_id" => "boolean|required",
             "department_id" => "required|string",
@@ -80,9 +80,28 @@ class LaborContractsController extends Controller
         $laborContracts->start_time = $input['start_time'];
         $laborContracts->end_time = $input['end_time'];
         $laborContracts->enterprise_id = $input['enterprise_id'];
-        $laborContracts->deparment_id = $input['department_id'];
+        $laborContracts->department_id = $input['department_id'];
         $laborContracts->image = $input['image'];
         $laborContracts->save();
         return response()->json([], 200);
+    }
+    public function delete($id)
+    {
+        $laborContracts = LaborContracts::find($id);
+    
+        if (!$laborContracts) {
+            return response()->json([
+                "status" => false,
+                "message" => "diplomas not found",
+                "data" => []
+            ], 404);
+        }
+    
+        $laborContracts->delete();
+        return response()->json([
+            "status" => true,
+            "message" => "Delete success",
+            "data" => []
+        ], 200);
     }
 }

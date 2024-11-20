@@ -14,29 +14,22 @@ class DecisionsController extends Controller
 {
     public function index()
     {
-        $decisions = Decisions::all();
-        return response()->json($decisions);
+    $hirings = Decisions::join('profiles', 'decisions.profile_id', '=', 'profiles.profile_id')
+                      ->select('decisions.*', 'profiles.profile_name')
+                      ->get();
+    return response()->json($hirings);
     }
-    public function show(string $id)
-    {
-        return
-            Decisions::findOrFail($id);
-    }
-    public function showByID(string $id)
-    {
-        return (
-            Decisions::where('profile_id', $id)->get()
-        );
-    }
+
     public function createNewdecision(Request $request)
     {
         $fields = $request->validate([
             "decision_id" => "required|string",
             "decision_name" => "required|string",
             "assign_date" => "required|date",
-            "decision_status" => "required|boolean",
+            "decision_status" => "required|integer",
             "decision_image" => "required|string",
-            "profile_id" => "nullable|string"
+            "profile_id" => "nullable|string",
+            "decision_content" => "required|string",
         ]);
         $newDecision = Decisions::create([
             'decision_name' => ($fields['decision_name']),
@@ -45,6 +38,7 @@ class DecisionsController extends Controller
             'assign_date' => $fields['assign_date'],
             'decision_id' => $fields['decision_id'],
             'decision_image' => $fields['decision_image'],
+            'decision_content' => $fields['decision_content'],
 
         ]);
         return response()->json([], 201);
@@ -56,13 +50,20 @@ class DecisionsController extends Controller
         $input = $request->validate([
             "decision_id" => "required|string",
             "decision_name" => "required|string",
-            "assign_date" => "required|datetime",
-            "decision_status" => "required|boolean",
+            "assign_date" => "required|date",
+            "decision_status" => "required|integer",
             "decision_image" => "required|string",
-            "profile_id" => "nullable|string"
+            "profile_id" => "nullable|string",
+            "decision_content" => "required|string",
         ]);
 
-        $decisions->name = $input['name'];
+        $decisions->decision_id = $input['decision_id'];
+        $decisions->decision_name = $input['decision_name'];
+        $decisions->assign_date = $input['assign_date'];
+        $decisions->decision_status = $input['decision_status'];
+        $decisions->decision_image = $input['decision_image'];
+        $decisions->decision_content = $input['decision_content'];
+        $decisions->profile_id = $input['profile_id'];
         $decisions->save();
         $arr = [
             "status" => true,
@@ -72,14 +73,23 @@ class DecisionsController extends Controller
         return response()->json($arr, 200);
     }
 
-    public function delete(Decisions $decisions)
+    public function delete($id)
     {
+        $decisions = Decisions::find($id);
+    
+        if (!$decisions) {
+            return response()->json([
+                "status" => false,
+                "message" => "Shifts not found",
+                "data" => []
+            ], 404);
+        }
+    
         $decisions->delete();
-        $arr = [
+        return response()->json([
             "status" => true,
             "message" => "Delete success",
             "data" => []
-        ];
-        return response()->json($arr, 200);
+        ], 200);
     }
 }

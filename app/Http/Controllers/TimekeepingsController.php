@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\TimekeepingsResource;
 use Illuminate\Routing\Controller;
 use App\Models\Timekeepings;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -41,6 +41,20 @@ class TimekeepingsController extends Controller
             ->get()
         ;
     }
+    public function getLateList(DateTime $start_date)
+    {
+        return
+            DB::table('timekeepings')
+            ->join('profiles', 'timekeepings.profile_id', '=', 'profiles.profile_id')
+            ->join('shifts', 'timekeepings.shift_id', '=', 'shifts.shift_id')
+            ->select(
+                'timekeepings.*',
+                'profiles.profile_name',
+                'shifts.shift_name',
+            )->where(['timekeepings.late','!=',null])
+            ->get()
+        ;
+    }
     public function checkIn(Request $request)
     {
         $input = $request->validate([
@@ -68,8 +82,6 @@ class TimekeepingsController extends Controller
         $input = $request->validate([
             'timekeeping_id' => "integer",
             'profile_id' => "required|string",
-            // 'late' => "nullable|time",
-            // 'checkin' => "required|time",
             'checkout' => "required|time",
             'shift_id' => "string",
             'leaving_soon' => "nullable|time",
@@ -79,11 +91,9 @@ class TimekeepingsController extends Controller
         $checkOut->timekeeping_id = $input['timekeeping_id'];
         $checkOut->profile_id = $input['profile_id'];
         $checkOut->shift_id = $input['shift_id'];
-        $checkOut->checkin = $input['checkin'];
         $checkOut->checkout = $input['checkout'];
         $checkOut->shift_id = $input['shift_id'];
         $checkOut->date = $input['date'];
-        $checkOut->late = $input['late'];
         $checkOut->status = $input['status'];
         $checkOut->save();
         return response()->json([], 200);
