@@ -57,6 +57,10 @@ class TimekeepingsController extends Controller
     }
     public function checkIn(Request $request)
     {
+          // Kiểm tra xem đã check-in chưa
+          $timeKeepings = Timekeepings::where('profile_id', $request->profile_id)
+          ->whereDate('date', now()->toDateString())
+          ->first();
         $input = $request->validate([
             'profile_id' => "required|string",
             'late' => "nullable|date_format:H:i:s",
@@ -79,13 +83,16 @@ class TimekeepingsController extends Controller
     public function checkOut(Request $request)
     {
         $checkOut = Timekeepings::find($request->timekeeping_id);
+         // Kiểm tra xem đã check-in nhưng chưa check-out
+         $checkOut = Timekeepings::where('profile_id', $$request->profile_id)
+         ->whereDate('date', now()->toDateString())
+         ->where('status', 0)
+         ->whereNull('checkout')
+         ->first();
+
         $input = $request->validate([
-            'timekeeping_id' => "integer",
-            'profile_id' => "required|string",
             'checkout' => "required|time",
-            'shift_id' => "string",
             'leaving_soon' => "nullable|time",
-            'date' => "required|date",
             'status' => 'required|integer'
         ]);
         $checkOut->timekeeping_id = $input['timekeeping_id'];
