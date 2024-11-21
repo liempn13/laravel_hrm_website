@@ -12,12 +12,10 @@ class EnterprisesController extends Controller
 {
     public function index()
     {
-        $enterprises = Enterprises::first();
-        return response()->json($enterprises);
+        return [Enterprises::first()];
     }
     public function update(Request $request, Enterprises $enterprises)
     {
-        $this->authorize('isBoardOfDirectors');
         $input = $request->validate([
             "license_num" => "required|string",
             "name" => "required|string",
