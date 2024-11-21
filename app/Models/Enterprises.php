@@ -17,6 +17,8 @@ class Enterprises extends Model
         "license_num",
         "phone",
         "assign_date",
+        "address",
+        "website"
     ];
     public $timestamps = false;
     protected $casts = [
@@ -25,5 +27,7 @@ class Enterprises extends Model
         "phone" => "string",
         "email" => "string",
         "assign_date" => "date",
+        "address"=> "string",
+        "website"=> "string",
     ];
 }

@@ -15,7 +15,7 @@ class AbsentsController extends Controller
         $absents = Absents::all();
         return response()->json($absents);
     }
-    public function show(string $idprofile)
+    public function show(string $ID)
     {
         return (
             Absents::findOrFail($ID)
