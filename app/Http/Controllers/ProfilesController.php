@@ -338,7 +338,19 @@ class ProfilesController extends Controller
         $profiles->save();
         return response()->json([], 200);
     }
+    public function deactivateProfile(Request $request)
+{
+    $profile = Profiles::find($request->profile_id);
 
+    if (!$profile) {
+        return response()->json(['message' => 'Profile not found'], 404);
+    }
+
+    $profile->profile_status = 0;
+    $profile->save();
+
+    return response()->json(['message' => 'Profile deactivated successfully'], 200);
+}
     public function changePassword(Request $request)
     {
         // Xác thực dữ liệu đầu vào
