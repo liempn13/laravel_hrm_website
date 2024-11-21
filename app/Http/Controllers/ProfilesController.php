@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+
 class ProfilesController extends Controller
 {
     public function index()
@@ -39,7 +40,7 @@ class ProfilesController extends Controller
     }
     public function quitMembersCount() //SL nhân viên đã nghỉ việc
     {
-        $profiles = Profiles::where('profile_status',0)->get();;
+        $profiles = Profiles::where('profile_status', 0)->get();;
         return response()->json([
             'profiles' => $profiles,
             'totals' => $profiles->count(),
@@ -47,52 +48,52 @@ class ProfilesController extends Controller
     }
     public function MembersCount() // SL nhân viên đã nghỉ việc và đang làm việc
     {
-    // Lấy tất cả nhân viên đã nghỉ việc (profile_status = 0)
-    $quitProfiles = Profiles::where('profile_status', 0)->get();
+        // Lấy tất cả nhân viên đã nghỉ việc (profile_status = 0)
+        $quitProfiles = Profiles::where('profile_status', 0)->get();
 
-    // Lấy tất cả nhân viên đang làm việc (profile_status = 1)
-    $activeProfiles = Profiles::where('profile_status', 1)->get();
-    
-    $officialContractsCount = DB::table('profiles')
-        ->join('labor_contract', 'profiles.labor_contract_id', '=', 'labor_contract.labor_contract_id')
-        ->whereNull('labor_contract.end_time')
-        ->count();
+        // Lấy tất cả nhân viên đang làm việc (profile_status = 1)
+        $activeProfiles = Profiles::where('profile_status', 1)->get();
 
-    $temporaryContractsCount = DB::table('profiles')
-        ->join('labor_contract', 'profiles.labor_contract_id', '=', 'labor_contract.labor_contract_id')
-        ->whereNotNull('labor_contract.end_time') 
-        ->count();
-    return response()->json([
-        'quitCount' => $quitProfiles->count(), // Số lượng nhân viên đã nghỉ việc
-        'activeCount' => $activeProfiles->count(), // Số lượng nhân viên đang làm việc
-        'officialContractsCount' => $officialContractsCount, // Số lượng hợp đồng chính thức (end_time null)
-        'temporaryContractsCount' => $temporaryContractsCount, // Số lượng hợp đồng có thời hạn (end_time không null)
-    ]);
+        $officialContractsCount = DB::table('profiles')
+            ->join('labor_contract', 'profiles.labor_contract_id', '=', 'labor_contract.labor_contract_id')
+            ->whereNull('labor_contract.end_time')
+            ->count();
+
+        $temporaryContractsCount = DB::table('profiles')
+            ->join('labor_contract', 'profiles.labor_contract_id', '=', 'labor_contract.labor_contract_id')
+            ->whereNotNull('labor_contract.end_time')
+            ->count();
+        return response()->json([
+            'quitCount' => $quitProfiles->count(), // Số lượng nhân viên đã nghỉ việc
+            'activeCount' => $activeProfiles->count(), // Số lượng nhân viên đang làm việc
+            'officialContractsCount' => $officialContractsCount, // Số lượng hợp đồng chính thức (end_time null)
+            'temporaryContractsCount' => $temporaryContractsCount, // Số lượng hợp đồng có thời hạn (end_time không null)
+        ]);
     }
     public function MembersCountGenderAndMaritalStatus() // SL nhân viên đã nghỉ việc và đang làm việc
     {
-    //Lấy count nam
-    $genderManEmloyment = Profiles::where('gender', 0)->get();
-    //Lấy count Nữ
-    $genderWomanEmloyment = Profiles::where('gender', 1)->get();
+        //Lấy count nam
+        $genderManEmloyment = Profiles::where('gender', 0)->get();
+        //Lấy count Nữ
+        $genderWomanEmloyment = Profiles::where('gender', 1)->get();
 
-    $marriedEmloyment = Profiles::where('marriage', 1)->get();
+        $marriedEmloyment = Profiles::where('marriage', 1)->get();
 
-    $unmarriedEmloyment = Profiles::where('marriage', 0)->get();
+        $unmarriedEmloyment = Profiles::where('marriage', 0)->get();
 
-    return response()->json([
-        'profiles' => $genderManEmloyment,
-        'genderMan' => $genderManEmloyment->count(),
+        return response()->json([
+            'profiles' => $genderManEmloyment,
+            'genderMan' => $genderManEmloyment->count(),
 
-        'profiles' => $genderWomanEmloyment,
-        'genderWoman' => $genderWomanEmloyment->count(), 
-        
-        'profiles' => $marriedEmloyment,
-        'married' => $marriedEmloyment->count(), 
+            'profiles' => $genderWomanEmloyment,
+            'genderWoman' => $genderWomanEmloyment->count(),
 
-        'profiles' => $unmarriedEmloyment,
-        'unmarried' => $unmarriedEmloyment->count(), 
-    ]);
+            'profiles' => $marriedEmloyment,
+            'married' => $marriedEmloyment->count(),
+
+            'profiles' => $unmarriedEmloyment,
+            'unmarried' => $unmarriedEmloyment->count(),
+        ]);
     }
     public function getUserProfileInfo(string $profile_id)
     {
@@ -323,22 +324,19 @@ class ProfilesController extends Controller
         $profiles->save();
         return response()->json([], 200);
     }
-    public function lockAndUnlock(Request $request)
+    public function deactivateProfile(Request $request)
     {
-        $profiles = Profiles::find($request->profile_id);
-        // Kiểm tra xem hồ sơ có tồn tại không
-        if (!$profiles) {
+        $profile = Profiles::find($request->profile_id);
+
+        if (!$profile) {
             return response()->json(['message' => 'Profile not found'], 404);
         }
-        $input = $request->validate([
-            "profile_status" => "required|integer",
-        ]);
 
-        $profiles->profile_status = $input['profile_status'];
-        $profiles->save();
-        return response()->json([], 200);
+        $profile->profile_status = 0;
+        $profile->save();
+
+        return response()->json(['message' => 'Profile deactivated successfully'], 200);
     }
-
     public function changePassword(Request $request)
     {
         // Xác thực dữ liệu đầu vào
