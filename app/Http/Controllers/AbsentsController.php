@@ -15,7 +15,7 @@ class AbsentsController extends Controller
         $absents = Absents::all();
         return response()->json($absents);
     }
-    public function show(string $ID)
+    public function show(string $idprofile)
     {
         return (
             Absents::findOrFail($ID)
@@ -81,7 +81,6 @@ class AbsentsController extends Controller
     return DB::table('absents')
         ->join('profiles', 'absents.profile_id', '=', 'profiles.profile_id')
         ->select(
-            'profiles.profile_name',
             'absents.*'
         )
         ->where('absents.profile_id', '=', $profile_id)
@@ -90,8 +89,8 @@ class AbsentsController extends Controller
     public function createNewAbsentRequest(Request $request)
     {
         $fields = $request->validate([
-            'from' => 'required|date_format:d-m-Y', // Xác thực ngày từ
-            'to' => 'nullable|date_format:d-m-Y',   // Xác thực ngày đến, có thể là null
+            'from' => 'required|date', // Xác thực ngày từ
+            'to' => 'nullable|date',   // Xác thực ngày đến, có thể là null
             "reason" => "nullable|string",
             "profile_id" => "required|string",
             "days_off" => "nullable|numeric",
@@ -113,8 +112,8 @@ class AbsentsController extends Controller
         $absents = Absents::find($request->ID);
         $input = $request->validate([
             "ID"=> "required|integer",
-            "from" => "required|date_format:d-m-Y",
-            "to" => 'nullable|date_format:d-m-Y',
+            "from" => "required|date",
+            "to" => 'nullable|date',
             "reason" => "nullable|string",
             "profile_id" => "required|string",
             "days_off" => "nullable|numeric",
