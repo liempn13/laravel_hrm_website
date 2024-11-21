@@ -20,8 +20,8 @@ class Absents extends Model
     ];
     public $timestamps = false;
     protected $casts = [
-        "from" => "datetime",
-        "to" => 'datetime',
+        "from" => "date",
+        "to" => 'date',
         "reason" => "string",
         "profile_id" => "string",
         "days_off" => "double",
