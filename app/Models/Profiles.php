@@ -74,10 +74,6 @@ class Profiles extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'profiles');
     }
-    public function department()
-    {
-        return $this->belongsToMany(Departments::class, 'profiles');
-    }
     public function position()
     {
         return $this->belongsToMany(Positions::class, 'profiles');
@@ -91,5 +87,4 @@ class Profiles extends Authenticatable
         }
         return false;
     }
-
 }
