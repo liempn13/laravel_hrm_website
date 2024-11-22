@@ -22,9 +22,6 @@ class Diplomas extends Model
         "major", // nghành nghề
         "granted_by", // cấp bởi
         "profile_id"
-      
-
-      
     ];
     public $timestamps = false;
     protected $casts = [
@@ -38,6 +35,5 @@ class Diplomas extends Model
         "diploma_type" => "string",
         "granted_by" => "string",
         "profile_id" => "string",
-      
     ];
 }
