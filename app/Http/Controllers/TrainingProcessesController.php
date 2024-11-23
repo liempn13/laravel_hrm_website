@@ -17,13 +17,11 @@ class TrainingProcessesController extends Controller
     public function addNewTrainingProccess(Request $request)
     {
         $input = $request->validate([
-            'trainingprocesses_id' => "string|required",
             'profile_id' => "required|string",
             'trainingprocesses_name' => "required|string",
             'trainingprocesses_content' => "required|string",
             'start_time' => "required|date",
             'end_time' => "nullable|date",
-            'trainingprocesses_status' => "integer|required",
         ]);
         $trainingProcesses = TrainingProcesses::create($input);
         $arr = [
@@ -44,19 +42,15 @@ class TrainingProcessesController extends Controller
         ], 404);  // Trả về lỗi 404 nếu không tìm thấy relative
     }
         $input = $request->validate([
-            'trainingprocesses_id' => "string|required",
             'profile_id' => "required|string",
             'trainingprocesses_name' => "required|string",
             'trainingprocesses_content' => "required|string",
             'start_time' => "required|date",
             'end_time' => "nullable|date",
-            'trainingprocesses_status' => "integer",
         ]);
         $trainingprocesses->start_time = $input['start_time'];
-        $trainingprocesses->trainingprocesses_id = $input['trainingprocesses_id'];
         $trainingprocesses->end_time = $input['end_time'];
         $trainingprocesses->profile_id = $input['profile_id'];
-        $trainingprocesses->trainingprocesses_status = $input['trainingprocesses_status'];
         $trainingprocesses->trainingprocesses_name = $input['trainingprocesses_name'];
         $trainingprocesses->trainingprocesses_content = $input['trainingprocesses_content'];
         $trainingprocesses->save();
@@ -70,7 +64,7 @@ class TrainingProcessesController extends Controller
     public function delete($id)
     {
         $trainingprocesses = TrainingProcesses::find($id);
-    
+
         if (!$trainingprocesses) {
             return response()->json([
                 "status" => false,
@@ -78,7 +72,7 @@ class TrainingProcessesController extends Controller
                 "data" => []
             ], 404);
         }
-    
+
         $trainingprocesses->delete();
         return response()->json([
             "status" => true,
