@@ -56,7 +56,6 @@ class RelativesController extends Controller
             ], 404);  // Trả về lỗi 404 nếu không tìm thấy relative
         }
         $input = $request->validate([
-            "relative_id" => 'required|integer',
             "relative_name" => "required|string",
             "relative_phone" => "required|string",
             "relative_birthday" => "required|date",
@@ -85,7 +84,7 @@ class RelativesController extends Controller
     public function delete(int $relative_id)
     {
         $relatives = Relatives::where('relative_id', $relative_id);
-    
+
         if ($relatives->doesntExist()) {
             return response()->json([
                 "status" => false,
@@ -93,15 +92,15 @@ class RelativesController extends Controller
                 "data" => []
             ], 404);
         }
-    
+
         $relatives->delete();
-    
+
         return response()->json([
             "status" => true,
             "message" => "Relatives deleted successfully",
             "data" => []
         ], 200);
     }
-    
+
 
 }
