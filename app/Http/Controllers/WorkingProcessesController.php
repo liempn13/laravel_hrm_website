@@ -17,12 +17,10 @@ class WorkingProcessesController extends Controller
     public function addNewWWorkingProcesses(Request $request)
     {
         $input = $request->validate([
-            'workingprocess_id' => "string|required",
             'profile_id' => "required|string",
             'workingprocess_content' => "nullable|string",
             'start_time' => "required|date",
             'end_time' => "nullable|date",
-            'workingprocess_status' => "required|integer",
             'workplace_name' => "required|string",
         ]);
         $workingProcesses = WorkingProcesses::create($input);
@@ -46,24 +44,20 @@ class WorkingProcessesController extends Controller
     }
     // Validate dữ liệu đầu vào
     $input = $request->validate([
-        'workingprocess_id' => "string|required",
         'profile_id' => "string|required",
         'workingprocess_content' => "string|nullable",
         'start_time' => "date|required",
         'end_time' => "nullable|date",
-        'workingprocess_status' => "required|integer",
         'workplace_name' => "string|required",
     ]);
 
     // Cập nhật các trường trong bản ghi
     $workingProcesses->workingprocess_id = $input['workingprocess_id'];
     $workingProcesses->workplace_name = $input['workplace_name'];
-    $workingProcesses->workingprocess_status = $input['workingprocess_status'];
     $workingProcesses->workingprocess_content = $input['workingprocess_content'];
     $workingProcesses->start_time = $input['start_time'];
     $workingProcesses->end_time = $input['end_time'];
     $workingProcesses->profile_id = $input['profile_id'];
-
     // Lưu bản ghi
     $workingProcesses->save();
 
@@ -75,7 +69,7 @@ class WorkingProcessesController extends Controller
     public function delete($id)
     {
         $workingProcesses = WorkingProcesses::find($id);
-    
+
         if (!$workingProcesses) {
             return response()->json([
                 "status" => false,
@@ -83,7 +77,7 @@ class WorkingProcessesController extends Controller
                 "data" => []
             ], 404);
         }
-    
+
         $workingProcesses->delete();
         return response()->json([
             "status" => true,

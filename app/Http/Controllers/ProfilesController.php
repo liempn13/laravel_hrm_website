@@ -214,6 +214,8 @@ class ProfilesController extends Controller
             "place_of_birth" => "required|string",
             "role_id" => "required|integer",
             "profile_image" => "required|string",
+            "start_time" => "nullable|datetime",
+            "end_time" => "nullable|datetime",
             //foriegn key
             "department_id" => "nullable|string",
             "position_id" => "nullable|string",
@@ -239,6 +241,8 @@ class ProfilesController extends Controller
             'password' => bcrypt($fields['password']),
             'role_id' => $fields['role_id'],
             'profile_status' => $fields['profile_status'],
+            'start_time' => $fields['start_time'],
+            'end_time' => $fields['end_time'],
             //fk
             "department_id" => $fields["department_id"],
             "position_id" => $fields["position_id"],
@@ -288,6 +292,8 @@ class ProfilesController extends Controller
             "place_of_birth" => "string",
             "role_id" => "integer",
             "profile_image" => "nullable|string",
+            "start_time" => "datetime",
+            "end_time" => "datetime",
             //foriegn key
             "department_id" => "nullable|string",
             "position_id" => "nullable|string",
@@ -309,6 +315,8 @@ class ProfilesController extends Controller
         $profiles->profile_status = $input['profile_status'];
         $profiles->identify_num = $input['identify_num'];
         $profiles->id_license_day = $input['id_license_day'];
+        $profiles->start_time = $input['start_time'];
+        $profiles->end_time = $input['end_time'];
         // $profiles->password = $input['password'];
         $profiles->role_id = $input['role_id'];
         if (isset($input['profile_image'])) {
@@ -326,7 +334,7 @@ class ProfilesController extends Controller
         $profiles->save();
         return response()->json([], 200);
     }
-    public function deactivateProfile(Request $request)
+    public function deactivateProfile(Request $request)//Khoá tk nếu nhân sự nghỉ việc
     {
         $profile = Profiles::find($request->profile_id);
 
@@ -334,7 +342,7 @@ class ProfilesController extends Controller
             return response()->json(['message' => 'Profile not found'], 404);
         }
 
-        $profile->profile_status = 0;
+        $profile->profile_status = -1;
         $profile->save();
 
         return response()->json(['message' => 'Profile deactivated successfully'], 200);
